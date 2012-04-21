@@ -16,9 +16,11 @@ import fr.aumgn.bukkitutils.command.Commands;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
+import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class MethodCommandExecutor implements CommandExecutor {
 
+    private final Messages local;
     private final Commands instance;
     private final Method method;
     private final int min;
@@ -26,7 +28,8 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final Set<Character> flags;
     private final boolean isPlayerCommand;
 
-    public MethodCommandExecutor(Commands instance, Method method, Command command) {
+    public MethodCommandExecutor(Messages local, Commands instance, Method method, Command command) {
+        this.local = local;
         this.instance = instance;
         this.method = method;
 
@@ -44,7 +47,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
         try {
             ensureHasValidSender(sender);
-            CommandArgs args = new CommandArgs(rawArgs, flags, min, max);
+            CommandArgs args = new CommandArgs(local, rawArgs, flags, min, max);
             callCommand(lbl, sender, args);
         } catch (CommandUsageError exc) {
             sender.sendMessage(ChatColor.RED + exc.getMessage());
@@ -57,7 +60,7 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private void ensureHasValidSender(CommandSender sender) {
         if (isPlayerCommand && !(sender instanceof Player)) {
-            throw new CommandError("Cette commande n'est utilisable qu'en tant que joueur.");
+            throw new CommandError(local.playerOnly());
         }
     }
 
@@ -80,8 +83,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     }
 
     private void unexpectedError(Exception exc) {
-        throw new CommandError(
-                "Erreur inattendue lors de l'exécution de la commande. "
-                + exc.getClass().getSimpleName() + ": " + exc.getMessage());
+        throw new CommandError(local.unexpectedError() +
+                exc.getClass().getSimpleName() + ": " + exc.getMessage());
     }
 }

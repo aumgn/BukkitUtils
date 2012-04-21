@@ -29,7 +29,7 @@ public class NestedCommandExecutor implements CommandExecutor {
         }
 
         PluginCommand subCommand = plugin.getCommand(name + " " + args[0]);
-        if (!subCommands.contains(subCommand.getName())) {
+        if (subCommand == null || !subCommands.contains(subCommand.getName())) {
             return false;
         }
 

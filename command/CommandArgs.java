@@ -7,20 +7,21 @@ import java.util.List;
 import java.util.Set;
 
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
+import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandArgs {
 
     private Set<Character> flags;
     private String[] args;
 
-    public CommandArgs(String[] tokens, Set<Character> allowedFlag, int min, int max) {
+    public CommandArgs(Messages local, String[] tokens, Set<Character> allowedFlag, int min, int max) {
         flags = new HashSet<Character>();
         List<String> argsList = new ArrayList<String>(tokens.length);
         for (String token : tokens) {
             if (token.charAt(0) == '-' && token.length() > 1) {
                 for (char flag : token.substring(1).toCharArray()) {
                     if (!allowedFlag.contains(flag)) {
-                        throw new CommandUsageError("Flag invalide : -" + flag);
+                        throw new CommandUsageError(String.format(local.invalidFlag(), flag));
                     }
                     flags.add(flag);
                 }
@@ -29,12 +30,12 @@ public class CommandArgs {
             }
         }
         if (argsList.size() < min) {
-            throw new CommandUsageError(
-                    "Argument(s) manquant(s) (" + argsList.size() + " / " + min + " minimum)");
+            throw new CommandUsageError(String.format(local.missingArguments(),
+                    argsList.size(), min));
         }
         if (max != -1 && argsList.size() > max) {
-            throw new CommandUsageError(
-                    "Argument(s) en trop (" + argsList.size() + " / " + max + " maximum)");
+            throw new CommandUsageError(String.format(local.tooManyArguments(),
+                    argsList.size(), max));
         }
         args = argsList.toArray(new String[0]);
     }

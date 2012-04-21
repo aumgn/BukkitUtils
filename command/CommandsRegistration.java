@@ -2,7 +2,6 @@ package fr.aumgn.bukkitutils.command;
 
 import java.lang.reflect.Method;
 
-import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
@@ -10,13 +9,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
+import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandsRegistration {
 
     private JavaPlugin plugin;
+    private Messages local;
 
-    public CommandsRegistration(JavaPlugin plugin) {
-        this.plugin = plugin; 
+    public CommandsRegistration(JavaPlugin plugin, Messages local) {
+        this.plugin = plugin;
+        this.local = local;
     }
 
     public void register(Commands commands) {
@@ -35,23 +37,22 @@ public class CommandsRegistration {
                 continue;
             }
 
-            String name;
+            PluginCommand command;
             if (subCommands) {
-                name = subCmdsAnnotation.name() + " " + cmdAnnotation.name();
-                System.out.println(name);
+                command = plugin.getCommand(subCmdsAnnotation.name() + " " + cmdAnnotation.name());
                 registerSubCommand(subCmdsAnnotation.name(), cmdAnnotation.name());
             } else {
-                name = cmdAnnotation.name();
+                command = plugin.getCommand(cmdAnnotation.name());
             }
-            PluginCommand command = plugin.getCommand(name);
+
             if (command != null) {
-                setCommandMessages(command);
                 CommandExecutor oldExecutor = command.getExecutor();
                 CommandExecutor executor = new MethodCommandExecutor(
-                        commands, method, cmdAnnotation);
+                        local, commands, method, cmdAnnotation);
                 if (oldExecutor instanceof NestedCommandExecutor) {
                     ((NestedCommandExecutor) oldExecutor).setDefaultExecutor(executor);
                 } else {
+                    setCommandMessages(command);
                     command.setExecutor(executor);
                 }
             }
@@ -59,10 +60,8 @@ public class CommandsRegistration {
     }
 
     private void setCommandMessages(PluginCommand command) {
-        command.setUsage(ChatColor.GREEN + "Utilisation : " +
-                ChatColor.YELLOW + command.getUsage());
-        command.setPermissionMessage(ChatColor.RED + 
-                "Vous n'avez pas la permission d'exécuter cette commande.");
+        command.setUsage(local.usagePrefix() + command.getUsage());
+        command.setPermissionMessage(local.permissionMessage());
     }
 
     private boolean isValidCommand(Method method) {
@@ -89,7 +88,9 @@ public class CommandsRegistration {
             NestedCommandExecutor nestedExecutor = new NestedCommandExecutor(plugin, name);
             nestedExecutor.setDefaultExecutor(executor);
             nestedExecutor.addSubCommand(subCmdName);
-            setCommandMessages(command);
+            if (!(executor instanceof MethodCommandExecutor)) {
+                setCommandMessages(command);
+            }
             command.setExecutor(nestedExecutor);
         }
     }
