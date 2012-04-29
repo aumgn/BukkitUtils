@@ -28,6 +28,10 @@ public class FrenchMessages extends Messages {
         return ChatColor.RED + "Argument(s) en trop (%d / %d max).";
     }
 
+    public String notAValidNumber() {
+        return "Nombre attendu pour l'argument %d.";
+    }
+
     public String unexpectedError() {
         return "Une erreur innatendue est apparue durant l'execution de le commande.";
     }

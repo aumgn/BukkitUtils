@@ -9,6 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.aumgn.bukkitutils.command.exception.CommandException;
+
 public class NestedCommandExecutor implements CommandExecutor {
 
     private JavaPlugin plugin;
@@ -28,14 +30,18 @@ public class NestedCommandExecutor implements CommandExecutor {
             return defaultExecutor.onCommand(sender, cmd, label, args);
         }
 
-        PluginCommand subCommand = plugin.getCommand(name + " " + args[0]);
-        if (subCommand == null || !subCommands.contains(subCommand.getName())) {
-            return false;
-        }
+        try {
+            PluginCommand subCommand = plugin.getCommand(name + " " + args[0]);
+            if (subCommand == null || !subCommands.contains(subCommand.getName())) {
+                return false;
+            }
 
-        String[] subCommandArgs = new String[args.length - 1];
-        System.arraycopy(args, 1, subCommandArgs, 0, args.length - 1);
-        subCommand.execute(sender, label + " " + args[0], subCommandArgs);
+            String[] subCommandArgs = new String[args.length - 1];
+            System.arraycopy(args, 1, subCommandArgs, 0, args.length - 1);
+            subCommand.execute(sender, label + " " + args[0], subCommandArgs);
+        } catch (CommandException exc) {
+            exc.printStackTrace();
+        }
         return true;
     }
 

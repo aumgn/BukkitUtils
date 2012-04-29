@@ -28,6 +28,10 @@ public class Messages {
         return "Too many argument(s) (%d / %d max)";
     }
 
+    public String notAValidNumber() {
+        return "Expected a number for arg %d.";
+    }
+
     public String unexpectedError() {
         return "An unexpected error ocurred while trying to execute command.";
     }
