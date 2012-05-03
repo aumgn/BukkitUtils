@@ -8,8 +8,8 @@ public class Vector2DIterator implements Iterator<Vector2D> {
     private Vector2D min;
     private Vector2D max;
     private boolean hasNext;
-    private int nextX;
-    private int nextZ;
+    private double nextX;
+    private double nextZ;
 
     public Vector2DIterator(Vector2D min, Vector2D max) {
         this.min = min;

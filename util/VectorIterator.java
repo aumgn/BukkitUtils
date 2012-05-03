@@ -8,9 +8,9 @@ public class VectorIterator implements Iterator<Vector> {
     private Vector min;
     private Vector max;
     private boolean hasNext;
-    private int nextX;
-    private int nextY;
-    private int nextZ;
+    private double nextX;
+    private double nextY;
+    private double nextZ;
 
     public VectorIterator(Vector min, Vector max) {
         this.min = min;

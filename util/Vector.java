@@ -8,7 +8,7 @@ import org.bukkit.block.Block;
 
 public class Vector implements Iterable<Vector> {
 
-    private final int x, y, z;
+    private final double x, y, z;
 
     public Vector() {
         this.x = 0;
@@ -22,6 +22,12 @@ public class Vector implements Iterable<Vector> {
         this.z = z;
     }
 
+    public Vector(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     public Vector(Location loc) {
         this(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
     }
@@ -30,35 +36,47 @@ public class Vector implements Iterable<Vector> {
         this(block.getX(), block.getY(), block.getZ());
     }
 
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public int getBlockX() {
+        return (int) Math.round(x);
+    }
+
+    public double getY() {
         return y;
     }
 
-    public int getZ() {
+    public int getBlockY() {
+        return (int) Math.round(y);
+    }
+
+    public double getZ() {
         return z;
     }
 
-    public Vector setX(int x) {
+    public int getBlockZ() {
+        return (int) Math.round(z);
+    }
+
+    public Vector setX(double x) {
         return new Vector(x, y, z);
     }
 
-    public Vector setY(int y) {
+    public Vector setY(double y) {
         return new Vector(x, y, z);
     }
 
-    public Vector setZ(int z) {
+    public Vector setZ(double z) {
         return new Vector(x, y, z);
     }
 
-    public Vector add(int i) {
+    public Vector add(double i) {
         return new Vector(this.x + i, this.y + i, this.z + i);
     }
 
-    public Vector add(int ox, int oy, int oz) {
+    public Vector add(double ox, double oy, double oz) {
         return new Vector(x + ox, y + oy, z + oz);
     }
 
@@ -66,16 +84,40 @@ public class Vector implements Iterable<Vector> {
         return new Vector(x + other.x, y + other.y, z + other.z);
     }
 
-    public Vector subtract(int i) {
+    public Vector subtract(double i) {
         return new Vector(x - i, y - i, z - i);
     }
 
-    public Vector subtract(int ox, int oy, int oz) {
+    public Vector subtract(double ox, double oy, double oz) {
         return new Vector(x - ox, y - oy, z - oz);
     }
 
     public Vector subtract(Vector other) {
         return new Vector(x - other.x, y - other.y, z - other.z);
+    }
+
+    public Vector multiply(double i) {
+        return new Vector(x * i, y * i, z * i);
+    }
+
+    public Vector multiply(double ox, double oy, double oz) {
+        return new Vector(x * ox, y * oy, z * oz);
+    }
+
+    public Vector multiply(Vector other) {
+        return new Vector(x * other.x, y * other.y, z * other.z);
+    }
+
+    public Vector divide(double i) {
+        return new Vector(x / i, y / i, z / i);
+    }
+
+    public Vector divide(double ox, double oy, double oz) {
+        return new Vector(x / ox, y / oy, z / oz);
+    }
+
+    public Vector divide(Vector other) {
+        return new Vector(x / other.x, y / other.y, z / other.z);
     }
 
     public Vector getMiddle(Vector other) {
@@ -95,7 +137,7 @@ public class Vector implements Iterable<Vector> {
         return new Vector(Math.abs(x), Math.abs(y), Math.abs(z));
     }
 
-    public int lengthSq() {
+    public double lengthSq() {
         return x * x + y * y + z * z;
     }
 
@@ -103,7 +145,7 @@ public class Vector implements Iterable<Vector> {
         return Math.sqrt(lengthSq());
     }
 
-    public int distanceSq(Vector other) {
+    public double distanceSq(Vector other) {
         return subtract(other).lengthSq();
     }
 
@@ -111,22 +153,33 @@ public class Vector implements Iterable<Vector> {
         return subtract(other).length();
     }
 
+    public Vector normalize() {
+        return divide(length());
+    }
+
     public Vector2D to2D() {
         return new Vector2D(x, z);
     }
 
     public Block toBlock(World world) {
-        return world.getBlockAt(x, y, z);
+        return world.getBlockAt(getBlockX(), getBlockY(), getBlockZ());
     }
 
     public Location toLocation(World world) {
-        return new Location(world, x + 0.5, y, 
-                z + 0.5, 0.0f, 0.0f);
+        return toLocation(world, 0.0f, 0.0f);
     }
 
     public Location toLocation(World world, Vector2D direction) {
-        return new Location(world, x + 0.5, y, 
-                z + 0.5, direction.toYaw(), 0.0f);
+        return toLocation(world, direction.toYaw());
+    }
+
+    public Location toLocation(World world, float yaw) {
+        return toLocation(world, yaw, 0.0f);
+    }
+
+    public Location toLocation(World world, float yaw, float pitch) {
+        return new Location(world, Math.round(x) + 0.5, getBlockY(),
+                Math.round(z) + 0.5, yaw, pitch);
     }
 
     @Override
@@ -150,20 +203,50 @@ public class Vector implements Iterable<Vector> {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += x;
-        hash += y;
-        hash += z;
-        return 31 * hash + 1;
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(x);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(y);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Vector)) {
+        if (this == obj)
+            return true;
+        if (obj == null)
             return false;
-        }
+        if (getClass() != obj.getClass())
+            return false;
         Vector other = (Vector) obj;
-        return (x == other.x && y == other.y 
-                && z == other.z);
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+            return false;
+        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
+            return false;
+        if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
+            return false;
+        return true;
+    }
+
+    public boolean equalsBlock(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Vector other = (Vector) obj;
+        if (getBlockX() != other.getBlockX())
+            return false;
+        if (getBlockY() != other.getBlockY())
+            return false;
+        if (getBlockZ() != other.getBlockZ())
+            return false;
+        return true;
     }
 }

@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 public class Vector2D implements Iterable<Vector2D> {
 
-    private final int x, z;
+    private final double x, z;
 
     public Vector2D() {
         this.x = 0;
@@ -16,27 +16,40 @@ public class Vector2D implements Iterable<Vector2D> {
         this.z = z;
     }
 
-    public int getX() {
+    public Vector2D(double x, double z) {
+        this.x = x;
+        this.z = z;
+    }
+
+    public double getX() {
         return x;
     }
 
-    public int getZ() {
+    public int getBlockX() {
+        return (int) Math.round(x);
+    }
+
+    public double getZ() {
         return z;
     }
 
-    public Vector2D setX(int x) {
+    public int getBlockZ() {
+        return (int) Math.round(z);
+    }
+
+    public Vector2D setX(double x) {
         return new Vector2D(x, z);
     }
 
-    public Vector2D setZ(int z) {
+    public Vector2D setZ(double z) {
         return new Vector2D(x, z);
     }
 
-    public Vector2D add(int i) {
+    public Vector2D add(double i) {
         return new Vector2D(this.x + i, this.z + i);
     }
 
-    public Vector2D add(int ox, int oz) {
+    public Vector2D add(double ox, double oz) {
         return new Vector2D(x + ox, z + oz);
     }
 
@@ -44,16 +57,40 @@ public class Vector2D implements Iterable<Vector2D> {
         return new Vector2D(x + other.x, z + other.z);
     }
 
-    public Vector2D subtract(int i) {
+    public Vector2D subtract(double i) {
         return new Vector2D(x - i, z - i);
     }
 
-    public Vector2D subtract(int ox, int oz) {
+    public Vector2D subtract(double ox, double oz) {
         return new Vector2D(x - ox, z - oz);
     }
 
     public Vector2D subtract(Vector2D other) {
         return new Vector2D(x - other.x, z - other.z);
+    }
+
+    public Vector2D multiply(double i) {
+        return new Vector2D(x * i, z * i);
+    }
+
+    public Vector2D multiply(double ox, double oz) {
+        return new Vector2D(x * ox, z * oz);
+    }
+
+    public Vector2D multiply(Vector2D other) {
+        return new Vector2D(x * other.x, z * other.z);
+    }
+
+    public Vector2D divide(double i) {
+        return new Vector2D(x / i, z / i);
+    }
+
+    public Vector2D divide(double ox, double oz) {
+        return new Vector2D(x / ox, z / oz);
+    }
+
+    public Vector2D divide(Vector2D other) {
+        return new Vector2D(x / other.x, z / other.z);
     }
 
     public Vector2D getMiddle(Vector2D other) {
@@ -71,7 +108,7 @@ public class Vector2D implements Iterable<Vector2D> {
         return new Vector2D(Math.abs(x), Math.abs(z));
     }
 
-    public int lengthSq() {
+    public double lengthSq() {
         return x * x + z * z;
     }
 
@@ -79,7 +116,7 @@ public class Vector2D implements Iterable<Vector2D> {
         return Math.sqrt(lengthSq());
     }
 
-    public int distanceSq(Vector2D other) {
+    public double distanceSq(Vector2D other) {
         return subtract(other).lengthSq();
     }
 
@@ -87,14 +124,19 @@ public class Vector2D implements Iterable<Vector2D> {
         return subtract(other).length();
     }
 
+    public Vector2D rotate90() {
+        return new Vector2D(-z, x);
+    }
+
+    public Vector2D normalize() {
+        return divide(length());
+    }
+
     public float toYaw() {
         double radians = Math.acos(z / length());
         float yaw = (float) (radians * 180.0 / Math.PI);
         if (x > 0) {
-            yaw += 180.0f;
-            if (z > 0) {
-                yaw += 90.0f;
-            }
+            yaw = 360.0f - yaw;
         }
         return yaw;
     }
@@ -103,7 +145,7 @@ public class Vector2D implements Iterable<Vector2D> {
         return new Vector(x, 0, z);
     }
 
-    public Vector to3D(int y) {
+    public Vector to3D(double y) {
         return new Vector(x, y, z);
     }
 
@@ -128,18 +170,29 @@ public class Vector2D implements Iterable<Vector2D> {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += x;
-        hash += z;
-        return 37 * hash + 1;
+        final int prime = 31;
+        int result = 1;
+        long temp;
+        temp = Double.doubleToLongBits(x);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        temp = Double.doubleToLongBits(z);
+        result = prime * result + (int) (temp ^ (temp >>> 32));
+        return result;
     }
-
 
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof Vector2D))
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
             return false;
         Vector2D other = (Vector2D) obj;
-        return (x == other.x && z == other.z);
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+            return false;
+        if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
+            return false;
+        return true;
     }
 }
