@@ -23,7 +23,8 @@ public class CommandArgs {
         for (String token : tokens) {
             if (token.isEmpty()) {
                 // Do nothing
-            } else if (token.charAt(0) == '-' && token.length() > 1) {
+            } else if (token.charAt(0) == '-' && token.length() > 1
+                    && Character.isLetter(token.charAt(1))) {
                 for (char flag : token.substring(1).toCharArray()) {
                     if (!allowedFlag.contains(flag)) {
                         throw new CommandUsageError(String.format(local.invalidFlag(), flag));
