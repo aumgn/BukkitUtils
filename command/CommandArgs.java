@@ -3,14 +3,14 @@ package fr.aumgn.bukkitutils.command;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import fr.aumgn.bukkitutils.command.exception.ArgNotAValidNumber;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
-public class CommandArgs {
+public class CommandArgs implements Iterable<String> {
 
     private Messages local;
     private Set<Character> flags;
@@ -54,6 +54,10 @@ public class CommandArgs {
         return flags.contains(character);
     }
 
+    public Iterable<Character> flags() {
+        return flags;
+    }
+
     public int length() {
         return args.length;
     }
@@ -66,7 +70,7 @@ public class CommandArgs {
         try {
             return Integer.parseInt(get(index));
         } catch (NumberFormatException exc) {
-            throw new ArgNotAValidNumber(
+            throw new CommandUsageError(
                     String.format(local.notAValidNumber(), index + 1));
         }
     }
@@ -75,7 +79,7 @@ public class CommandArgs {
         try {
             return Double.parseDouble(get(index));
         } catch (NumberFormatException exc) {
-            throw new ArgNotAValidNumber(
+            throw new CommandUsageError(
                     String.format(local.notAValidNumber(), index + 1));
         }
     }
@@ -96,5 +100,10 @@ public class CommandArgs {
 
     public List<String> asList(int index, int endIndex) {
         return asList().subList(index, endIndex);
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return asList().iterator();
     }
 }

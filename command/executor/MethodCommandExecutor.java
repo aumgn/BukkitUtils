@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -13,7 +14,6 @@ import org.bukkit.entity.Player;
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.CommandArgs;
 import fr.aumgn.bukkitutils.command.Commands;
-import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
@@ -45,45 +45,57 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
+        if (isPlayerCommand && !(sender instanceof Player)) {
+            sender.sendMessage(ChatColor.RED + local.playerOnly());
+            return true;
+        }
         try {
-            ensureHasValidSender(sender);
             CommandArgs args = new CommandArgs(local, rawArgs, flags, min, max);
             callCommand(lbl, sender, args);
-        } catch (CommandUsageError exc) {
-            sender.sendMessage(ChatColor.RED + exc.getMessage());
+        } catch (CommandUsageError error) {
+            sender.sendMessage(ChatColor.RED + error.getMessage());
             return false;
-        } catch (CommandError exc) {
-            sender.sendMessage(ChatColor.RED + exc.getMessage());
+        } catch (Throwable thr) {
+            sender.sendMessage(ChatColor.RED + thr.getMessage());
         }
         return true;
     }
 
-    private void ensureHasValidSender(CommandSender sender) {
-        if (isPlayerCommand && !(sender instanceof Player)) {
-            throw new CommandError(local.playerOnly());
-        }
-    }
-
-    private void callCommand(String name, CommandSender sender, CommandArgs args) {
+    private void callCommand(String name, CommandSender sender, CommandArgs args) throws Throwable {
         try {
             method.invoke(instance, sender, args);
-        } catch (IllegalArgumentException exc) {
-            unexpectedError(exc);
-        } catch (IllegalAccessException exc) {
-            unexpectedError(exc);
         } catch (InvocationTargetException exc) {
-            if (exc.getCause() instanceof CommandError) {
-                throw (CommandError) exc.getCause();
+            Throwable cause = exc.getCause();
+            if (cause instanceof CommandException) {
+                throw cause;
             }
-            if (exc.getCause() instanceof CommandUsageError) {
-                throw (CommandUsageError) exc.getCause();
-            }
-            throw new CommandException(exc.getCause());
+            unhandledError(name, args, cause);
+        } catch (IllegalArgumentException exc) {
+            unhandledError(name, args, exc);
+        } catch (IllegalAccessException exc) {
+            unhandledError(name, args, exc);
         }
     }
 
-    private void unexpectedError(Exception exc) {
-        throw new CommandError(local.unexpectedError() +
-                exc.getClass().getSimpleName() + ": " + exc.getMessage());
+    private void unhandledError(String name, CommandArgs args, Throwable exc) {
+        if (!(exc instanceof org.bukkit.command.CommandException)) {
+            Bukkit.getLogger().severe("Exception occured while executing \""+ name + "\"");
+            if (args.hasFlags()) {
+                StringBuilder flags = new StringBuilder();
+                for (char flag : args.flags()) {
+                    flags.append(flag);
+                }
+                Bukkit.getLogger().severe("Flags : " + flags.toString());
+            }
+            if (args.length() > 0) {
+                StringBuilder arguments = new StringBuilder();
+                for (String arg : args.asList()) {
+                    arguments.append(arg);
+                    arguments.append(" ");
+                }
+                Bukkit.getLogger().severe("Arguments : " + arguments.toString());
+            }
+        }
+        exc.printStackTrace();
     }
 }
