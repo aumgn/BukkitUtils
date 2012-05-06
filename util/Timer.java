@@ -93,7 +93,12 @@ public abstract class Timer implements Runnable {
     }
 
     public void resume() {
-        scheduleAndPrintTime(currentDelay - pauseDelay); 
+        int delay = currentDelay - pauseDelay;
+        if (delay > 0) {
+            scheduleAndPrintTime(delay);
+        } else {
+            runnable.run();
+        }
     }
 
     public abstract void sendTimeMessage(String string);
