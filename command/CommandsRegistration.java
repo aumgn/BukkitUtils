@@ -39,8 +39,14 @@ public class CommandsRegistration {
 
             PluginCommand command;
             if (subCommands) {
-                command = plugin.getCommand(subCmdsAnnotation.name() + " " + cmdAnnotation.name());
-                registerSubCommand(subCmdsAnnotation.name(), cmdAnnotation.name());
+                String[] nestedCmds = subCmdsAnnotation.name();
+                String cmd = nestedCmds[0];
+                for (int i = 1; i < nestedCmds.length; i++) {
+                    registerSubCommand(cmd, nestedCmds[i]);
+                    cmd = cmd + " " + nestedCmds[i];
+                }
+                registerSubCommand(cmd, cmdAnnotation.name());
+                command = plugin.getCommand(cmd + " " + cmdAnnotation.name());
             } else {
                 command = plugin.getCommand(cmdAnnotation.name());
             }

@@ -98,6 +98,10 @@ public class CommandArgs implements Iterable<String> {
         return Arrays.asList(args);
     }
 
+    public List<String> asList(int index) {
+        return asList(index, args.length);
+    }
+
     public List<String> asList(int index, int endIndex) {
         return asList().subList(index, endIndex);
     }
