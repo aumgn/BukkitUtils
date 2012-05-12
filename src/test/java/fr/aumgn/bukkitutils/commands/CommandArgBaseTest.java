@@ -160,4 +160,22 @@ public class CommandArgBaseTest {
         assertEquals("to", list2.get(0));
         assertEquals("test", list2.get(1));
     }
+
+    @Test
+    public void testAsSubListWithOutOfBoundIndex() {
+        Set<Character> expectedFlags = Collections.<Character>emptySet();
+        String[] tokens = { "args", "args2"};
+        CommandArgsBase args = new CommandArgsBase(
+                local, tokens, expectedFlags, 0, -1);
+        List<String> list1 = args.asList(-4, 1);
+        List<String> list2 = args.asList(0, 7);
+
+        assertEquals(2, list1.size());
+        assertEquals("args", list1.get(0));
+        assertEquals("args2", list1.get(1));
+
+        assertEquals(2, list2.size());
+        assertEquals("args", list2.get(0));
+        assertEquals("args2", list2.get(1));
+    }
 }

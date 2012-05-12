@@ -85,7 +85,9 @@ public class CommandArgsBase implements Iterable<String> {
     }
 
     public List<String> asList(int index, int endIndex) {
-        return asList().subList(index, endIndex + 1);
+        int startIndex = Math.max(0, index);
+        int actualEndIndex = Math.min(args.length, endIndex + 1);
+        return asList().subList(startIndex, actualEndIndex);
     }
 
     @Override
