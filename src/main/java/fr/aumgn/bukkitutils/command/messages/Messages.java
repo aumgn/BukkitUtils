@@ -35,4 +35,20 @@ public class Messages {
     public String unexpectedError() {
         return "An unexpected error ocurred while trying to execute command.";
     }
+
+    public String noSuchWorld() {
+        return "No such world (%s).";
+    }
+
+    public String noSuchPlayer() {
+        return "No such player (%s).";
+    }
+
+    public String noSuchMaterial() {
+        return "No such material (%s).";
+    }
+
+    public String invalidMaterialAndDataFormat() {
+        return "Invalide material and data format : %s.";
+    }
 }
