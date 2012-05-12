@@ -149,7 +149,7 @@ public class CommandArgBaseTest {
         String[] tokens = { "args", "to", "test" };
         CommandArgsBase args = new CommandArgsBase(
                 local, tokens, expectedFlags, 0, -1);
-        List<String> list1 = args.asList(0, 2);
+        List<String> list1 = args.asList(0, 1);
         List<String> list2 = args.asList(1);
 
         assertEquals(2, list1.size());

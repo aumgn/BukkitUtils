@@ -81,11 +81,11 @@ public class CommandArgsBase implements Iterable<String> {
     }
 
     public List<String> asList(int index) {
-        return asList(index, args.length);
+        return asList(index, args.length - 1);
     }
 
     public List<String> asList(int index, int endIndex) {
-        return asList().subList(index, endIndex);
+        return asList().subList(index, endIndex + 1);
     }
 
     @Override
