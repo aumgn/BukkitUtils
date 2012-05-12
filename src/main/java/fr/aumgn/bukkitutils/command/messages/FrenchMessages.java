@@ -35,4 +35,21 @@ public class FrenchMessages extends Messages {
     public String unexpectedError() {
         return "Une erreur innatendue est apparue durant l'execution de le commande.";
     }
+
+    public String noSuchWorld() {
+        return "Le monde (%s) n'existe pas.";
+    }
+
+    public String noSuchPlayer() {
+        return "Le joueur (%s) n'existe pas.";
+    }
+
+    public String noSuchMaterial() {
+        return "Le materiel (%s) n'existe pas.";
+    }
+
+    public String invalidMaterialAndDataFormat() {
+        return "Le format de %s est invalide <materiel:data>.";
+    }
+
 }

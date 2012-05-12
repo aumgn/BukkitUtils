@@ -49,6 +49,6 @@ public class Messages {
     }
 
     public String invalidMaterialAndDataFormat() {
-        return "Invalide material and data format : %s.";
+        return "Invalid material and data format : %s.";
     }
 }
