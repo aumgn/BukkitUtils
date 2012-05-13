@@ -2,7 +2,7 @@ package fr.aumgn.bukkitutils.timer;
 
 public class TimerConfig {
 
-    public final static TimerConfig DEFAULT = new TimerConfig(
+    public static final TimerConfig DEFAULT = new TimerConfig(
             2 * 60, 20, "%02d:%02d");
 
     private int majorDuration;

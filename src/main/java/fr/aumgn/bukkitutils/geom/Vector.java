@@ -241,36 +241,40 @@ public class Vector implements Iterable<Vector> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (!(obj instanceof Vector)) {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        }
+
         Vector other = (Vector) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)
+                || Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)
+                || Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) {
             return false;
-        if (Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y))
-            return false;
-        if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-            return false;
+        }
+
         return true;
     }
 
     public boolean equalsBlock(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (!(obj instanceof Vector)) {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        }
+
         Vector other = (Vector) obj;
-        if (getBlockX() != other.getBlockX())
+        if (getBlockX() != other.getBlockX()
+                || getBlockY() != other.getBlockY()
+                || getBlockZ() != other.getBlockZ()) {
             return false;
-        if (getBlockY() != other.getBlockY())
-            return false;
-        if (getBlockZ() != other.getBlockZ())
-            return false;
+        }
+
         return true;
     }
 }

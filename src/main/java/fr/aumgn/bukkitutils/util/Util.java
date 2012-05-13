@@ -12,13 +12,13 @@ import org.bukkit.event.Event;
 
 public final class Util {
 
-    private static final Random random = new Random();
+    private static final Random RANDOM = new Random();
 
     private Util() {
     }
 
     public static Random getRandom() {
-        return random;
+        return RANDOM;
     }
 
     public static <T> T pickRandom(List<T> from) {

@@ -31,27 +31,33 @@ public class GConfLoader {
         return Charset.defaultCharset();
     }
 
-    public <T> T loadOrCreate(String filename, Class<T> klass) throws GConfLoadException {
+    public <T> T loadOrCreate(String filename, Class<T> klass)
+            throws GConfLoadException {
+
         try {
             File folder = plugin.getDataFolder();
-            if (!folder.exists()) {
-                folder.mkdirs();
+            if (!folder.exists() && !folder.mkdirs()) {
+                throw new GConfLoadException(
+                        "Impossible de créer le dossier :" + folder.getPath());
             }
-        
+
             File file = new File(plugin.getDataFolder(), "config.json");
             T config;
-            if (file.exists()) {
-                config = load(file, klass);
-            } else {
-                file.createNewFile();
+            if (file.createNewFile()) {
                 config = klass.newInstance();
+            } else {
+                config = load(file, klass);
             }
 
             // This ensures user file is updated with newer fields. 
             write(file, config);
 
             return config;
-        } catch (Exception exc) {
+        } catch (IOException exc) {
+            throw new GConfLoadException(exc);
+        } catch (InstantiationException exc) {
+            throw new GConfLoadException(exc);
+        } catch (IllegalAccessException exc) {
             throw new GConfLoadException(exc);
         }
     }
@@ -60,6 +66,7 @@ public class GConfLoader {
         InputStreamReader isr = new InputStreamReader(
                 new FileInputStream(file), charset());
         JsonReader reader = new JsonReader(isr);
+
         try {
             return gson.fromJson(reader, klass);
         } finally {
@@ -71,6 +78,7 @@ public class GConfLoader {
         OutputStreamWriter osw = new OutputStreamWriter(
                 new FileOutputStream(file), charset());
         BufferedWriter writer = new BufferedWriter(osw);
+
         try {
             writer.write(gson.toJson(object));
         } finally {

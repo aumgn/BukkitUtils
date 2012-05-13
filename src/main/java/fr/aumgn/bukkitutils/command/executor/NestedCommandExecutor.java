@@ -20,11 +20,16 @@ public class NestedCommandExecutor implements CommandExecutor {
         this.plugin = plugin;
         this.name = name;
         this.subCommands = new HashSet<String>();
+        this.defaultExecutor = null;
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (args.length == 0) {
+            if (defaultExecutor == null) {
+                return false;
+            }
+
             return defaultExecutor.onCommand(sender, cmd, label, args);
         }
 

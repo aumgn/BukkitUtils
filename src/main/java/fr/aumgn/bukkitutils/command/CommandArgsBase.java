@@ -16,34 +16,58 @@ public class CommandArgsBase implements Iterable<String> {
     private Set<Character> flags;
     private String[] args;
 
-    public CommandArgsBase(Messages local, String[] tokens, Set<Character> allowedFlag, int min, int max) {
+    public CommandArgsBase(Messages local, String[] tokens, Set<Character> allowedFlags, int min, int max) {
         this.local = local;
+        parse(tokens);
+        validate(allowedFlags, min, max);
+    }
+
+    private void parse(String[] tokens) {
         flags = new HashSet<Character>();
-        List<String> argsList = new ArrayList<String>(tokens.length);
+        ArrayList<String> argsList = new ArrayList<String>();
         for (String token : tokens) {
             if (token.isEmpty()) {
-                // Do nothing
-            } else if (token.charAt(0) == '-' && token.length() > 1
+                continue;
+            }
+
+            if (token.charAt(0) == '-' && token.length() > 1
                     && Character.isLetter(token.charAt(1))) {
-                for (char flag : token.substring(1).toCharArray()) {
-                    if (!allowedFlag.contains(flag)) {
-                        throw new CommandUsageError(String.format(local.invalidFlag(), flag));
-                    }
-                    flags.add(flag);
-                }
+                parseFlags(token.substring(1));
             } else {
                 argsList.add(token);
             }
         }
-        if (argsList.size() < min) {
+
+        args = argsList.toArray(new String[argsList.size()]);
+    }
+
+    private void parseFlags(String flagsString) {
+        for (char flag : flagsString.toCharArray()) {
+            flags.add(flag);
+        }
+    }
+
+    private void validate(Set<Character> allowedFlags, int min, int max) {
+        StringBuilder invalidFlags = new StringBuilder();
+        for (char flag : flags) {
+            if (!allowedFlags.contains(flag)) {
+                invalidFlags.append(flag);
+            }
+        }
+
+        if (invalidFlags.toString().length() > 0) {
+            throw new CommandUsageError(
+                    String.format(local.invalidFlag(), invalidFlags.toString()));
+        }
+
+        if (args.length < min) {
             throw new CommandUsageError(String.format(local.missingArguments(),
-                    argsList.size(), min));
+                    args.length, min));
         }
-        if (max != -1 && argsList.size() > max) {
+        if (max != -1 && args.length > max) {
             throw new CommandUsageError(String.format(local.tooManyArguments(),
-                    argsList.size(), max));
+                    args.length, max));
         }
-        args = argsList.toArray(new String[0]);
     }
 
     public boolean hasFlags() {

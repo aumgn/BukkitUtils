@@ -198,32 +198,38 @@ public class Vector2D implements Iterable<Vector2D> {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (!(obj instanceof Vector2D)) {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        }
+
         Vector2D other = (Vector2D) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)
+                || Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) {
             return false;
-        if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
-            return false;
+        }
+
         return true;
     }
 
     public boolean equalsBlock(Object obj) {
-        if (this == obj)
+        if (this == obj) {
             return true;
-        if (obj == null)
+        }
+
+        if (!(obj instanceof Vector2D)) {
             return false;
-        if (getClass() != obj.getClass())
-            return false;
+        }
+
         Vector2D other = (Vector2D) obj;
-        if (getBlockX() != other.getBlockX())
+        if (getBlockX() != other.getBlockX()
+                || getBlockZ() != other.getBlockZ()) {
             return false;
-        if (getBlockZ() != other.getBlockZ())
-            return false;
+        }
+
         return true;
     }
 }

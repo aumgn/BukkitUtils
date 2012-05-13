@@ -48,7 +48,7 @@ public abstract class Timer implements Runnable {
         currentDelay = delay;
         taskStartTime = getCurrentTimeSeconds();
         taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(
-                plugin, this, delay * TICKS_PER_SECONDS);
+                plugin, this, (long) delay * TICKS_PER_SECONDS);
     }
 
     private ChatColor getCurrentColor() {

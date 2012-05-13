@@ -17,7 +17,7 @@ public class FrenchMessages extends Messages {
     }
 
     public String invalidFlag() {
-        return ChatColor.RED + "Flag invalide : %c.";
+        return ChatColor.RED + "Flag(s) invalide(s) : %s.";
     }
 
     public String missingArguments() {

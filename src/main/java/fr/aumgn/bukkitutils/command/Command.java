@@ -9,11 +9,11 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Command {
 
-    public String name();
+    String name();
 
-    public int min() default 0;
+    int min() default 0;
 
-    public int max() default 0;
+    int max() default 0;
 
-    public String flags() default "";
+    String flags() default "";
 }

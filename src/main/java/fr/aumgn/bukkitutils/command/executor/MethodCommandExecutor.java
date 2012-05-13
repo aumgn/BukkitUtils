@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -81,11 +82,11 @@ public class MethodCommandExecutor implements CommandExecutor {
         if (!(exc instanceof org.bukkit.command.CommandException)) {
             Bukkit.getLogger().severe("Exception occured while executing \""+ name + "\"");
             if (args.hasFlags()) {
-                StringBuilder flags = new StringBuilder();
+                StringBuilder flagsString = new StringBuilder();
                 for (char flag : args.flags()) {
-                    flags.append(flag);
+                    flagsString.append(flag);
                 }
-                Bukkit.getLogger().severe("Flags : " + flags.toString());
+                Bukkit.getLogger().severe("Flags : " + flagsString.toString());
             }
             if (args.length() > 0) {
                 StringBuilder arguments = new StringBuilder();
@@ -96,6 +97,6 @@ public class MethodCommandExecutor implements CommandExecutor {
                 Bukkit.getLogger().severe("Arguments : " + arguments.toString());
             }
         }
-        exc.printStackTrace();
+        Bukkit.getLogger().log(Level.SEVERE, "Exception : ", exc);
     }
 }

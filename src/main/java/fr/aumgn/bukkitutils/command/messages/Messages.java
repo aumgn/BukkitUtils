@@ -17,7 +17,7 @@ public class Messages {
     }
 
     public String invalidFlag() {
-        return "Invalid Flag : %c";
+        return "Invalid Flag(s) : %s";
     }
 
     public String missingArguments() {

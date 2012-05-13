@@ -65,8 +65,7 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public OfflinePlayer getOfflinePlayer(int index) {
-        OfflinePlayer player = Bukkit.getOfflinePlayer(get(index));
-        return player;
+        return Bukkit.getOfflinePlayer(get(index));
     }
 
     public List<OfflinePlayer> getOfflinePlayers(int index) {

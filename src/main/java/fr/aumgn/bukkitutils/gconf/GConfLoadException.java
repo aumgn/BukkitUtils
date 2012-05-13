@@ -7,4 +7,8 @@ public class GConfLoadException extends Exception {
     public GConfLoadException(Throwable throwable) {
         super(throwable);
     }
+
+    public GConfLoadException(String message) {
+        super(message);
+    }
 }
