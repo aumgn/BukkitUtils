@@ -16,8 +16,8 @@ import com.google.gson.stream.JsonReader;
 
 public class GConfLoader {
 
-    private Gson gson;
-    private Plugin plugin;
+    private final Gson gson;
+    private final Plugin plugin;
 
     public GConfLoader(Gson gson, Plugin plugin) {
         this.gson = gson;

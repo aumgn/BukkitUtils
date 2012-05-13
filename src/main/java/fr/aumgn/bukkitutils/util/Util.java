@@ -12,7 +12,7 @@ import org.bukkit.event.Event;
 
 public final class Util {
 
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     private Util() {
     }

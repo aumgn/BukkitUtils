@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.util;
+package fr.aumgn.bukkitutils.geom;
 
 import java.util.Iterator;
 
@@ -84,6 +84,18 @@ public class Vector implements Iterable<Vector> {
         return new Vector(x + other.x, y + other.y, z + other.z);
     }
 
+    public Vector addX(double ox) {
+        return new Vector(x + ox, y, z);
+    }
+
+    public Vector addY(double oy) {
+        return new Vector(x, y + oy, z);
+    }
+
+    public Vector addZ(double oz) {
+        return new Vector(x, y, z + oz);
+    }
+
     public Vector subtract(double i) {
         return new Vector(x - i, y - i, z - i);
     }
@@ -94,6 +106,18 @@ public class Vector implements Iterable<Vector> {
 
     public Vector subtract(Vector other) {
         return new Vector(x - other.x, y - other.y, z - other.z);
+    }
+
+    public Vector subtractX(double ox) {
+        return new Vector(x - ox, y, z);
+    }
+
+    public Vector subtractY(double oy) {
+        return new Vector(x, y - oy, z);
+    }
+
+    public Vector subtractZ(double oz) {
+        return new Vector(x, y, z - oz);
     }
 
     public Vector multiply(double i) {

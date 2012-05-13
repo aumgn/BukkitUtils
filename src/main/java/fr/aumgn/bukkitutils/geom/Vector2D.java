@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.util;
+package fr.aumgn.bukkitutils.geom;
 
 import java.util.Iterator;
 
@@ -57,6 +57,14 @@ public class Vector2D implements Iterable<Vector2D> {
         return new Vector2D(x + other.x, z + other.z);
     }
 
+    public Vector2D addX(double ox) {
+        return new Vector2D(x + ox, z);
+    }
+
+    public Vector2D addZ(double oz) {
+        return new Vector2D(x, z + oz);
+    }
+
     public Vector2D subtract(double i) {
         return new Vector2D(x - i, z - i);
     }
@@ -67,6 +75,14 @@ public class Vector2D implements Iterable<Vector2D> {
 
     public Vector2D subtract(Vector2D other) {
         return new Vector2D(x - other.x, z - other.z);
+    }
+
+    public Vector2D subtractX(double ox) {
+        return new Vector2D(x - ox, z);
+    }
+
+    public Vector2D subtractZ(double oz) {
+        return new Vector2D(x, z - oz);
     }
 
     public Vector2D multiply(double i) {
@@ -192,6 +208,21 @@ public class Vector2D implements Iterable<Vector2D> {
         if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x))
             return false;
         if (Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z))
+            return false;
+        return true;
+    }
+
+    public boolean equalsBlock(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Vector2D other = (Vector2D) obj;
+        if (getBlockX() != other.getBlockX())
+            return false;
+        if (getBlockZ() != other.getBlockZ())
             return false;
         return true;
     }

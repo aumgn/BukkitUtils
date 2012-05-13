@@ -7,6 +7,7 @@ public class Random extends java.util.Random {
         if (min < max) {
             return min + nextInt(max - min);
         }
+
         return min;
     }
 
@@ -18,6 +19,7 @@ public class Random extends java.util.Random {
         if (min < max) {
             return min + nextDouble(max - min);
         }
+
         return min;
     }
 }
