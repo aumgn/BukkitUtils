@@ -2,6 +2,9 @@ package fr.aumgn.bukkitutils.util;
 
 public class TimerConfig {
 
+    public final static TimerConfig DEFAULT = new TimerConfig(
+            2 * 60, 20, "%02d:%02d");
+
     private int majorDuration;
     private int minorDuration;
     private String format;
