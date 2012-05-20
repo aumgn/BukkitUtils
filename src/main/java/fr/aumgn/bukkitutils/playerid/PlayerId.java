@@ -1,6 +1,7 @@
 package fr.aumgn.bukkitutils.playerid;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -17,11 +18,12 @@ public final class PlayerId {
     }
 
     public static PlayerId get(String name) {
-        if (!accounts.containsKey(name)) {
-            accounts.put(name, new PlayerId(name));
+        String lname = name.toLowerCase(Locale.ENGLISH);
+        if (!accounts.containsKey(lname)) {
+            accounts.put(lname, new PlayerId(lname));
         }
 
-        return accounts.get(name);
+        return accounts.get(lname);
     }
 
     private final String name;
@@ -56,7 +58,7 @@ public final class PlayerId {
             return false;
         }
 
-        return name.equalsIgnoreCase(((PlayerId) other).name);
+        return name.equals(((PlayerId) other).name);
     }
 
     @Override
