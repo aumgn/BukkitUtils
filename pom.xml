@@ -5,10 +5,15 @@
 	<groupId>fr.aumgn</groupId>
 	<artifactId>bukkitutils</artifactId>
 	<version>0.2.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
 
 	<name>BukkitUtils</name>
 	<description>Set of bukkit utilities</description>
 	<url>https://github.com/aumgn/BukkitUtils</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
 
 	<licenses>
 		<license>
@@ -18,10 +23,6 @@
 			<comments>A liberal open source license</comments>
 		</license>
 	</licenses>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<repositories>
 		<repository>
@@ -36,19 +37,14 @@
 			<artifactId>bukkit</artifactId>
 			<version>1.2.5-R0.1</version>
 		</dependency>
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.1</version>
-		</dependency>
 
+		<!-- Tests -->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit-dep</artifactId>
 			<version>4.10</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
@@ -56,29 +52,28 @@
 		</dependency>
 	</dependencies>
 
+	<modules>
+		<module>mockbukkit</module>
+		<module>core</module>
+        <module>playerid</module>
+		<module>command</module>
+		<module>gconf</module>
+	</modules>
+
 	<build>
-
-		<defaultGoal>clean install</defaultGoal>
-		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-		<finalName>${project.name}-${project.version}</finalName>
-
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.3.2</version>
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.3.2</version>
-			</plugin>
-		</plugins>
-
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<configuration>
+						<source>1.6</source>
+						<target>1.6</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
 	</build>
+
 
 </project>

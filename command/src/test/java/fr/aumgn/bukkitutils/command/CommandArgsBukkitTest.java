@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.commands;
+package fr.aumgn.bukkitutils.command;
 
 import java.util.List;
 

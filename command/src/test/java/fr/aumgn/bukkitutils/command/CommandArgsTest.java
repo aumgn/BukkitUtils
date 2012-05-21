@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.commands;
+package fr.aumgn.bukkitutils.command;
 
 import org.bukkit.Material;
 import org.junit.Test;
