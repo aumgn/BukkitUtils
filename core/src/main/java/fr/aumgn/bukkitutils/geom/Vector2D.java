@@ -2,6 +2,8 @@ package fr.aumgn.bukkitutils.geom;
 
 import java.util.Iterator;
 
+import org.bukkit.World;
+
 public class Vector2D implements Iterable<Vector2D> {
 
     private final double x, z;
@@ -163,6 +165,12 @@ public class Vector2D implements Iterable<Vector2D> {
 
     public Vector to3D(double y) {
         return new Vector(x, y, z);
+    }
+
+    public Vector toHighest(World world) {
+        int y = world.getHighestBlockYAt(
+                getBlockX(), getBlockZ());
+        return to3D(y);
     }
 
     @Override
