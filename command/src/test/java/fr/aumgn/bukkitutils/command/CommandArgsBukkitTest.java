@@ -40,6 +40,15 @@ public class CommandArgsBukkitTest {
     }
 
     @Test
+    public void testMatchAllPlayers() {
+        MockBukkit.mockPlayer("Player2");
+        MockBukkit.mockPlayer("Player3");
+        CommandArgs args = CommandArgsUtil.parse("*");
+
+        assertEquals(3, args.getPlayers(0).size());
+    }
+
+    @Test
     public void testMatchPlayer() {
         CommandArgs args = CommandArgsUtil.parse("Pla", "pl");
 

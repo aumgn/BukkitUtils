@@ -1,5 +1,6 @@
 package fr.aumgn.bukkitutils.command;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -102,7 +103,12 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public List<Player> getPlayers(int index) {
-        return Util.matchPlayer(get(index));
+        String arg = get(index);
+
+        if (arg.equals("*")) {
+            return Arrays.asList(Bukkit.getOnlinePlayers());
+        }
+        return Util.matchPlayer(arg);
     }
 
     public OfflinePlayer getOfflinePlayer(int index) {
