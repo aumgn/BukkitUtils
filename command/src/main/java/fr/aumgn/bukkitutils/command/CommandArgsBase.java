@@ -90,7 +90,13 @@ public class CommandArgsBase implements Iterable<String> {
         return args[index];
     }
 
-    public String get(int index, int endIndex) {
+    public String get(int index, int rawEndIndex) {
+        int endIndex;
+        if (rawEndIndex > -1) {
+            endIndex = rawEndIndex;
+        } else {
+            endIndex = args.length - 1;
+        }
         StringBuilder builder = new StringBuilder();
         for (int i = index; i < endIndex; i++) {
             builder.append(args[i]);

@@ -15,17 +15,18 @@ import fr.aumgn.bukkitutils.command.messages.Messages;
 public class CommandArgBaseTest {
 
     private Messages local;
+    private Set<Character> emptyExpectedFlags;
 
     public CommandArgBaseTest() {
         this.local = new Messages();
+        this.emptyExpectedFlags = Collections.<Character>emptySet();
     }
 
     @Test
-    public void testRemoveEmptyWhitespace() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
+    public void testRemoveEmptyArgs() {
         String[] tokens = { "", "arg1", "", "arg2", "" };
         CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+                local, tokens, emptyExpectedFlags, 0, -1);
 
         assertEquals(2, args.length());
         assertEquals("arg1", args.get(0));
@@ -34,26 +35,23 @@ public class CommandArgBaseTest {
 
     @Test(expected = CommandUsageError.class)
     public void testArgsMinLength() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
         String[] tokens = {};
         new CommandArgsBase(
-                local, tokens, expectedFlags, 1, 1);
+                local, tokens, emptyExpectedFlags, 1, 1);
     }
 
     @Test(expected = CommandUsageError.class)
     public void testArgsMaxLength() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
         String[] tokens = { "args1", "args2" };
         new CommandArgsBase(
-                local, tokens, expectedFlags, 1, 1);
+                local, tokens, emptyExpectedFlags, 1, 1);
     }
 
     @Test
     public void testUnrestrictedArgsMaxLength() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
         String[] tokens = { "args" };
         CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+                local, tokens, emptyExpectedFlags, 0, -1);
 
         int size = 16;
         String[] tokens2 = new String[size];
@@ -61,7 +59,7 @@ public class CommandArgBaseTest {
             tokens2[i] = "args" + (i + 1);
         }
         CommandArgsBase args2 = new CommandArgsBase(
-                local, tokens2, expectedFlags, 0, -1);
+                local, tokens2, emptyExpectedFlags, 0, -1);
 
         assertEquals(1, args.length());
         assertEquals(size, args2.length());
@@ -119,10 +117,9 @@ public class CommandArgBaseTest {
 
     @Test
     public void testArgsJoin() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
         String[] tokens = { "args", "to", "test" };
         CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+                local, tokens, emptyExpectedFlags, 0, -1);
 
         assertEquals("args to", args.get(0, 1));
         assertEquals("to test", args.get(1, 2));
@@ -130,11 +127,20 @@ public class CommandArgBaseTest {
     }
 
     @Test
-    public void testAsList() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
+    public void testArgsJoinWithNegativeOne() {
         String[] tokens = { "args", "to", "test" };
         CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+                local, tokens, emptyExpectedFlags, 0, -1);
+
+        assertEquals("args to test", args.get(0, -1));
+        assertEquals("to test", args.get(1, -1));
+    }
+
+    @Test
+    public void testAsList() {
+        String[] tokens = { "args", "to", "test" };
+        CommandArgsBase args = new CommandArgsBase(
+                local, tokens, emptyExpectedFlags, 0, -1);
         List<String> list = args.asList();
 
         assertEquals(3, list.size());
@@ -145,10 +151,9 @@ public class CommandArgBaseTest {
 
     @Test
     public void testAsSubList() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
         String[] tokens = { "args", "to", "test" };
         CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+                local, tokens, emptyExpectedFlags, 0, -1);
         List<String> list1 = args.asList(0, 1);
         List<String> list2 = args.asList(1);
 
@@ -163,10 +168,9 @@ public class CommandArgBaseTest {
 
     @Test
     public void testAsSubListWithOutOfBoundIndex() {
-        Set<Character> expectedFlags = Collections.<Character>emptySet();
         String[] tokens = { "args", "args2"};
         CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+                local, tokens, emptyExpectedFlags, 0, -1);
         List<String> list1 = args.asList(-4, 1);
         List<String> list2 = args.asList(0, 7);
 
