@@ -23,10 +23,6 @@ public class CommandArgsBukkitTest {
     public void setUp() {
         MockBukkit.setUp();
         player = MockBukkit.mockPlayer("Player");
-        MockBukkit.mockPlayer("Player2");
-        MockBukkit.mockPlayer("Player3");
-        MockBukkit.mockPlayer("Intruder");
-
         world = MockBukkit.mockWorld("world");
     }
 
@@ -53,6 +49,9 @@ public class CommandArgsBukkitTest {
 
     @Test
     public void testMatchPlayers() {
+        MockBukkit.mockPlayer("Player2");
+        MockBukkit.mockPlayer("Player3");
+        MockBukkit.mockPlayer("Intruder");
         CommandArgs args = CommandArgsUtil.parse("Pla");
         List<Player> players = args.getPlayers(0);
 
