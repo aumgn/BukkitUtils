@@ -41,7 +41,7 @@ public class GConfLoader {
                         "Impossible de créer le dossier :" + folder.getPath());
             }
 
-            File file = new File(plugin.getDataFolder(), "config.json");
+            File file = new File(plugin.getDataFolder(), filename);
             T config;
             if (file.createNewFile()) {
                 config = klass.newInstance();
