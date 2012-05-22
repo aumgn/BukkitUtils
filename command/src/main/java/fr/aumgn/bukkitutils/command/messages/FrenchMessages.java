@@ -52,4 +52,7 @@ public class FrenchMessages extends Messages {
         return "Le format de %s est invalide <materiel:data>.";
     }
 
+    public String notAValidVectorComponent() {
+        return "Composant de vecteur invalide : %s.";
+    }
 }

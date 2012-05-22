@@ -8,6 +8,8 @@ import fr.aumgn.bukkitutils.command.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
+import fr.aumgn.bukkitutils.geom.Vector;
+import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.util.MaterialAndData;
 
 public class CommandArgsTest {
@@ -38,6 +40,40 @@ public class CommandArgsTest {
         CommandArgs args = CommandArgsUtil.parse("arg1", "args2");
 
         args.getDouble(1);
+    }
+
+    @Test
+    public void testGetVector() {
+        CommandArgs args1 = CommandArgsUtil.parse("1");
+        CommandArgs args2 = CommandArgsUtil.parse("1,2");
+        CommandArgs args3 = CommandArgsUtil.parse("1,2,3");
+
+        assertEquals(new Vector(1, 0, 0), args1.getVector(0));
+        assertEquals(new Vector(1, 2, 0), args2.getVector(0));
+        assertEquals(new Vector(1, 2, 3), args3.getVector(0));
+    }
+
+    @Test(expected = CommandUsageError.class)
+    public void testInvalidVectorComponent() {
+        CommandArgs args = CommandArgsUtil.parse("1,invalid,4");
+
+        args.getVector(0);
+    }
+
+    @Test
+    public void testGetVector2D() {
+        CommandArgs args1 = CommandArgsUtil.parse("1");
+        CommandArgs args2 = CommandArgsUtil.parse("1,2");
+
+        assertEquals(new Vector2D(1, 0), args1.getVector2D(0));
+        assertEquals(new Vector2D(1, 2), args2.getVector2D(0));
+    }
+
+    @Test(expected = CommandUsageError.class)
+    public void testInvalidVector2DComponent() {
+        CommandArgs args = CommandArgsUtil.parse("1,invalid");
+
+        args.getVector2D(0);
     }
 
     @Test

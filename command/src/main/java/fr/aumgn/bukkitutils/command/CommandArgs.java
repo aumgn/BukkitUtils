@@ -15,6 +15,8 @@ import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPlayer;
 import fr.aumgn.bukkitutils.command.exception.NoSuchWorld;
 import fr.aumgn.bukkitutils.command.messages.Messages;
+import fr.aumgn.bukkitutils.geom.Vector;
+import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.util.MaterialAndData;
 import fr.aumgn.bukkitutils.util.Util;
 
@@ -39,6 +41,45 @@ public class CommandArgs extends CommandArgsBase {
         } catch (NumberFormatException exc) {
             throw new CommandUsageError(
                     String.format(local.notAValidNumber(), index + 1));
+        }
+    }
+
+    public Vector getVector(int i) {
+        String arg = get(i);
+        String[] splitted = arg.split(",");
+
+        double x = parseVectorComponent(splitted[0]);
+        double y = 0.0;
+        double z = 0.0;
+        if (splitted.length > 1) {
+            y = parseVectorComponent(splitted[1]);
+            if (splitted.length > 2) {
+                z = parseVectorComponent(splitted[2]);
+            }
+        }
+
+        return new Vector(x, y, z);
+    }
+
+    public Vector2D getVector2D(int i) {
+        String arg = get(i);
+        String[] splitted = arg.split(",");
+
+        double x = parseVectorComponent(splitted[0]);
+        double z = 0.0;
+        if (splitted.length > 1) {
+            z = parseVectorComponent(splitted[1]);
+        }
+
+        return new Vector2D(x,z);
+    }
+
+    private double parseVectorComponent(String component) {
+        try {
+            return Double.parseDouble(component);
+        } catch (NumberFormatException exc) {
+            throw new CommandUsageError(
+                    String.format(local.notAValidVectorComponent(), component));
         }
     }
 

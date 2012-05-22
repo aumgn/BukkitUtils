@@ -51,4 +51,8 @@ public class Messages {
     public String invalidMaterialAndDataFormat() {
         return "Invalid material and data format : %s.";
     }
+
+    public String notAValidVectorComponent() {
+        return "Invalid vector component : %s.";
+    }
 }
