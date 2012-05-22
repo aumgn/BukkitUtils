@@ -44,13 +44,13 @@ public class CommandArgsTest {
 
     @Test
     public void testGetVector() {
-        CommandArgs args1 = CommandArgsUtil.parse("1");
-        CommandArgs args2 = CommandArgsUtil.parse("1,2");
-        CommandArgs args3 = CommandArgsUtil.parse("1,2,3");
+        CommandArgs args1 = CommandArgsUtil.parse("1.0");
+        CommandArgs args2 = CommandArgsUtil.parse("1,2.0");
+        CommandArgs args3 = CommandArgsUtil.parse("1,2,3.3");
 
         assertEquals(new Vector(1, 0, 0), args1.getVector(0));
         assertEquals(new Vector(1, 2, 0), args2.getVector(0));
-        assertEquals(new Vector(1, 2, 3), args3.getVector(0));
+        assertEquals(new Vector(1, 2, 3.3), args3.getVector(0));
     }
 
     @Test(expected = CommandUsageError.class)
@@ -63,10 +63,10 @@ public class CommandArgsTest {
     @Test
     public void testGetVector2D() {
         CommandArgs args1 = CommandArgsUtil.parse("1");
-        CommandArgs args2 = CommandArgsUtil.parse("1,2");
+        CommandArgs args2 = CommandArgsUtil.parse("1,2.5");
 
         assertEquals(new Vector2D(1, 0), args1.getVector2D(0));
-        assertEquals(new Vector2D(1, 2), args2.getVector2D(0));
+        assertEquals(new Vector2D(1, 2.5), args2.getVector2D(0));
     }
 
     @Test(expected = CommandUsageError.class)
