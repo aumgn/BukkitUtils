@@ -164,6 +164,10 @@ public class Vector2D implements Iterable<Vector2D> {
         return new Vector2DDirection(this);
     }
 
+    public Direction toDirection(Vector2D to) {
+        return to.subtract(this).toDirection();
+    }
+
     public Vector to3D() {
         return new Vector(x, 0, z);
     }

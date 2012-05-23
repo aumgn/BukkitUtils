@@ -203,6 +203,10 @@ public class Vector implements Iterable<Vector> {
         return new VectorDirection(this);
     }
 
+    public Direction toDirection(Vector to) {
+        return to.subtract(this).toDirection();
+    }
+
     public Location toLocation(World world) {
         return toLocation(world, 0.0f, 0.0f);
     }
