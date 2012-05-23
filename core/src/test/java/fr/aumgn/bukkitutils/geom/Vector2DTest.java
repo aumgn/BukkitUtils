@@ -3,6 +3,8 @@ package fr.aumgn.bukkitutils.geom;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import static fr.aumgn.bukkitutils.geom.VectorUtils.*;
+
 public class Vector2DTest {
 
     @Test
@@ -62,5 +64,12 @@ public class Vector2DTest {
                 vector1.distanceSq(vector2),
                 vector1.subtract(vector2).lengthSq(),
                 0);
+    }
+
+    @Test
+    public void testNormalize() {
+        Vector2D vec1 = new Vector2D(1, 1).normalize();
+
+        assertEquals(new Vector2D(0.707, 0.707), vec1, 0.001);
     }
 }

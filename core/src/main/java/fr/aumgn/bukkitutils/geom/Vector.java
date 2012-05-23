@@ -6,6 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 
+import fr.aumgn.bukkitutils.geom.direction.VectorDirection;
+
 public class Vector implements Iterable<Vector> {
 
     private final double x, y, z;
@@ -157,6 +159,10 @@ public class Vector implements Iterable<Vector> {
                 && z >= min.z && z <= max.z;
     }
 
+    public boolean isZero() {
+        return x == 0.0 && y == 0.0 && z == 0;
+    }
+
     public Vector positive() {
         return new Vector(Math.abs(x), Math.abs(y), Math.abs(z));
     }
@@ -189,16 +195,24 @@ public class Vector implements Iterable<Vector> {
         return world.getBlockAt(getBlockX(), getBlockY(), getBlockZ());
     }
 
+    public Direction toDirection() {
+        if (isZero()) {
+            return Direction.NONE;
+        }
+
+        return new VectorDirection(this);
+    }
+
     public Location toLocation(World world) {
         return toLocation(world, 0.0f, 0.0f);
     }
 
     public Location toLocation(World world, Vector2D direction) {
-        return toLocation(world, direction.toYaw());
+        return toLocation(world, direction.toDirection());
     }
 
-    public Location toLocation(World world, float yaw) {
-        return toLocation(world, yaw, 0.0f);
+    public Location toLocation(World world, Direction dir) {
+        return toLocation(world, dir.getYaw(), dir.getPitch());
     }
 
     public Location toLocation(World world, float yaw, float pitch) {

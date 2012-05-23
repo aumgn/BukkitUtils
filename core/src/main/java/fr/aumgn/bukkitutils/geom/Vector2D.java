@@ -4,6 +4,8 @@ import java.util.Iterator;
 
 import org.bukkit.World;
 
+import fr.aumgn.bukkitutils.geom.direction.Vector2DDirection;
+
 public class Vector2D implements Iterable<Vector2D> {
 
     private final double x, z;
@@ -122,6 +124,10 @@ public class Vector2D implements Iterable<Vector2D> {
                 && z >= min.z && z <= max.z;
     }
 
+    public boolean isZero() {
+        return x == 0.0 && z == 0;
+    }
+
     public Vector2D positive() {
         return new Vector2D(Math.abs(x), Math.abs(z));
     }
@@ -150,13 +156,12 @@ public class Vector2D implements Iterable<Vector2D> {
         return divide(length());
     }
 
-    public float toYaw() {
-        double radians = Math.acos(z / length());
-        float yaw = (float) (radians * 180.0 / Math.PI);
-        if (x > 0) {
-            yaw = 360.0f - yaw;
+    public Direction toDirection() {
+        if (isZero()) {
+            return Direction.NONE;
         }
-        return yaw;
+
+        return new Vector2DDirection(this);
     }
 
     public Vector to3D() {
