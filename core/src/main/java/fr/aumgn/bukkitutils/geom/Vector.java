@@ -29,7 +29,7 @@ public class Vector implements Iterable<Vector> {
     }
 
     public Vector(Location loc) {
-        this(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ());
+        this(loc.getX(), loc.getY(), loc.getZ());
     }
 
     public Vector(Block block) {
