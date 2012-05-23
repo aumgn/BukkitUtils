@@ -70,6 +70,6 @@ public class Vector2DTest {
     public void testNormalize() {
         Vector2D vec1 = new Vector2D(1, 1).normalize();
 
-        assertEquals(new Vector2D(0.707, 0.707), vec1, 0.001);
+        assertVector2DEquals(new Vector2D(0.707, 0.707), vec1, 0.001);
     }
 }

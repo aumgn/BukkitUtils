@@ -2,11 +2,11 @@ package fr.aumgn.bukkitutils.geom;
 
 import org.junit.Ignore;
 import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
-import static fr.aumgn.bukkitutils.geom.VectorUtils.*;
 import fr.aumgn.bukkitutils.geom.direction.HorizontalDirection;
 import fr.aumgn.bukkitutils.geom.direction.LocationDirection;
+import static fr.aumgn.bukkitutils.geom.VectorUtils.*;
 
 public class DirectionTest {
 
@@ -63,7 +63,7 @@ public class DirectionTest {
     private void testYawToVector2D(int x, int y, float yaw) {
         Vector2D expected = new Vector2D(x, y).normalize();
         Vector2D result = new HorizontalDirection(yaw).getVector2D();
-        assertEquals(expected, result, 0.00001);
+        assertVector2DEquals(expected, result, 0.00001);
     }
 
     @Ignore("Not implemented yet.")

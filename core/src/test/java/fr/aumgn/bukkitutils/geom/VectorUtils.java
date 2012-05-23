@@ -2,7 +2,7 @@ package fr.aumgn.bukkitutils.geom;
 
 public class VectorUtils {
 
-    public static void assertEquals(Vector expected, Vector result, double delta) {
+    public static void assertVectorEquals(Vector expected, Vector result, double delta) {
         org.junit.Assert.assertEquals(
                 expected.getX(), result.getX(), delta);
         org.junit.Assert.assertEquals(
@@ -11,7 +11,7 @@ public class VectorUtils {
                 expected.getZ(), result.getZ(), delta);
     }
 
-    public static void assertEquals(Vector2D expected, Vector2D result, double delta) {
+    public static void assertVector2DEquals(Vector2D expected, Vector2D result, double delta) {
         org.junit.Assert.assertEquals(
                 expected.getX(), result.getX(), delta);
         org.junit.Assert.assertEquals(
