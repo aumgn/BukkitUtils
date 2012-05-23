@@ -10,6 +10,8 @@ public interface Direction {
 
     Vector getVector();
 
+    Direction rotate(float angle);
+
     public static final Direction NONE = new Direction() {
         @Override
         public Vector2D getVector2D() {
@@ -29,6 +31,11 @@ public interface Direction {
         @Override
         public float getPitch() {
             return Float.NaN;
+        }
+
+        @Override
+        public Direction rotate(float angle) {
+            return NONE;
         }
     };
 }

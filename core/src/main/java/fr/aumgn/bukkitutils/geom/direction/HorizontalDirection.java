@@ -12,6 +12,11 @@ public class HorizontalDirection implements Direction {
                 Math.sin(radians), Math.cos(radians));
     }
 
+    public static Direction calculateHorizontalRotation(Direction dir, float angle) {
+        float oppositeYaw = (dir.getYaw() + 180f) % 360f;
+        return new HorizontalDirection(oppositeYaw);
+    }
+
     protected final float yaw;
     private Vector2D vector;
 
@@ -40,5 +45,40 @@ public class HorizontalDirection implements Direction {
     @Override
     public Vector getVector() {
         return new Vector();
+    }
+
+    @Override
+    public Direction rotate(float angle) {
+        return calculateHorizontalRotation(this, angle);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Float.floatToIntBits(yaw);
+        result = prime * result;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Direction)) {
+            return false;
+        }
+
+        Direction other = (Direction) obj;
+        if (yaw != other.getYaw()) {
+            return false;
+        }
+        if (0f != other.getPitch()) {
+            return false;
+        }
+
+        return true;
     }
 }

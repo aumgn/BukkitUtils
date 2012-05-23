@@ -1,30 +1,32 @@
 package fr.aumgn.bukkitutils.geom;
 
-public enum Face implements Direction {
+import fr.aumgn.bukkitutils.geom.direction.LocationDirection;
 
-    UP             (  0.0f,  180.0f,  0,  1,  0),
-    DOWN           (  0.0f, -180.0f,  0, -1,  0),
+public final class Face implements Direction {
 
-    NORTH          ( 90.0f,    0.0f, -1,  0,  0),
-    EAST           (180.0f,    0.0f,  0,  0, -1),
-    SOUTH          (270.0f,    0.0f,  1,  0,  0),
-    WEST           (  0.0f,    0.0f,  0,  0,  1),
+    public static final Face UP          = new Face(  0.0f,  180.0f,  0,  1,  0);
+    public static final Face DOWN        = new Face(  0.0f, -180.0f,  0, -1,  0);
 
-    UP_NORTH       ( 90.0f,  180.0f, -1,  1,  0),
-    UP_EAST        (180.0f,  180.0f,  0,  1, -1),
-    UP_SOUTH       (270.0f,  180.0f,  1,  1,  0),
-    UP_WEST        (  0.0f,  180.0f,  0,  1,  1),
+    public static final Face NORTH       = new Face( 90.0f,    0.0f, -1,  0,  0);
+    public static final Face EAST        = new Face(180.0f,    0.0f,  0,  0, -1);
+    public static final Face SOUTH       = new Face(270.0f,    0.0f,  1,  0,  0);
+    public static final Face WEST        = new Face(  0.0f,    0.0f,  0,  0,  1);
 
-    DOWN_NORTH     ( 90.0f, -180.0f, -1, -1,  0),
-    DOWN_EAST      (180.0f, -180.0f,  0, -1, -1),
-    DOWN_SOUTH     (270.0f, -180.0f,  1, -1,  0),
-    DOWN_WEST      (  0.0f, -180.0f,  0, -1,  1),
+    public static final Face UP_NORTH    = new Face( 90.0f,  180.0f, -1,  1,  0);
+    public static final Face UP_EAST     = new Face(180.0f,  180.0f,  0,  1, -1);
+    public static final Face UP_SOUTH    = new Face(270.0f,  180.0f,  1,  1,  0);
+    public static final Face UP_WEST     = new Face(  0.0f,  180.0f,  0,  1,  1);
 
-    NORTH_EAST     (135.0f,    0.0f, -1,  0, -1),
-    NORTH_WEST     ( 45.0f,    0.0f, -1,  0,  1),
+    public static final Face DOWN_NORTH  = new Face( 90.0f, -180.0f, -1, -1,  0);
+    public static final Face DOWN_EAST   = new Face(180.0f, -180.0f,  0, -1, -1);
+    public static final Face DOWN_SOUTH  = new Face(270.0f, -180.0f,  1, -1,  0);
+    public static final Face DOWN_WEST   = new Face(  0.0f, -180.0f,  0, -1,  1);
 
-    SOUTH_EAST     (225.0f,    0.0f,  1,  0, -1),
-    SOUTH_WEST     (315.0f,    0.0f,  1,  0,  1);
+    public static final Face NORTH_EAST  = new Face(135.0f,    0.0f, -1,  0, -1);
+    public static final Face NORTH_WEST  = new Face( 45.0f,    0.0f, -1,  0,  1);
+
+    public static final Face SOUTH_EAST  = new Face(225.0f,    0.0f,  1,  0, -1);
+    public static final Face SOUTH_WEST  = new Face(315.0f,    0.0f,  1,  0,  1);
 
     private final float yaw;
     private final float pitch;
@@ -58,5 +60,40 @@ public enum Face implements Direction {
     @Override
     public Vector getVector() {
         return new Vector(x, y, z);
+    }
+
+    @Override
+    public Direction rotate(float angle) {
+        return new LocationDirection(yaw, pitch).rotate(angle);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Float.floatToIntBits(yaw);
+        result = prime * result + Float.floatToIntBits(pitch);
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Direction)) {
+            return false;
+        }
+
+        Direction other = (Direction) obj;
+        if (yaw != other.getYaw()) {
+            return false;
+        }
+        if (pitch != other.getPitch()) {
+            return false;
+        }
+
+        return true;
     }
 }

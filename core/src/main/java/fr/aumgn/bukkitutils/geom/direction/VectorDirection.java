@@ -54,4 +54,32 @@ public class VectorDirection implements Direction {
     public Vector getVector() {
         return vector;
     }
+
+    @Override
+    public Direction rotate(float angle) {
+        return LocationDirection.calculateRotation(this, angle);
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + Float.floatToIntBits(getYaw());
+        result = prime * result + Float.floatToIntBits(getPitch());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Direction)) {
+            return false;
+        }
+
+        Direction other = (Direction) obj;
+        return vector.equals(other.getVector());
+    }
 }
