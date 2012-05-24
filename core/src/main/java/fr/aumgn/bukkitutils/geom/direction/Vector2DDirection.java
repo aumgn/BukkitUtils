@@ -11,7 +11,6 @@ public class Vector2DDirection extends AbstractDirection implements Direction {
     private float yaw;
 
     public Vector2DDirection(Vector2D vector) {
-        validateVector(vector);
         this.vector = vector;
         this.yaw = Float.NaN;
     }

@@ -12,7 +12,7 @@ public class LocationDirection extends HorizontalDirection {
 
     public LocationDirection(float yaw, float pitch) {
         super(yaw);
-        if (pitch <= -180f || pitch >= 180f) {
+        if (pitch < -180f || pitch > 180f) {
             throw new IllegalArgumentException("Invalid pitch");
         }
         this.pitch = pitch;
