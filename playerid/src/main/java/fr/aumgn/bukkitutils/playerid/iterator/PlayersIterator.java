@@ -44,7 +44,6 @@ public class PlayersIterator implements Iterator<Player> {
         forwardOne();
         forward();
 
-        System.out.println(current.getName() + " : " + current.isOffline());
         return current.getPlayer();
     }
 
