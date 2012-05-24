@@ -14,7 +14,9 @@ public interface PlayersIdMap<T> extends Map<PlayerId, T> {
 
     T get(OfflinePlayer player);
 
-    void put(OfflinePlayer player, T value);
+    T put(OfflinePlayer player, T value);
+
+    T remove(OfflinePlayer player);
 
     Set<OfflinePlayer> offlinePlayersSet();
 

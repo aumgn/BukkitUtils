@@ -30,8 +30,13 @@ public class PlayersIdHashMap<T>
     }
 
     @Override
-    public void put(OfflinePlayer player, T value) {
-        put(PlayerId.get(player), value);
+    public T put(OfflinePlayer player, T value) {
+        return put(PlayerId.get(player), value);
+    }
+
+    @Override
+    public T remove(OfflinePlayer player) {
+        return remove(PlayerId.get(player));
     }
 
     @Override
