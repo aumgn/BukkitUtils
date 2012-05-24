@@ -13,27 +13,38 @@ public class PlayersIterator implements Iterator<Player> {
 
     public PlayersIterator(Iterator<PlayerId> iterator) {
         this.it = iterator;
+
+        forwardOne();
         forward();
     }
 
-    public void forward() {
-        while (next.isOffline()) {
+    private void forward() {
+        while (next != null && next.isOffline()) {
+            forwardOne();
+        }
+    }
+
+    private void forwardOne() {
+        if (it.hasNext()) {
             next = it.next();
+        } else {
+            next = null;
         }
     }
 
     @Override
     public boolean hasNext() {
-        return it.hasNext();
+        return next != null;
     }
 
     @Override
     public Player next() {
         PlayerId current = next;
 
-        next = it.next();
+        forwardOne();
         forward();
 
+        System.out.println(current.getName() + " : " + current.isOffline());
         return current.getPlayer();
     }
 
