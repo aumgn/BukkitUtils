@@ -3,24 +3,17 @@ package fr.aumgn.bukkitutils.geom.direction;
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
 
-public class HorizontalDirection implements Direction {
-
-    public static Vector2D calculateVector2D(float yaw) {
-        double radians = (360.0f - yaw) * Math.PI / 180.0;
-        return new Vector2D(
-                Math.sin(radians), Math.cos(radians));
-    }
-
-    public static Direction calculateHorizontalRotation(Direction dir, float angle) {
-        float oppositeYaw = (dir.getYaw() + 180f) % 360f;
-        return new HorizontalDirection(oppositeYaw);
-    }
+public class HorizontalDirection extends AbstractDirection {
 
     protected final float yaw;
     private Vector2D vector;
 
     public HorizontalDirection(float yaw) {
+        if (yaw < 0f || yaw >= 360f) {
+            throw new IllegalArgumentException("Invalid yaw");
+        }
         this.yaw = yaw;
         this.vector = null;
     }
@@ -44,41 +37,11 @@ public class HorizontalDirection implements Direction {
 
     @Override
     public Vector getVector() {
-        return new Vector();
+        return getVector2D().to3D();
     }
 
     @Override
     public Direction rotate(float angle) {
         return calculateHorizontalRotation(this, angle);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Float.floatToIntBits(yaw);
-        result = prime * result;
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Direction)) {
-            return false;
-        }
-
-        Direction other = (Direction) obj;
-        if (yaw != other.getYaw()) {
-            return false;
-        }
-        if (0f != other.getPitch()) {
-            return false;
-        }
-
-        return true;
     }
 }

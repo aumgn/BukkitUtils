@@ -2,27 +2,21 @@ package fr.aumgn.bukkitutils.geom.direction;
 
 import org.bukkit.Location;
 
-import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Vector;
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
 
 public class LocationDirection extends HorizontalDirection {
 
-    public static double calculateVectorY(float yaw, float pitch) {
-        return 0.0;
-    }
-
-    public static Direction calculateRotation(Direction dir, float angle) {
-        float oppositeYaw = (dir.getYaw() + 180f) % 360f;
-        float oppositePitch = (dir.getPitch() + 180f + angle) % 360f - 180f;
-        return new LocationDirection(oppositeYaw, oppositePitch);
-    }
-
     private final float pitch;
-    private double y;
+    private Vector vector;
 
     public LocationDirection(float yaw, float pitch) {
         super(yaw);
-        this.pitch = Float.NaN;
+        if (pitch <= -180f || pitch >= 180f) {
+            throw new IllegalArgumentException("Invalid pitch");
+        }
+        this.pitch = pitch;
+        this.vector = null;
     }
 
     public LocationDirection(Location location) {
@@ -33,50 +27,12 @@ public class LocationDirection extends HorizontalDirection {
         return pitch;
     }
 
-    public double getVectorY() {
-        if (Double.isNaN(y)) {
-            y = calculateVectorY(yaw, pitch);
-        }
-
-        return y;
-    }
-
+    @Override
     public Vector getVector() {
-        return getVector2D().to3D(getVectorY());
-    }
-
-    @Override
-    public Direction rotate(float angle) {
-        return calculateRotation(this, angle);
-    }
-
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Float.floatToIntBits(yaw);
-        result = prime * result + Float.floatToIntBits(pitch);
-        return result;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
+        if (vector == null) {
+            vector = calculateVector(getVector2D(), pitch);
         }
 
-        if (!(obj instanceof Direction)) {
-            return false;
-        }
-
-        Direction other = (Direction) obj;
-        if (yaw != other.getYaw()) {
-            return false;
-        }
-        if (pitch != other.getPitch()) {
-            return false;
-        }
-
-        return true;
+        return vector;
     }
 }

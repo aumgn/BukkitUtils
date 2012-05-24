@@ -49,6 +49,10 @@ public class CommandArgs extends CommandArgsBase {
         String arg = get(i);
         String[] splitted = arg.split(",");
 
+        if (splitted.length > 3) {
+            throw new CommandUsageError();
+        }
+
         double x = parseVectorComponent(splitted[0]);
         double y = 0.0;
         double z = 0.0;
@@ -65,6 +69,10 @@ public class CommandArgs extends CommandArgsBase {
     public Vector2D getVector2D(int i) {
         String arg = get(i);
         String[] splitted = arg.split(",");
+
+        if (splitted.length > 2) {
+            throw new CommandUsageError();
+        }
 
         double x = parseVectorComponent(splitted[0]);
         double z = 0.0;
