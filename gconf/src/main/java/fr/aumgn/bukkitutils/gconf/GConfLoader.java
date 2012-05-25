@@ -31,17 +31,22 @@ public class GConfLoader {
         return Charset.defaultCharset();
     }
 
+    private File getFile(String filename)
+            throws GConfLoadException {
+        File folder = plugin.getDataFolder();
+        if (!folder.exists() && !folder.mkdirs()) {
+            throw new GConfLoadException(
+                    "Impossible de créer le dossier :" + folder.getPath());
+        }
+
+        return new File(plugin.getDataFolder(), filename);
+    }
+
     public <T> T loadOrCreate(String filename, Class<T> klass)
             throws GConfLoadException {
 
         try {
-            File folder = plugin.getDataFolder();
-            if (!folder.exists() && !folder.mkdirs()) {
-                throw new GConfLoadException(
-                        "Impossible de créer le dossier :" + folder.getPath());
-            }
-
-            File file = new File(plugin.getDataFolder(), filename);
+            File file = getFile(filename);
             T config;
             if (file.createNewFile()) {
                 config = klass.newInstance();
@@ -71,6 +76,14 @@ public class GConfLoader {
             return gson.fromJson(reader, klass);
         } finally {
             reader.close();
+        }
+    }
+
+    public void write(String filename, Object object) throws GConfLoadException {
+        try {
+            write(getFile(filename), object);
+        } catch (IOException exc) {
+            throw new GConfLoadException(exc);
         }
     }
 
