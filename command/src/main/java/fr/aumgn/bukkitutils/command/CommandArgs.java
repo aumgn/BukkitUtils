@@ -1,6 +1,7 @@
 package fr.aumgn.bukkitutils.command;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -163,6 +164,14 @@ public class CommandArgs extends CommandArgsBase {
         return getPlayers(index, true);
     }
 
+    public List<Player> getPlayers(int index, Player def) {
+        return getPlayers(index, def, true);
+    }
+
+    public List<Player> getPlayers(int index, List<Player> def) {
+        return getPlayers(index, def, true);
+    }
+
     public List<Player> getPlayers(int index, boolean throwWhenEmpty) {
         String arg = get(index);
 
@@ -176,6 +185,18 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         return players;
+    }
+
+    public List<Player> getPlayers(int index, Player def, boolean throwWhenEmpty) {
+        return getPlayers(index, Collections.<Player>singletonList(def));
+    }
+
+    public List<Player> getPlayers(int index, List<Player> def, boolean throwWhenEmpty) {
+        if (hasIndex(index)) {
+            return getPlayers(index, throwWhenEmpty);
+        }
+
+        return def;
     }
 
     public OfflinePlayer getOfflinePlayer(int index) {
