@@ -10,7 +10,7 @@ import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.bukkitutils.util.MaterialAndData;
+import fr.aumgn.bukkitutils.itemtype.ItemType;
 
 public class CommandArgsTest {
 
@@ -109,34 +109,34 @@ public class CommandArgsTest {
     }
 
     @Test
-    public void testMaterialAndData() {
+    public void testItemType() {
         CommandArgs args = CommandArgsUtil.parse("stone:3");
-        MaterialAndData materialAndData = args.getMaterialAndData(0);
+        ItemType materialAndData = args.getItemType(0);
 
         assertEquals(Material.STONE, materialAndData.getMaterial());
         assertEquals(3, materialAndData.getData());
     }
 
     @Test
-    public void testMaterialAndDataWithoutData() {
+    public void testItemTypeWithoutData() {
         CommandArgs args = CommandArgsUtil.parse("stone");
-        MaterialAndData materialAndData = args.getMaterialAndData(0);
+        ItemType materialAndData = args.getItemType(0);
 
         assertEquals(Material.STONE, materialAndData.getMaterial());
         assertEquals(0, materialAndData.getData());
     }
 
     @Test(expected = InvalidMaterialAndDataFormat.class)
-    public void testInvalidMaterialAndDataFormat() {
+    public void testInvalidItemTypeFormat() {
         CommandArgs args = CommandArgsUtil.parse("stone:4:5");
 
-        args.getMaterialAndData(0);
+        args.getItemType(0);
     }
 
     @Test(expected = InvalidMaterialAndDataFormat.class)
-    public void testInvalidMaterialAndDataData() {
+    public void testInvalidItemTypeData() {
         CommandArgs args = CommandArgsUtil.parse("stone:invaliddata");
 
-        args.getMaterialAndData(0);
+        args.getItemType(0);
     }
 }

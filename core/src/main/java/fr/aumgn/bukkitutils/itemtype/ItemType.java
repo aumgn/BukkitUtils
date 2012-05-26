@@ -1,23 +1,23 @@
-package fr.aumgn.bukkitutils.util;
+package fr.aumgn.bukkitutils.itemtype;
 
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
-public class MaterialAndData {
+public class ItemType {
 
     private final Material material;
     private final byte data;
 
-    public MaterialAndData(Material material) {
+    public ItemType(Material material) {
         this(material, 0);
     }
 
-    public MaterialAndData(Material material, int data) {
+    public ItemType(Material material, int data) {
         this(material, (byte) data);
     }
 
-    public MaterialAndData(Material material, byte data) {
+    public ItemType(Material material, byte data) {
         if (material == null) {
             throw new IllegalArgumentException("Material can't be null.");
         }
@@ -26,11 +26,11 @@ public class MaterialAndData {
         this.data = data;
     }
 
-    public MaterialAndData(ItemStack stack) {
+    public ItemType(ItemStack stack) {
         this(stack.getType(), stack.getData().getData());
     }
 
-    public MaterialAndData(Block block) {
+    public ItemType(Block block) {
         this(block.getType(), block.getData());
     }
 
@@ -38,16 +38,16 @@ public class MaterialAndData {
         return material;
     }
 
-    public MaterialAndData setMaterial(Material material) {
-        return new MaterialAndData(material, data);
+    public ItemType setMaterial(Material material) {
+        return new ItemType(material, data);
     }
 
     public byte getData() {
         return data;
     }
 
-    public MaterialAndData setData(byte data) {
-        return new MaterialAndData(material, data);
+    public ItemType setData(byte data) {
+        return new ItemType(material, data);
     }
 
     public int getMaxStackSize() {
@@ -93,11 +93,11 @@ public class MaterialAndData {
             return true;
         }
 
-        if (!(obj instanceof MaterialAndData)) {
+        if (!(obj instanceof ItemType)) {
             return false;
         }
 
-        MaterialAndData other = (MaterialAndData) obj;
+        ItemType other = (ItemType) obj;
         if (data != other.data || material != other.material) {
             return false;
         }

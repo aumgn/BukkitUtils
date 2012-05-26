@@ -18,7 +18,7 @@ import fr.aumgn.bukkitutils.command.exception.NoSuchWorld;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.bukkitutils.util.MaterialAndData;
+import fr.aumgn.bukkitutils.itemtype.ItemType;
 import fr.aumgn.bukkitutils.util.Util;
 
 public class CommandArgs extends CommandArgsBase {
@@ -231,7 +231,7 @@ public class CommandArgs extends CommandArgsBase {
         return def;
     }
 
-    public MaterialAndData getMaterialAndData(int index) {
+    public ItemType getItemType(int index) {
         String[] splitted = get(index).split(":");
         if (splitted.length > 2) {
             throw new InvalidMaterialAndDataFormat(local, get(index));
@@ -247,22 +247,22 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         Material material = getMaterial(splitted[0]);
-        return new MaterialAndData(material, data);
+        return new ItemType(material, data);
     }
 
-    public MaterialAndData getMaterialAndData(int index, MaterialAndData def) {
+    public ItemType getItemType(int index, ItemType def) {
         if (hasIndex(index)) {
-            return getMaterialAndData(index);
+            return getItemType(index);
         }
 
         return def;
     }
 
-    public MaterialAndData getMaterialAndData(int index, Material def) {
+    public ItemType getItemType(int index, Material def) {
         if (hasIndex(index)) {
-            return getMaterialAndData(index);
+            return getItemType(index);
         }
 
-        return new MaterialAndData(def);
+        return new ItemType(def);
     }
 }
