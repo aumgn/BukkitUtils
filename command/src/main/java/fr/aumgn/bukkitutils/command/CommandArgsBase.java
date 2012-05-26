@@ -70,7 +70,7 @@ public class CommandArgsBase implements Iterable<String> {
         }
     }
 
-    protected boolean hasIndex(int index) {
+    public boolean hasIndex(int index) {
         return index < args.length;
     }
 

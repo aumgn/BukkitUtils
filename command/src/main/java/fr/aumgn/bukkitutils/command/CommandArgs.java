@@ -159,12 +159,22 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public List<Player> getPlayers(int index) {
+        return getPlayers(index, true);
+    }
+
+    public List<Player> getPlayers(int index, boolean throwWhenEmpty) {
         String arg = get(index);
 
         if (arg.equals("*")) {
             return Arrays.asList(Bukkit.getOnlinePlayers());
         }
-        return Util.matchPlayer(arg);
+
+        List<Player> players = Util.matchPlayer(arg);
+        if (throwWhenEmpty && players.isEmpty()) {
+            throw new NoSuchPlayer(local, get(index));
+        }
+
+        return players;
     }
 
     public OfflinePlayer getOfflinePlayer(int index) {
@@ -180,7 +190,16 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public List<OfflinePlayer> getOfflinePlayers(int index) {
-        return Util.matchOfflinePlayer(get(index));
+        return getOfflinePlayers(index, true);
+    }
+
+    public List<OfflinePlayer> getOfflinePlayers(int index, boolean throwWhenEmpty) {
+        List<OfflinePlayer> players = Util.matchOfflinePlayer(get(index));
+        if (throwWhenEmpty && players.isEmpty()) {
+            throw new NoSuchPlayer(local, get(index));
+        }
+
+        return players;
     }
 
     private Material getMaterial(String identifier) {

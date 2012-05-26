@@ -78,6 +78,13 @@ public class CommandArgsBukkitTest {
         args.getPlayer(0);
     }
 
+    @Test(expected = NoSuchPlayer.class)
+    public void testNoSuchPlayerWithGetPlayers() {
+        CommandArgs args = CommandArgsUtil.parse("NotAPlayer");
+
+        args.getPlayers(0);
+    }
+
     @Test
     public void testGetWorld() {
         CommandArgs args = CommandArgsUtil.parse("world");
