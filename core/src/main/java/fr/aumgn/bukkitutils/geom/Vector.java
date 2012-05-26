@@ -203,7 +203,7 @@ public class Vector implements Iterable<Vector> {
         return new VectorDirection(this);
     }
 
-    public Direction toDirection(Vector to) {
+    public Direction towards(Vector to) {
         return to.subtract(this).toDirection();
     }
 
