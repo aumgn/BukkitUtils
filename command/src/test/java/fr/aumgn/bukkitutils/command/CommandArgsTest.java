@@ -118,6 +118,19 @@ public class CommandArgsTest {
     }
 
     @Test
+    public void testItemTypeWithSpecificData() {
+        CommandArgs args = CommandArgsUtil.parse("wool:orange", "wood:jungle");
+        ItemType materialAndData = args.getItemType(0);
+        ItemType materialAndData2 = args.getItemType(1);
+
+        assertEquals(Material.WOOL, materialAndData.getMaterial());
+        assertEquals(1, materialAndData.getData());
+
+        assertEquals(Material.WOOD, materialAndData2.getMaterial());
+        assertEquals(3, materialAndData2.getData());
+    }
+
+    @Test
     public void testItemTypeWithoutData() {
         CommandArgs args = CommandArgsUtil.parse("stone");
         ItemType materialAndData = args.getItemType(0);

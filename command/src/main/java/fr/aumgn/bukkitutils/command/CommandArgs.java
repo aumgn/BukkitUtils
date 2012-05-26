@@ -19,6 +19,7 @@ import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.itemtype.ItemType;
+import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
 import fr.aumgn.bukkitutils.util.Util;
 
 public class CommandArgs extends CommandArgsBase {
@@ -237,16 +238,16 @@ public class CommandArgs extends CommandArgsBase {
             throw new InvalidMaterialAndDataFormat(local, get(index));
         }
 
-        byte data = 0;
+        Material material = getMaterial(splitted[0]);
+        Byte data = 0;
         if (splitted.length == 2) {
-            try {
-                data = Byte.parseByte(splitted[1]);
-            } catch (NumberFormatException exc) {
+            ItemTypeDataParser parser = ItemTypeDataParser.getFor(material);
+            data = parser.parse(splitted[1]);
+            if (data == null) {
                 throw new InvalidMaterialAndDataFormat(local, get(index));
             }
         }
 
-        Material material = getMaterial(splitted[0]);
         return new ItemType(material, data);
     }
 
