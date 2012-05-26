@@ -29,6 +29,13 @@ public class CommandArgsTest {
     }
 
     @Test
+    public void testDefaultIntegerArg() {
+        CommandArgs args = CommandArgsUtil.parse("10");
+
+        assertEquals(10, args.getInteger(0, 1));
+        assertEquals(1, args.getInteger(1, 1));
+    }
+    @Test
     public void testDoubleArgs() {
         CommandArgs args = CommandArgsUtil.parse("arg1", "1.0");
 

@@ -70,6 +70,10 @@ public class CommandArgsBase implements Iterable<String> {
         }
     }
 
+    protected boolean hasIndex(int index) {
+        return index < args.length;
+    }
+
     public boolean hasFlags() {
         return !flags.isEmpty();
     }
@@ -90,6 +94,14 @@ public class CommandArgsBase implements Iterable<String> {
         return args[index];
     }
 
+    public String get(int index, String def) {
+        if (hasIndex(index)) {
+            return get(index);
+        }
+
+        return def;
+    }
+
     public String get(int index, int rawEndIndex) {
         int endIndex;
         if (rawEndIndex > -1) {
@@ -104,6 +116,14 @@ public class CommandArgsBase implements Iterable<String> {
         }
         builder.append(args[endIndex]);
         return builder.toString();
+    }
+
+    public String get(int index, int endIndex, String def) {
+        if (hasIndex(index) && hasIndex(endIndex)) {
+            return get(index, endIndex);
+        }
+
+        return def;
     }
 
     public List<String> asList() {

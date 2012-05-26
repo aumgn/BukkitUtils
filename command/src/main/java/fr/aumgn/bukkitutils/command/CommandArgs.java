@@ -36,6 +36,14 @@ public class CommandArgs extends CommandArgsBase {
         }
     }
 
+    public int getInteger(int index, int def) {
+        if (hasIndex(index)) {
+            return getInteger(index);
+        }
+
+        return def;
+    }
+
     public double getDouble(int index) {
         try {
             return Double.parseDouble(get(index));
@@ -43,6 +51,14 @@ public class CommandArgs extends CommandArgsBase {
             throw new CommandUsageError(
                     String.format(local.notAValidNumber(), index + 1));
         }
+    }
+
+    public double getDouble(int index, double def) {
+        if (hasIndex(index)) {
+            return getDouble(index);
+        }
+
+        return def;
     }
 
     public Vector getVector(int i) {
@@ -66,6 +82,14 @@ public class CommandArgs extends CommandArgsBase {
         return new Vector(x, y, z);
     }
 
+    public Vector getVector(int index, Vector def) {
+        if (hasIndex(index)) {
+            return getVector(index);
+        }
+
+        return def;
+    }
+
     public Vector2D getVector2D(int i) {
         String arg = get(i);
         String[] splitted = arg.split(",");
@@ -81,6 +105,14 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         return new Vector2D(x,z);
+    }
+
+    public Vector2D getVector2D(int index, Vector2D def) {
+        if (hasIndex(index)) {
+            return getVector2D(index);
+        }
+
+        return def;
     }
 
     private double parseVectorComponent(String component) {
@@ -101,6 +133,14 @@ public class CommandArgs extends CommandArgsBase {
         return world;
     }
 
+    public World getWorld(int index, World def) {
+        if (hasIndex(index)) {
+            return getWorld(index);
+        }
+
+        return def;
+    }
+
     public Player getPlayer(int index) {
         Player player = Bukkit.getPlayer(get(index));
         if (player == null) {
@@ -108,6 +148,14 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         return player;
+    }
+
+    public Player getPlayer(int index, Player def) {
+        if (hasIndex(index)) {
+            return getPlayer(index);
+        }
+
+        return def;
     }
 
     public List<Player> getPlayers(int index) {
@@ -121,6 +169,14 @@ public class CommandArgs extends CommandArgsBase {
 
     public OfflinePlayer getOfflinePlayer(int index) {
         return Bukkit.getOfflinePlayer(get(index));
+    }
+
+    public OfflinePlayer getOfflinePlayer(int index, OfflinePlayer def) {
+        if (hasIndex(index)) {
+            return getOfflinePlayer(index);
+        }
+
+        return def;
     }
 
     public List<OfflinePlayer> getOfflinePlayers(int index) {
@@ -148,6 +204,14 @@ public class CommandArgs extends CommandArgsBase {
         return getMaterial(get(index));
     }
 
+    public Material getMaterial(int index, Material def) {
+        if (hasIndex(index)) {
+            return getMaterial(index);
+        }
+
+        return def;
+    }
+
     public MaterialAndData getMaterialAndData(int index) {
         String[] splitted = get(index).split(":");
         if (splitted.length > 2) {
@@ -165,5 +229,21 @@ public class CommandArgs extends CommandArgsBase {
 
         Material material = getMaterial(splitted[0]);
         return new MaterialAndData(material, data);
+    }
+
+    public MaterialAndData getMaterialAndData(int index, MaterialAndData def) {
+        if (hasIndex(index)) {
+            return getMaterialAndData(index);
+        }
+
+        return def;
+    }
+
+    public MaterialAndData getMaterialAndData(int index, Material def) {
+        if (hasIndex(index)) {
+            return getMaterialAndData(index);
+        }
+
+        return new MaterialAndData(def);
     }
 }
