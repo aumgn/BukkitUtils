@@ -1,9 +1,8 @@
-package fr.aumgn.bukkitutils.command;
+package fr.aumgn.bukkitutils.command.args;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,8 +24,10 @@ import fr.aumgn.bukkitutils.util.Util;
 
 public class CommandArgs extends CommandArgsBase {
 
-    public CommandArgs(Messages local, String[] tokens, Set<Character> allowedFlag, int min, int max) {
-        super(local, tokens, allowedFlag, min, max);
+    public CommandArgs(Messages messages, CommandArgsParser parser) {
+        this.messages = messages;
+        this.flags = parser.getFlags();
+        this.args = parser.getArgs();
     }
 
     public int getInteger(int index) {
@@ -34,7 +35,7 @@ public class CommandArgs extends CommandArgsBase {
             return Integer.parseInt(get(index));
         } catch (NumberFormatException exc) {
             throw new CommandUsageError(
-                    String.format(local.notAValidNumber(), index + 1));
+                    String.format(messages.notAValidNumber(), index + 1));
         }
     }
 
@@ -51,7 +52,7 @@ public class CommandArgs extends CommandArgsBase {
             return Double.parseDouble(get(index));
         } catch (NumberFormatException exc) {
             throw new CommandUsageError(
-                    String.format(local.notAValidNumber(), index + 1));
+                    String.format(messages.notAValidNumber(), index + 1));
         }
     }
 
@@ -122,14 +123,14 @@ public class CommandArgs extends CommandArgsBase {
             return Double.parseDouble(component);
         } catch (NumberFormatException exc) {
             throw new CommandUsageError(
-                    String.format(local.notAValidVectorComponent(), component));
+                    String.format(messages.notAValidVectorComponent(), component));
         }
     }
 
     public World getWorld(int index) {
         World world = Bukkit.getWorld(get(index));
         if (world == null) {
-            throw new NoSuchWorld(local, get(index));
+            throw new NoSuchWorld(messages, get(index));
         }
 
         return world;
@@ -146,7 +147,7 @@ public class CommandArgs extends CommandArgsBase {
     public Player getPlayer(int index) {
         Player player = Bukkit.getPlayer(get(index));
         if (player == null) {
-            throw new NoSuchPlayer(local, get(index));
+            throw new NoSuchPlayer(messages, get(index));
         }
 
         return player;
@@ -181,7 +182,7 @@ public class CommandArgs extends CommandArgsBase {
 
         List<Player> players = Util.matchPlayer(arg);
         if (throwWhenEmpty && players.isEmpty()) {
-            throw new NoSuchPlayer(local, get(index));
+            throw new NoSuchPlayer(messages, get(index));
         }
 
         return players;
@@ -218,7 +219,7 @@ public class CommandArgs extends CommandArgsBase {
     public List<OfflinePlayer> getOfflinePlayers(int index, boolean throwWhenEmpty) {
         List<OfflinePlayer> players = Util.matchOfflinePlayer(get(index));
         if (throwWhenEmpty && players.isEmpty()) {
-            throw new NoSuchPlayer(local, get(index));
+            throw new NoSuchPlayer(messages, get(index));
         }
 
         return players;
@@ -235,7 +236,7 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         if (material == null) {
-            throw new NoSuchMaterial(local, identifier);
+            throw new NoSuchMaterial(messages, identifier);
         }
 
         return material;
@@ -256,7 +257,7 @@ public class CommandArgs extends CommandArgsBase {
     public ItemType getItemType(int index) {
         String[] splitted = get(index).split(":");
         if (splitted.length > 2) {
-            throw new InvalidMaterialAndDataFormat(local, get(index));
+            throw new InvalidMaterialAndDataFormat(messages, get(index));
         }
 
         Material material = getMaterial(splitted[0]);
@@ -265,7 +266,7 @@ public class CommandArgs extends CommandArgsBase {
             ItemTypeDataParser parser = ItemTypeDataParser.getFor(material);
             data = parser.parse(splitted[1]);
             if (data == null) {
-                throw new InvalidMaterialAndDataFormat(local, get(index));
+                throw new InvalidMaterialAndDataFormat(messages, get(index));
             }
         }
 

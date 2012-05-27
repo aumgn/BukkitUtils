@@ -1,6 +1,5 @@
-package fr.aumgn.bukkitutils.command;
+package fr.aumgn.bukkitutils.command.args;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,25 +7,16 @@ import java.util.Set;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import fr.aumgn.bukkitutils.command.CommandArgsBase;
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
+import static fr.aumgn.bukkitutils.command.args.CommandArgsUtil.parse;
 
 public class CommandArgBaseTest {
 
-    private Messages local;
-    private Set<Character> emptyExpectedFlags;
-
-    public CommandArgBaseTest() {
-        this.local = new Messages();
-        this.emptyExpectedFlags = Collections.<Character>emptySet();
-    }
-
     @Test
     public void testRemoveEmptyArgs() {
-        String[] tokens = { "", "arg1", "", "arg2", "" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse(0, -1,
+                "", "arg1", "", "arg2", "" );
 
         assertEquals(2, args.length());
         assertEquals("arg1", args.get(0));
@@ -35,31 +25,24 @@ public class CommandArgBaseTest {
 
     @Test(expected = CommandUsageError.class)
     public void testArgsMinLength() {
-        String[] tokens = {};
-        new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 1, 1);
+        parse(1, 1);
     }
 
     @Test(expected = CommandUsageError.class)
     public void testArgsMaxLength() {
-        String[] tokens = { "args1", "args2" };
-        new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 1, 1);
+        parse(1, 1, "args1", "args2");
     }
 
     @Test
     public void testUnrestrictedArgsMaxLength() {
-        String[] tokens = { "args" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse(0, -1, "args");
 
         int size = 16;
-        String[] tokens2 = new String[size];
+        String[] tokens = new String[size];
         for (int i = 0; i < size; i++) {
-            tokens2[i] = "args" + (i + 1);
+            tokens[i] = "args" + (i + 1);
         }
-        CommandArgsBase args2 = new CommandArgsBase(
-                local, tokens2, emptyExpectedFlags, 0, -1);
+        CommandArgs args2 = parse(0, -1, tokens);
 
         assertEquals(1, args.length());
         assertEquals(size, args2.length());
@@ -69,18 +52,14 @@ public class CommandArgBaseTest {
     public void testInvalidFlag() {
         Set<Character> expectedFlags = new HashSet<Character>();
         expectedFlags.add('t');
-        String[] tokens = { "args1", "-d", "args2" };
-        new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+        parse(expectedFlags, "args1", "-d", "args2");
     }
 
     @Test
     public void testFlagsPresence() {
         Set<Character> expectedFlags = new HashSet<Character>();
         expectedFlags.add('t');
-        String[] tokens = { "args1", "args2" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+        CommandArgs args = parse(expectedFlags, "args1", "args2");
 
         Set<Character> expectedFlags2 = new HashSet<Character>();
         expectedFlags2.add('t');
@@ -88,9 +67,8 @@ public class CommandArgBaseTest {
         expectedFlags2.add('c');
         expectedFlags2.add('f');
         expectedFlags2.add('p');
-        String[] tokens2 = { "-t", "args1", "-cd", "args2", "-f" };
-        CommandArgsBase args2 = new CommandArgsBase(
-                local, tokens2, expectedFlags2, 0, -1);
+        CommandArgs args2 = parse(expectedFlags2,
+                "-t", "args1", "-cd", "args2", "-f");
 
         assertFalse(args.hasFlags());
         assertFalse(args.hasFlag('t'));
@@ -108,18 +86,15 @@ public class CommandArgBaseTest {
         Set<Character> expectedFlags = new HashSet<Character>();
         expectedFlags.add('t');
         expectedFlags.add('d');
-        String[] tokens = { "args1", "-td", "args2" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, expectedFlags, 0, -1);
+        CommandArgs args = parse(expectedFlags,
+                "args1", "-td", "args2");
 
         assertEquals(2, args.length());
     }
 
     @Test
     public void testArgsJoin() {
-        String[] tokens = { "args", "to", "test" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse("args", "to", "test");
 
         assertEquals("args to", args.get(0, 1));
         assertEquals("to test", args.get(1, 2));
@@ -128,9 +103,7 @@ public class CommandArgBaseTest {
 
     @Test
     public void testArgsJoinWithNegativeOne() {
-        String[] tokens = { "args", "to", "test" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse("args", "to", "test");
 
         assertEquals("args to test", args.get(0, -1));
         assertEquals("to test", args.get(1, -1));
@@ -138,9 +111,7 @@ public class CommandArgBaseTest {
 
     @Test
     public void testAsList() {
-        String[] tokens = { "args", "to", "test" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse("args", "to", "test");
         List<String> list = args.asList();
 
         assertEquals(3, list.size());
@@ -151,9 +122,7 @@ public class CommandArgBaseTest {
 
     @Test
     public void testAsSubList() {
-        String[] tokens = { "args", "to", "test" };
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse("args", "to", "test");
         List<String> list1 = args.asList(0, 1);
         List<String> list2 = args.asList(1);
 
@@ -168,9 +137,7 @@ public class CommandArgBaseTest {
 
     @Test
     public void testAsSubListWithOutOfBoundIndex() {
-        String[] tokens = { "args", "args2"};
-        CommandArgsBase args = new CommandArgsBase(
-                local, tokens, emptyExpectedFlags, 0, -1);
+        CommandArgs args = parse("args", "args2");
         List<String> list1 = args.asList(-4, 1);
         List<String> list2 = args.asList(0, 7);
 

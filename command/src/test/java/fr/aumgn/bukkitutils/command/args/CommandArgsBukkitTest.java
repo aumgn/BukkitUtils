@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.command;
+package fr.aumgn.bukkitutils.command.args;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import fr.aumgn.bukkitutils.command.CommandArgs;
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPlayer;
 import fr.aumgn.bukkitutils.command.exception.NoSuchWorld;
 import fr.aumgn.bukkitutils.mockbukkit.MockBukkit;

@@ -1,10 +1,10 @@
-package fr.aumgn.bukkitutils.command;
+package fr.aumgn.bukkitutils.command.args;
 
 import org.bukkit.Material;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import fr.aumgn.bukkitutils.command.CommandArgs;
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;

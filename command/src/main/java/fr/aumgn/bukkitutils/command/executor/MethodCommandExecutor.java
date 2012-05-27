@@ -13,15 +13,17 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.Command;
-import fr.aumgn.bukkitutils.command.CommandArgs;
 import fr.aumgn.bukkitutils.command.Commands;
+import fr.aumgn.bukkitutils.command.args.CommandArgsFactory;
+import fr.aumgn.bukkitutils.command.args.CommandArgsInterface;
+import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class MethodCommandExecutor implements CommandExecutor {
 
-    private final Messages local;
+    private final Messages messages;
     private final Commands instance;
     private final Method method;
     private final int min;
@@ -29,8 +31,8 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final Set<Character> flags;
     private final boolean isPlayerCommand;
 
-    public MethodCommandExecutor(Messages local, Commands instance, Method method, Command command) {
-        this.local = local;
+    public MethodCommandExecutor(Messages messages, Commands instance, Method method, Command command) {
+        this.messages = messages;
         this.instance = instance;
         this.method = method;
 
@@ -47,11 +49,11 @@ public class MethodCommandExecutor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
         if (isPlayerCommand && !(sender instanceof Player)) {
-            sender.sendMessage(ChatColor.RED + local.playerOnly());
+            sender.sendMessage(ChatColor.RED + messages.playerOnly());
             return true;
         }
         try {
-            CommandArgs args = new CommandArgs(local, rawArgs, flags, min, max);
+            CommandArgsInterface args = getArgs(rawArgs);
             callCommand(lbl, sender, args);
         } catch (CommandUsageError error) {
             sender.sendMessage(ChatColor.RED + error.getMessage());
@@ -62,7 +64,16 @@ public class MethodCommandExecutor implements CommandExecutor {
         return true;
     }
 
-    private void callCommand(String name, CommandSender sender, CommandArgs args) throws Throwable {
+    private CommandArgsInterface getArgs(String[] rawArgs){
+        CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
+        parser.validate(flags, min, max);
+        @SuppressWarnings("unchecked")
+        CommandArgsFactory factory = CommandArgsFactory.get(
+                (Class<? extends CommandArgsInterface>) method.getParameterTypes()[1]);
+        return factory.createCommandArgs(messages, parser);
+    }
+
+    private void callCommand(String name, CommandSender sender, CommandArgsInterface args) throws Throwable {
         try {
             method.invoke(instance, sender, args);
         } catch (InvocationTargetException exc) {
@@ -78,7 +89,7 @@ public class MethodCommandExecutor implements CommandExecutor {
         }
     }
 
-    private void unhandledError(String name, CommandArgs args, Throwable exc) {
+    private void unhandledError(String name, CommandArgsInterface args, Throwable exc) {
         if (!(exc instanceof org.bukkit.command.CommandException)) {
             Bukkit.getLogger().severe("Exception occured while executing \""+ name + "\"");
             if (args.hasFlags()) {
