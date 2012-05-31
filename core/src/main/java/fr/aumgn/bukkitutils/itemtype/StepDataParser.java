@@ -5,7 +5,7 @@ import java.util.Locale;
 public class StepDataParser extends ItemTypeDataParser {
 
     @Override
-    public Byte parse(String token) {
+    public Short parse(String token) {
         String lToken = token.toLowerCase(Locale.ENGLISH);
         if (lToken.equals("stone")) {
             return 0;

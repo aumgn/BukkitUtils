@@ -10,7 +10,7 @@ public class ColorDataParser extends ItemTypeDataParser {
         this.dye = dye;
     }
 
-    private Byte parseColor(String token) {
+    private Short parseColor(String token) {
         String lToken = token.toLowerCase(Locale.ENGLISH);
         if (lToken.equals("white")) {
             return 0;
@@ -66,11 +66,11 @@ public class ColorDataParser extends ItemTypeDataParser {
     }
 
     @Override
-    public Byte parse(String token) {
-        Byte data = parseColor(token);
+    public Short parse(String token) {
+        Short data = parseColor(token);
 
         if (data != null && dye) {
-            return (byte) (15 - data);
+            return (short) (15 - data);
         } else {
             return data;
         }

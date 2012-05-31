@@ -7,17 +7,17 @@ import org.bukkit.inventory.ItemStack;
 public class ItemType {
 
     private final Material material;
-    private final byte data;
+    private final short data;
 
     public ItemType(Material material) {
         this(material, 0);
     }
 
     public ItemType(Material material, int data) {
-        this(material, (byte) data);
+        this(material, (short) data);
     }
 
-    public ItemType(Material material, byte data) {
+    public ItemType(Material material, short data) {
         if (material == null) {
             throw new IllegalArgumentException("Material can't be null.");
         }
@@ -42,7 +42,7 @@ public class ItemType {
         return new ItemType(material, data);
     }
 
-    public byte getData() {
+    public short getData() {
         return data;
     }
 
@@ -58,24 +58,16 @@ public class ItemType {
         return material.getMaxDurability();
     }
 
-    public ItemStack toItemStack() {
-        return toItemStack(1);
-    }
-
     public ItemStack toMaxItemStack() {
         return toItemStack(getMaxStackSize());
     }
 
+    public ItemStack toItemStack() {
+        return toItemStack(1);
+    }
+
     public ItemStack toItemStack(int amount) {
-        return toItemStack(amount, 0);
-    }
-
-    public ItemStack toItemStack(int amount, int damage) {
-        return toItemStack(amount, (short) damage);
-    }
-
-    public ItemStack toItemStack(int amount, short damage) {
-        return new ItemStack(material, amount, damage, data);
+        return new ItemStack(material, amount, data);
     }
 
     @Override

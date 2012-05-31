@@ -252,7 +252,7 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         Material material = getMaterial(splitted[0]);
-        Byte data = 0;
+        Short data = 0;
         if (splitted.length == 2) {
             data = Util.parseDataFor(material, splitted[1]);
             if (data == null) {

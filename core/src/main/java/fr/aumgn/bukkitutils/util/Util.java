@@ -87,9 +87,9 @@ public final class Util {
         return Material.matchMaterial(pattern);
     }
 
-    public static Byte parseDataFor(Material material, String token) {
+    public static Short parseDataFor(Material material, String token) {
         try {
-            return Byte.parseByte(token);
+            return Short.parseShort(token);
         } catch (NumberFormatException exc) {
         }
 

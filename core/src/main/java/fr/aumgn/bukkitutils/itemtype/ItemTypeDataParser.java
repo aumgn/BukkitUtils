@@ -32,5 +32,5 @@ public abstract class ItemTypeDataParser {
         return null;
     }
 
-    public abstract Byte parse(String token);
+    public abstract Short parse(String token);
 }
