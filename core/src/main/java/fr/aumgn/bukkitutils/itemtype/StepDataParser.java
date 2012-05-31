@@ -26,6 +26,6 @@ public class StepDataParser extends ItemTypeDataParser {
             return 5;
         }
 
-        return super.parse(token);
+        return null;
     }
 }

@@ -21,6 +21,6 @@ public class WoodDataParser extends ItemTypeDataParser {
             return 3;
         }
 
-        return super.parse(token);
+        return null;
     }
 }

@@ -2,10 +2,15 @@ package fr.aumgn.bukkitutils.itemtype;
 
 import java.util.Locale;
 
-public class WoolDataParser extends ItemTypeDataParser{
+public class ColorDataParser extends ItemTypeDataParser {
 
-    @Override
-    public Byte parse(String token) {
+    private final boolean dye;
+
+    public ColorDataParser(boolean dye) {
+        this.dye = dye;
+    }
+
+    private Byte parseColor(String token) {
         String lToken = token.toLowerCase(Locale.ENGLISH);
         if (lToken.equals("white")) {
             return 0;
@@ -57,7 +62,18 @@ public class WoolDataParser extends ItemTypeDataParser{
             return 15;
         }
 
-        return super.parse(lToken);
+        return null;
+    }
+
+    @Override
+    public Byte parse(String token) {
+        Byte data = parseColor(token);
+
+        if (data != null && dye) {
+            return (byte) (15 - data);
+        } else {
+            return data;
+        }
     }
 
 }

@@ -19,7 +19,6 @@ import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.itemtype.ItemType;
-import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
 import fr.aumgn.bukkitutils.util.Util;
 
 public class CommandArgs extends CommandArgsBase {
@@ -225,18 +224,10 @@ public class CommandArgs extends CommandArgsBase {
         return players;
     }
 
-    private Material getMaterial(String identifier) {
-        Material material = Material.matchMaterial(identifier);
+    private Material getMaterial(String pattern) {
+        Material material = Util.matchMaterial(pattern);
         if (material == null) {
-            try {
-                int id = Integer.parseInt(identifier);
-                material = Material.getMaterial(id);
-            } catch (NumberFormatException exc) {
-            }
-        }
-
-        if (material == null) {
-            throw new NoSuchMaterial(messages, identifier);
+            throw new NoSuchMaterial(messages, pattern);
         }
 
         return material;
@@ -263,8 +254,7 @@ public class CommandArgs extends CommandArgsBase {
         Material material = getMaterial(splitted[0]);
         Byte data = 0;
         if (splitted.length == 2) {
-            ItemTypeDataParser parser = ItemTypeDataParser.getFor(material);
-            data = parser.parse(splitted[1]);
+            data = Util.parseDataFor(material, splitted[1]);
             if (data == null) {
                 throw new InvalidMaterialAndDataFormat(messages, get(index));
             }

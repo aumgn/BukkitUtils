@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Locale;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+
+import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
 
 public final class Util {
 
@@ -74,5 +77,27 @@ public final class Util {
         }
 
         return players;
+    }
+
+    public static Material matchMaterial(String pattern) {
+        if (pattern.equalsIgnoreCase("dye")) {
+            return Material.INK_SACK;
+        }
+
+        return Material.matchMaterial(pattern);
+    }
+
+    public static Byte parseDataFor(Material material, String token) {
+        try {
+            return Byte.parseByte(token);
+        } catch (NumberFormatException exc) {
+        }
+
+        ItemTypeDataParser parser = ItemTypeDataParser.getFor(material);
+        if (parser == null) {
+            return null;
+        }
+
+        return parser.parse(token);
     }
 }
