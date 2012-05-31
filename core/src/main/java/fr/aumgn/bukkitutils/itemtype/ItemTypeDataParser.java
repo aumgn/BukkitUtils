@@ -29,6 +29,10 @@ public abstract class ItemTypeDataParser {
             return new SmoothBrickDataParser();
         }
 
+        if (material == Material.POTION) {
+            return new PotionDataParser();
+        }
+
         return null;
     }
 
