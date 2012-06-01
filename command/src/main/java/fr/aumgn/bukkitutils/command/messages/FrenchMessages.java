@@ -59,4 +59,8 @@ public class FrenchMessages extends Messages {
     public String noSuchPotionEffect() {
         return "L'effet de potion (%s) n'existe pas.";
     }
+
+    public String noSuchEnchant() {
+        return "L'enchantement (%s) n'existe pas.";
+    }
 }

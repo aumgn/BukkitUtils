@@ -59,4 +59,8 @@ public class Messages {
     public String noSuchPotionEffect() {
         return "No such potion effect (%s).";
     }
+
+    public String noSuchEnchant() {
+        return "No such enchant (%s).";
+    }
 }
