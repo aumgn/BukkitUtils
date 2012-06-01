@@ -9,12 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.command.exception.NoSuchEnchantment;
+import fr.aumgn.bukkitutils.command.exception.NoSuchEntityType;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPlayer;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPotionEffect;
@@ -284,28 +286,32 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public PotionEffectType getPotionEffectType(int index) {
-        return getPotionEffectType(get(index));
-    }
-
-    private PotionEffectType getPotionEffectType(String string) {
-        PotionEffectType effect = PotionEffectType.getByName(string);
+        String name = get(index);
+        PotionEffectType effect = PotionEffectType.getByName(name);
         if(effect == null) {
-            throw new NoSuchPotionEffect(messages, string);
+            throw new NoSuchPotionEffect(messages, name);
         }
 
         return effect;
     }
 
     public Enchantment getEnchantment(int index) {
-        return getEnchantment(get(index));
-    }
-
-    private Enchantment getEnchantment(String string) {
-        Enchantment enchant = Enchantment.getByName(string);
+        String name = get(index);
+        Enchantment enchant = Enchantment.getByName(name);
         if(enchant == null) {
-            throw new NoSuchEnchantment(messages, string);
+            throw new NoSuchEnchantment(messages, name);
         }
 
         return enchant;
+    }
+
+    public EntityType getEntityType(int index) {
+        String name = get(index);
+        EntityType entityType = EntityType.fromName(name);
+        if(entityType == null) {
+            throw new NoSuchEntityType(messages, name);
+        }
+
+        return entityType;
     }
 }
