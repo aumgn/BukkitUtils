@@ -63,4 +63,8 @@ public class Messages {
     public String noSuchEnchant() {
         return "No such enchant (%s).";
     }
+    
+    public String noSuchEntityType() {
+        return "No such entity (%s).";
+    }
 }

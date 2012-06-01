@@ -9,12 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.command.exception.NoSuchEnchantment;
+import fr.aumgn.bukkitutils.command.exception.NoSuchEntityType;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPlayer;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPotionEffect;
@@ -307,5 +309,18 @@ public class CommandArgs extends CommandArgsBase {
         }
 
         return enchant;
+    }
+    
+    public EntityType getEntityType(int index) {
+        return getEntityType(get(index));
+    }
+
+    private EntityType getEntityType(String string) {
+    	EntityType entityType = EntityType.fromName(string);
+        if(entityType == null) {
+            throw new NoSuchEntityType(messages, string);
+        }
+        
+        return entityType;
     }
 }

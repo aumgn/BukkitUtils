@@ -63,4 +63,8 @@ public class FrenchMessages extends Messages {
     public String noSuchEnchant() {
         return "L'enchantement (%s) n'existe pas.";
     }
+    
+    public String noSuchEntityType() {
+        return "L'entitée (%s) n'existe pas.";
+    }
 }
