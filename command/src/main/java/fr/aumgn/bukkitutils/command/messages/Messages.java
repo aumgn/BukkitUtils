@@ -55,4 +55,8 @@ public class Messages {
     public String notAValidVectorComponent() {
         return "Invalid vector component : %s.";
     }
+    
+    public String noSuchPotionEffect() {
+        return "No such effect (%s).";
+    }
 }

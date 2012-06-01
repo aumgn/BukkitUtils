@@ -9,11 +9,14 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
 import fr.aumgn.bukkitutils.command.exception.NoSuchPlayer;
+import fr.aumgn.bukkitutils.command.exception.NoSuchPotionEffect;
 import fr.aumgn.bukkitutils.command.exception.NoSuchWorld;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.geom.Vector;
@@ -230,6 +233,7 @@ public class CommandArgs extends CommandArgsBase {
             throw new NoSuchMaterial(messages, pattern);
         }
 
+        
         return material;
     }
 
@@ -244,8 +248,21 @@ public class CommandArgs extends CommandArgsBase {
 
         return def;
     }
+    
+    public PotionEffectType getPotionEffectType(int index) {
+    	return getPotionEffectType(get(index));
+    }
 
-    public ItemType getItemType(int index) {
+    private PotionEffectType getPotionEffectType(String string) {
+		PotionEffectType effect = PotionEffectType.getByName(string);
+		
+		if(effect == null) {
+			throw new NoSuchPotionEffect(messages, string);
+		}
+		return effect;
+	}
+
+	public ItemType getItemType(int index) {
         String[] splitted = get(index).split(":");
         if (splitted.length > 2) {
             throw new InvalidMaterialAndDataFormat(messages, get(index));
