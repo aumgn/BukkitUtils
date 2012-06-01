@@ -55,4 +55,8 @@ public class FrenchMessages extends Messages {
     public String notAValidVectorComponent() {
         return "Composant de vecteur invalide : %s.";
     }
+
+    public String noSuchPotionEffect() {
+        return "L'effet de potion (%s) n'existe pas.";
+    }
 }
