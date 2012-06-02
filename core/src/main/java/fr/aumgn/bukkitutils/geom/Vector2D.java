@@ -2,7 +2,10 @@ package fr.aumgn.bukkitutils.geom;
 
 import java.util.Iterator;
 
+import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 
 import fr.aumgn.bukkitutils.geom.direction.Vector2DDirection;
 
@@ -23,6 +26,18 @@ public class Vector2D implements Iterable<Vector2D> {
     public Vector2D(double x, double z) {
         this.x = x;
         this.z = z;
+    }
+
+    public Vector2D(Location loc) {
+        this(loc.getX(), loc.getZ());
+    }
+
+    public Vector2D(Entity entity) {
+        this(entity.getLocation());
+    }
+
+    public Vector2D(Block block) {
+        this(block.getX(), block.getZ());
     }
 
     public double getX() {

@@ -1,8 +1,6 @@
-package fr.aumgn.bukkitutils.geom.direction;
+package fr.aumgn.bukkitutils.geom;
 
-import fr.aumgn.bukkitutils.geom.Direction;
-import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.bukkitutils.geom.Vector2D;
+import fr.aumgn.bukkitutils.geom.direction.AbstractDirection;
 
 public final class Face extends AbstractDirection implements Direction {
 

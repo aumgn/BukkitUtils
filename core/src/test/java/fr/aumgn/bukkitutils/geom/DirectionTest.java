@@ -3,7 +3,6 @@ package fr.aumgn.bukkitutils.geom;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-import fr.aumgn.bukkitutils.geom.direction.Face;
 import fr.aumgn.bukkitutils.geom.direction.HorizontalDirection;
 import fr.aumgn.bukkitutils.geom.direction.LocationDirection;
 import static fr.aumgn.bukkitutils.geom.VectorUtils.*;

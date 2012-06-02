@@ -11,10 +11,7 @@ public class HorizontalDirection extends AbstractDirection {
     private Vector2D vector;
 
     public HorizontalDirection(float yaw) {
-        if (yaw < 0f || yaw >= 360f) {
-            throw new IllegalArgumentException("Invalid yaw");
-        }
-        this.yaw = yaw;
+        this.yaw = yaw % 360;
         this.vector = null;
     }
 

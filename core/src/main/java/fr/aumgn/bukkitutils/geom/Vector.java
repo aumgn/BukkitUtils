@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Entity;
 
 import fr.aumgn.bukkitutils.geom.direction.VectorDirection;
 
@@ -32,6 +33,10 @@ public class Vector implements Iterable<Vector> {
 
     public Vector(Location loc) {
         this(loc.getX(), loc.getY(), loc.getZ());
+    }
+
+    public Vector(Entity entity) {
+        this(entity.getLocation());
     }
 
     public Vector(Block block) {
@@ -220,8 +225,7 @@ public class Vector implements Iterable<Vector> {
     }
 
     public Location toLocation(World world, float yaw, float pitch) {
-        return new Location(world, Math.round(x) + 0.5, getBlockY(),
-                Math.round(z) + 0.5, yaw, pitch);
+        return new Location(world, x, getBlockY() + 0.1, z, yaw, pitch);
     }
 
     @Override
