@@ -17,6 +17,11 @@
 			<artifactId>gson</artifactId>
 			<version>2.1</version>
 		</dependency>
+		<dependency>
+			<groupId>fr.aumgn.bukkitutils</groupId>
+			<artifactId>core</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
