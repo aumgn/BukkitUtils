@@ -36,6 +36,10 @@ public class FrenchMessages extends Messages {
         return "Une erreur innatendue est apparue durant l'execution de le commande.";
     }
 
+    public String noSuchColor() {
+        return "La couleur %s n'existe pas.";
+    }
+
     public String noSuchWorld() {
         return "Le monde (%s) n'existe pas.";
     }

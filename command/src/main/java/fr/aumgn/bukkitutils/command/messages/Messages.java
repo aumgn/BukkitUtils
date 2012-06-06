@@ -36,16 +36,20 @@ public class Messages {
         return "An unexpected error ocurred while trying to execute command.";
     }
 
+    public String noSuchColor() {
+        return "No such color %s.";
+    }
+
     public String noSuchWorld() {
-        return "No such world (%s).";
+        return "No such world %s.";
     }
 
     public String noSuchPlayer() {
-        return "No such player (%s).";
+        return "No such player %s.";
     }
 
     public String noSuchMaterial() {
-        return "No such material (%s).";
+        return "No such material %s.";
     }
 
     public String invalidMaterialAndDataFormat() {
@@ -57,11 +61,11 @@ public class Messages {
     }
 
     public String noSuchPotionEffect() {
-        return "No such potion effect (%s).";
+        return "No such potion effect %s.";
     }
 
     public String noSuchEnchant() {
-        return "No such enchant (%s).";
+        return "No such enchant %s.";
     }
 
     public String noSuchEntityType() {

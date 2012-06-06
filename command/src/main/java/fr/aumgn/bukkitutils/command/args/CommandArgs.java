@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -15,6 +16,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
+import fr.aumgn.bukkitutils.command.exception.NoSuchColor;
 import fr.aumgn.bukkitutils.command.exception.NoSuchEnchantment;
 import fr.aumgn.bukkitutils.command.exception.NoSuchEntityType;
 import fr.aumgn.bukkitutils.command.exception.NoSuchMaterial;
@@ -64,6 +66,22 @@ public class CommandArgs extends CommandArgsBase {
     public double getDouble(int index, double def) {
         if (hasIndex(index)) {
             return getDouble(index);
+        }
+
+        return def;
+    }
+
+    public ChatColor getChatColor(int index) {
+        try {
+            return ChatColor.valueOf(get(index).toUpperCase());
+        } catch (IllegalArgumentException exc) {
+            throw new NoSuchColor(messages, get(index));
+        }
+    }
+
+    public ChatColor getChatColor(int index, ChatColor def) {
+        if (hasIndex(index)) {
+            return getChatColor(index);
         }
 
         return def;
