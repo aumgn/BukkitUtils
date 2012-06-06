@@ -14,7 +14,8 @@ public abstract class Timer implements Runnable {
     private final int majorDelay;
     private final int minorDelay;
     private final String format;
-    private final Runnable runnable;
+    private final String endMessage;
+    private Runnable runnable;
 
     private int remainingTime;
 
@@ -23,17 +24,31 @@ public abstract class Timer implements Runnable {
     private int currentDelay;
     private int pauseDelay;
 
-    public Timer(Plugin plugin, TimerConfig config, int seconds, Runnable runnable) {
+    private Timer(boolean dummy, Plugin plugin, TimerConfig config, int seconds) {
         this.plugin = plugin;
         this.majorDelay = config.getMajorDuration();
         this.minorDelay = config.getMinorDuration();
         this.format = config.getFormat();
+        this.endMessage = config.getEndMessage();
 
         this.taskId = -1;
         this.remainingTime = seconds;
-        this.runnable = runnable;
 
         this.currentDelay = 0;
+    }
+
+    public Timer(Plugin plugin, TimerConfig config, int seconds, Runnable runnable) {
+        this(true, plugin, config, seconds);
+        this.runnable = runnable;
+    }
+
+    public Timer(Plugin plugin, TimerConfig config, int seconds) {
+        this(false, plugin, config, seconds);
+        this.runnable = new Runnable() {
+            public void run() {
+                onFinish();
+            }
+        };
     }
 
     private long getCurrentTimeSeconds() {
@@ -99,6 +114,10 @@ public abstract class Timer implements Runnable {
         } else {
             runnable.run();
         }
+    }
+
+    public void onFinish() {
+        sendTimeMessage(endMessage);
     }
 
     public abstract void sendTimeMessage(String string);
