@@ -7,11 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Type;
 import java.nio.charset.Charset;
 
 import org.bukkit.plugin.Plugin;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 public class GConfLoader {
@@ -44,17 +46,27 @@ public class GConfLoader {
 
     public <T> T loadOrCreate(String filename, Class<T> klass)
             throws GConfLoadException {
+        return loadOrCreate(filename, klass, klass);
+    }
 
+    @SuppressWarnings("unchecked")
+    public <T> T loadOrCreate(String filename, TypeToken<T> typeToken)
+            throws GConfLoadException {
+        return (T) loadOrCreate(filename, typeToken.getType(), typeToken.getRawType());
+    }
+
+    private <T> T loadOrCreate(String filename, Type type, Class<T> klass)
+            throws GConfLoadException {
         try {
             File file = getFile(filename);
             T config;
             if (file.createNewFile()) {
                 config = klass.newInstance();
             } else {
-                config = load(file, klass);
+                config = load(file, type);
             }
 
-            // This ensures user file is updated with newer fields. 
+            // This ensures user file is updated with newer fields.
             write(file, config);
 
             return config;
@@ -67,7 +79,7 @@ public class GConfLoader {
         }
     }
 
-    private <T> T load(File file, Class<T> klass) throws IOException {
+    private <T> T load(File file, Type klass) throws IOException {
         InputStreamReader isr = new InputStreamReader(
                 new FileInputStream(file), charset());
         JsonReader reader = new JsonReader(isr);

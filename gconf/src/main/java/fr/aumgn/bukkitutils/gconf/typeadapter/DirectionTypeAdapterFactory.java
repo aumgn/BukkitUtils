@@ -30,6 +30,7 @@ public class DirectionTypeAdapterFactory implements TypeAdapterFactory {
             writer.value(dir.getYaw());
             writer.name("pitch");
             writer.value(dir.getPitch());
+            writer.endObject();
         }
 
         @SuppressWarnings("unchecked")
@@ -45,6 +46,7 @@ public class DirectionTypeAdapterFactory implements TypeAdapterFactory {
             float yaw = (float) reader.nextDouble();
             reader.nextName();
             float pitch = (float) reader.nextDouble();
+            reader.endObject();
             return (T) Directions.fromYawAndPitch(yaw, pitch);
         }
     }
