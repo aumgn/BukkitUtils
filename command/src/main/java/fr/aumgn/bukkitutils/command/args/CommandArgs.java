@@ -315,7 +315,7 @@ public class CommandArgs extends CommandArgsBase {
 
     public Enchantment getEnchantment(int index) {
         String name = get(index);
-        Enchantment enchant = Enchantment.getByName(name);
+        Enchantment enchant = Enchantment.getByName(name.toUpperCase());
         if(enchant == null) {
             throw new NoSuchEnchantment(messages, name);
         }
