@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.Commands;
-import fr.aumgn.bukkitutils.command.args.CommandArgsFactory;
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.args.CommandArgsInterface;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
@@ -72,10 +72,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     private CommandArgsInterface getArgs(String[] rawArgs){
         CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
         parser.validate(flags, argsFlags, min, max);
-        @SuppressWarnings("unchecked")
-        CommandArgsFactory factory = CommandArgsFactory.get(
-                (Class<? extends CommandArgsInterface>) method.getParameterTypes()[1]);
-        return factory.createCommandArgs(messages, parser);
+        return new CommandArgs(messages, parser);
     }
 
     private void callCommand(String name, CommandSender sender, CommandArgsInterface args) throws Throwable {

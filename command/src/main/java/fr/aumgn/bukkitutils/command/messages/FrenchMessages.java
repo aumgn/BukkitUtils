@@ -33,7 +33,7 @@ public class FrenchMessages extends Messages {
     }
 
     public String notAValidNumber() {
-        return "Nombre attendu pour l'argument %d.";
+        return "Nombre invalide : %s.";
     }
 
     public String unexpectedError() {

@@ -33,7 +33,7 @@ public class Messages {
     }
 
     public String notAValidNumber() {
-        return "Expected a number for arg %d.";
+        return "Invalid number : %s.";
     }
 
     public String unexpectedError() {

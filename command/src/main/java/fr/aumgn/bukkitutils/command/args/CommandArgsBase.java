@@ -6,6 +6,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import fr.aumgn.bukkitutils.command.arg.CommandArg;
+import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.basic.ListArg;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandArgsBase implements CommandArgsInterface {
@@ -38,10 +41,6 @@ public class CommandArgsBase implements CommandArgsInterface {
         return argsFlags.containsKey(character);
     }
 
-    public String getArgFlag(char character) {
-        return argsFlags.get(character);
-    }
-
     public Iterable<Character> flags() {
         return flags;
     }
@@ -60,6 +59,76 @@ public class CommandArgsBase implements CommandArgsInterface {
         }
 
         return def;
+    }
+
+    public String get(char flag) {
+        return argsFlags.get(flag);
+    }
+
+    public String get(char flag, String def) {
+        if (hasArgFlag(flag)) {
+            return get(flag);
+        }
+
+        return def;
+    }
+
+    public <T> CommandArg<T> get(int index, CommandArgFactory<T> factory) {
+        String arg = null;
+        if (hasIndex(index)) {
+            arg = args[index];
+        }
+
+        return factory.createCommandArg(messages, arg);
+    }
+
+    public <T> CommandArg<T> get(int index, Class<T> klass) {
+        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+        return get(index, factory);
+    }
+
+    public <T> CommandArg<T> get(char flag, CommandArgFactory<T> factory) {
+        String arg = null;
+        if (hasArgFlag(flag)) {
+            arg = argsFlags.get(flag);
+        }
+
+        return factory.createCommandArg(messages, arg);
+    }
+
+    public <T> CommandArg<T> get(char flag, Class<T> klass) {
+        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+        return get(flag, factory);
+    }
+
+    public String getArgFlag(char character) {
+        return argsFlags.get(character);
+    }
+
+    public String getArgFlag(char character, String def) {
+        if (hasArgFlag(character)) {
+            return getArgFlag(character);
+        }
+
+        return def;
+    }
+
+    public <T> ListArg<T> getList(int index, CommandArgFactory<T> factory) {
+        return new ListArg<T>(factory, messages, get(index));
+    }
+
+    public <T> ListArg<T> getList(int index, Class<T> klass) {
+        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+        return getList(index, factory);
+    }
+
+    public <T> ListArg<T> getList(char flag, CommandArgFactory<T> factory) {
+        return new ListArg<T>(factory, messages, get(flag));
+    }
+
+    public <T> ListArg<T> getList(char flag, Class<T> klass) {
+        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+        return getList(flag, factory);
     }
 
     public String get(int index, int rawEndIndex) {
