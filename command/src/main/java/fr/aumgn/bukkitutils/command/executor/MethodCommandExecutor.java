@@ -29,6 +29,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final int min;
     private final int max;
     private final Set<Character> flags;
+    private final Set<Character> argsFlags;
     private final boolean isPlayerCommand;
 
     public MethodCommandExecutor(Messages messages, Commands instance, Method method, Command command) {
@@ -41,6 +42,10 @@ public class MethodCommandExecutor implements CommandExecutor {
         this.flags = new HashSet<Character>();
         for (char flag : command.flags().toCharArray()) {
             this.flags.add(flag);
+        }
+        this.argsFlags = new HashSet<Character>();
+        for (char flag : command.argsFlags().toCharArray()) {
+            this.argsFlags.add(flag);
         }
         this.isPlayerCommand = Player.class.isAssignableFrom(
                 method.getParameterTypes()[0]);
@@ -66,7 +71,7 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private CommandArgsInterface getArgs(String[] rawArgs){
         CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
-        parser.validate(flags, min, max);
+        parser.validate(flags, argsFlags, min, max);
         @SuppressWarnings("unchecked")
         CommandArgsFactory factory = CommandArgsFactory.get(
                 (Class<? extends CommandArgsInterface>) method.getParameterTypes()[1]);

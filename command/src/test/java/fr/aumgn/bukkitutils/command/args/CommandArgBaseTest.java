@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import static fr.aumgn.bukkitutils.command.args.CommandArgsUtil.parse;
+import static fr.aumgn.bukkitutils.command.args.CommandArgsUtil.*;
 
 public class CommandArgBaseTest {
 
@@ -49,6 +49,17 @@ public class CommandArgBaseTest {
     }
 
     @Test
+    public void testDoNotCountFlagsAsArgs() {
+        Set<Character> expectedFlags = new HashSet<Character>();
+        expectedFlags.add('t');
+        expectedFlags.add('d');
+        CommandArgs args = parse(expectedFlags,
+                "args1", "-td", "args2");
+
+        assertEquals(2, args.length());
+    }
+
+    @Test
     public void testParseQuotedArgs() {
         CommandArgs args = parse(0, -1, "arg1", "\"arg2", "", "with", "spaces\"", "arg3");
 
@@ -67,14 +78,25 @@ public class CommandArgBaseTest {
     public void testInvalidFlag() {
         Set<Character> expectedFlags = new HashSet<Character>();
         expectedFlags.add('t');
+
         parse(expectedFlags, "args1", "-d", "args2");
+    }
+
+    @Test(expected = CommandUsageError.class)
+    public void testInvalidArgFlag() {
+        Set<Character> expectedArgFlags = new HashSet<Character>();
+        expectedArgFlags.add('t');
+
+        parseWithArgsFlags(expectedArgFlags, "args1", "-d=14", "args2");
     }
 
     @Test
     public void testFlagsPresence() {
         Set<Character> expectedFlags = new HashSet<Character>();
+        Set<Character> expectedArgsFlags = new HashSet<Character>();
         expectedFlags.add('t');
-        CommandArgs args = parse(expectedFlags, "args1", "args2");
+        expectedArgsFlags.add('d');
+        CommandArgs args = parse(expectedFlags, expectedArgsFlags, "args1", "args2");
 
         Set<Character> expectedFlags2 = new HashSet<Character>();
         expectedFlags2.add('t');
@@ -87,6 +109,7 @@ public class CommandArgBaseTest {
 
         assertFalse(args.hasFlags());
         assertFalse(args.hasFlag('t'));
+        assertFalse(args.hasArgFlag('d'));
 
         assertTrue(args2.hasFlags());
         assertTrue(args2.hasFlag('t'));
@@ -97,14 +120,19 @@ public class CommandArgBaseTest {
     }
 
     @Test
-    public void testDoNotCountFlagsAsArgs() {
+    public void testArgFlags() {
         Set<Character> expectedFlags = new HashSet<Character>();
         expectedFlags.add('t');
         expectedFlags.add('d');
-        CommandArgs args = parse(expectedFlags,
-                "args1", "-td", "args2");
+        expectedFlags.add('p');
+        CommandArgs args = parseWithArgsFlags(expectedFlags,
+                "-t=Test", "-d=14", "args1", "args2");
 
-        assertEquals(2, args.length());
+        assertTrue(args.hasArgFlag('t'));
+        assertEquals("Test", args.getArgFlag('t'));
+        assertTrue(args.hasArgFlag('d'));
+        assertEquals("14", args.getArgFlag('d'));
+        assertFalse(args.hasFlag('p'));
     }
 
     @Test

@@ -16,4 +16,6 @@ public @interface Command {
     int max() default 0;
 
     String flags() default "";
+
+    String argsFlags() default "";
 }

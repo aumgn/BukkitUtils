@@ -3,26 +3,43 @@ package fr.aumgn.bukkitutils.command.args;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandArgsBase implements CommandArgsInterface {
 
-    protected Messages messages;
-    protected Set<Character> flags;
-    protected String[] args;
+    protected final Messages messages;
+    private final Set<Character> flags;
+    private final Map<Character, String> argsFlags;
+    private final String[] args;
+
+    public CommandArgsBase(Messages messages, CommandArgsParser parser) {
+        this.messages = messages;
+        this.flags = parser.getFlags();
+        this.argsFlags = parser.getArgsFlags();
+        this.args = parser.getArgs();
+    }
 
     public boolean hasIndex(int index) {
         return index < args.length;
     }
 
     public boolean hasFlags() {
-        return !flags.isEmpty();
+        return !flags.isEmpty() || !argsFlags.isEmpty();
     }
 
     public boolean hasFlag(char character) {
         return flags.contains(character);
+    }
+
+    public boolean hasArgFlag(char character) {
+        return argsFlags.containsKey(character);
+    }
+
+    public String getArgFlag(char character) {
+        return argsFlags.get(character);
     }
 
     public Iterable<Character> flags() {

@@ -32,9 +32,7 @@ import fr.aumgn.bukkitutils.util.Util;
 public class CommandArgs extends CommandArgsBase {
 
     public CommandArgs(Messages messages, CommandArgsParser parser) {
-        this.messages = messages;
-        this.flags = parser.getFlags();
-        this.args = parser.getArgs();
+        super(messages, parser);
     }
 
     public int getInteger(int index) {

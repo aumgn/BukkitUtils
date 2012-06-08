@@ -1,7 +1,9 @@
 package fr.aumgn.bukkitutils.command.args;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -12,6 +14,7 @@ public class CommandArgsParser {
     private Messages messages;
     private String[] args;
     private Set<Character> flags;
+    private Map<Character, String> argsFlags;
 
     public CommandArgsParser(Messages messages, String[] tokens) {
         this.messages = messages;
@@ -20,6 +23,7 @@ public class CommandArgsParser {
 
     private void parse(String[] tokens) {
         flags = new HashSet<Character>();
+        argsFlags = new HashMap<Character, String>();
         ArrayList<String> argsList = new ArrayList<String>();
         boolean quoted = false;
         StringBuilder current = null;
@@ -64,12 +68,29 @@ public class CommandArgsParser {
     }
 
     private void parseFlags(String flagsString) {
+        int equal = flagsString.indexOf("=");
+        if (equal == -1) {
+            parseRegularFlags(flagsString);
+            return;
+        }
+
+        if (equal > 1) {
+            parseRegularFlags(flagsString.substring(0, equal -1));
+        }
+
+        argsFlags.put(
+                flagsString.charAt(equal - 1),
+                flagsString.substring(equal + 1));
+    }
+
+    private void parseRegularFlags(String flagsString) {
         for (char flag : flagsString.toCharArray()) {
             flags.add(flag);
         }
     }
 
-    public void validate(Set<Character> allowedFlags, int min, int max) {
+    public void validate(Set<Character> allowedFlags,
+            Set<Character> allowedArgsFlags, int min, int max) {
         StringBuilder invalidFlags = new StringBuilder();
         for (char flag : flags) {
             if (!allowedFlags.contains(flag)) {
@@ -77,7 +98,13 @@ public class CommandArgsParser {
             }
         }
 
-        if (invalidFlags.toString().length() > 0) {
+        for (char flag : argsFlags.keySet()) {
+            if (!allowedArgsFlags.contains(flag)) {
+                invalidFlags.append(flag);
+            }
+        }
+
+        if (invalidFlags.length() > 0) {
             throw new CommandUsageError(
                     String.format(messages.invalidFlag(), invalidFlags.toString()));
         }
@@ -94,6 +121,10 @@ public class CommandArgsParser {
 
     public Set<Character> getFlags() {
         return flags;
+    }
+
+    public Map<Character, String> getArgsFlags() {
+        return argsFlags;
     }
 
     public String[] getArgs() {
