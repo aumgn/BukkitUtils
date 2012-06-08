@@ -16,16 +16,20 @@ public class Messages {
         return ChatColor.RED + "This command can only be used as a player.";
     }
 
+    public String missingEndingQuote() {
+        return "Missing ending quote in %s.";
+    }
+
     public String invalidFlag() {
-        return "Invalid Flag(s) : %s";
+        return "Invalid Flag(s) : %s.";
     }
 
     public String missingArguments() {
-        return "Missing argument(s) (%d / %d min)";
+        return "Missing argument(s) (%d / %d min).";
     }
 
     public String tooManyArguments() {
-        return "Too many argument(s) (%d / %d max)";
+        return "Too many argument(s) (%d / %d max).";
     }
 
     public String notAValidNumber() {

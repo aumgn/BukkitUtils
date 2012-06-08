@@ -21,17 +21,43 @@ public class CommandArgsParser {
     private void parse(String[] tokens) {
         flags = new HashSet<Character>();
         ArrayList<String> argsList = new ArrayList<String>();
-        for (String token : tokens) {
-            if (token.isEmpty()) {
-                continue;
-            }
+        boolean quoted = false;
+        StringBuilder current = null;
 
-            if (token.charAt(0) == '-' && token.length() > 1
-                    && Character.isLetter(token.charAt(1))) {
-                parseFlags(token.substring(1));
+        for (String token : tokens) {
+
+            if (quoted) {
+                if (!token.isEmpty()
+                        && token.charAt(token.length() - 1) == '\"') {
+                    current.append(" ");
+                    current.append(token.substring(0, token.length() - 1));
+                    argsList.add(current.toString());
+                    quoted = false;
+                } else {
+                    current.append(" ");
+                    current.append(token);
+                }
             } else {
-                argsList.add(token);
+                if (token.isEmpty()) {
+                    continue;
+                }
+
+                if (token.charAt(0) == '"') {
+                    quoted = true;
+                    current = new StringBuilder();
+                    current.append(token.substring(1));
+                } else if (token.charAt(0) == '-' && token.length() > 1
+                        && Character.isLetter(token.charAt(1))) {
+                    parseFlags(token.substring(1));
+                } else {
+                    argsList.add(token);
+                }
             }
+        }
+
+        if (quoted) {
+            throw new CommandUsageError(
+                    String.format(messages.missingEndingQuote(), current.toString()));
         }
 
         args = argsList.toArray(new String[argsList.size()]);

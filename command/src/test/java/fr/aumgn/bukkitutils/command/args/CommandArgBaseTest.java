@@ -48,6 +48,21 @@ public class CommandArgBaseTest {
         assertEquals(size, args2.length());
     }
 
+    @Test
+    public void testParseQuotedArgs() {
+        CommandArgs args = parse(0, -1, "arg1", "\"arg2", "", "with", "spaces\"", "arg3");
+
+        assertEquals(3, args.length());
+        assertEquals("arg1", args.get(0));
+        assertEquals("arg2  with spaces", args.get(1));
+        assertEquals("arg3", args.get(2));
+    }
+
+    @Test(expected = CommandUsageError.class)
+    public void testParseQuotedArgsWithoutEndingQuote() {
+        parse(0, -1, "arg1", "\"arg2", "", "with", "spaces");
+    }
+
     @Test(expected = CommandUsageError.class)
     public void testInvalidFlag() {
         Set<Character> expectedFlags = new HashSet<Character>();

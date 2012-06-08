@@ -16,6 +16,10 @@ public class FrenchMessages extends Messages {
         return ChatColor.RED + "Cette commande ne peut être utilisée qu'en tant que joueur.";
     }
 
+    public String missingEndingQuote() {
+        return "Guillemet fermante manquante : %s.";
+    }
+
     public String invalidFlag() {
         return ChatColor.RED + "Flag(s) invalide(s) : %s.";
     }
