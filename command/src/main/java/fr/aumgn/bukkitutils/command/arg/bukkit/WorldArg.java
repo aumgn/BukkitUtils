@@ -71,7 +71,7 @@ public class WorldArg extends CommandArg<World> {
         List<World> worlds = new ArrayList<World>();
 
         for (World world : Bukkit.getWorlds()) {
-            if (world.getName().toLowerCase().startsWith(pattern)) {
+            if (world.getName().toLowerCase().contains(pattern)) {
                 worlds.add(world);
             }
         }
