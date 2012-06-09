@@ -17,7 +17,7 @@ public class EnchantmentArg extends CommandArg<Enchantment> {
         }
     }
 
-    private static class NoSuchEnchantment extends CommandError {
+    public static class NoSuchEnchantment extends CommandError {
 
         private static final long serialVersionUID = -4832133406864970323L;
 

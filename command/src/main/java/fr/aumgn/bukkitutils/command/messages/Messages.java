@@ -75,4 +75,16 @@ public class Messages {
     public String noSuchEntityType() {
         return "No such entity (%s).";
     }
+
+    public String playerNeeded() {
+        return "You have to specify a player.";
+    }
+
+    public String worldNeeded() {
+        return "You have to specify a world.";
+    }
+
+    public String positionNeeded() {
+        return "You have to specify a position.";
+    }
 }

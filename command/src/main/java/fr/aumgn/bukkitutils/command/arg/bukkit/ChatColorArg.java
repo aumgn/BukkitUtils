@@ -17,7 +17,7 @@ public class ChatColorArg extends CommandArg<ChatColor> {
         }
     }
 
-    private static class NoSuchColor extends CommandError {
+    public static class NoSuchColor extends CommandError {
 
         private static final long serialVersionUID = 2534023126371443961L;
 

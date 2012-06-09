@@ -61,9 +61,9 @@ public class VectorArg extends CommandArg<Vector> {
         }
 
         if (!(sender instanceof Player)) {
-            throw new CommandUsageError("You have to specify a position.");
+            throw new CommandUsageError(messages.positionNeeded());
         }
 
-        return value(new Vector((Player) sender));
+        return new Vector((Player) sender);
     }
 }

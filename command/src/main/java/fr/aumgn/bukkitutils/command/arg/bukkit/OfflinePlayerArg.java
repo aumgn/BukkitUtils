@@ -2,9 +2,12 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
@@ -24,5 +27,18 @@ public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
     @Override
     public OfflinePlayer value() {
         return Bukkit.getOfflinePlayer(string);
+    }
+
+    @Override
+    public OfflinePlayer value(CommandSender sender) {
+        if (string != null) {
+            return value();
+        }
+
+        if (!(sender instanceof Player)) {
+            throw new CommandUsageError(messages.playerNeeded());
+        }
+
+        return (Player) sender;
     }
 }

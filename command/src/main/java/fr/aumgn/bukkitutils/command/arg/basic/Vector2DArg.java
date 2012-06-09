@@ -28,17 +28,24 @@ public class Vector2DArg extends CommandArg<Vector2D> {
     public Vector2D value() {
         String[] splitted = string.split(",");
 
-        if (splitted.length > 2) {
+        if (splitted.length > 3) {
             throw new CommandUsageError();
         }
 
         double x = VectorArg.parseVectorComponent(messages, splitted[0]);
-        double z = 0.0;
-        if (splitted.length > 1) {
-            z = VectorArg.parseVectorComponent(messages, splitted[1]);
+        double z;
+        switch (splitted.length) {
+            case 2:
+                z = VectorArg.parseVectorComponent(messages, splitted[1]);
+                break;
+            case 3:
+                z = VectorArg.parseVectorComponent(messages, splitted[2]);
+                break;
+            default:
+                z = 0.0;
         }
 
-        return new Vector2D(x,z);
+        return new Vector2D(x, z);
     }
 
     @Override
@@ -48,9 +55,9 @@ public class Vector2DArg extends CommandArg<Vector2D> {
         }
 
         if (!(sender instanceof Player)) {
-            throw new CommandUsageError("You have to specify a position.");
+            throw new CommandUsageError(messages.positionNeeded());
         }
 
-        return value(new Vector((Player) sender).to2D());
+        return new Vector((Player) sender).to2D();
     }
 }

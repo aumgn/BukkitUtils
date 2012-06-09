@@ -1,20 +1,21 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
-import fr.aumgn.bukkitutils.command.arg.PartialCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.util.Util;
 
-public class PlayerArg extends PartialCommandArg<Player> {
+public class PlayerArg extends CommandArg<Player> {
 
     public static class Factory extends CommandArgFactory<Player> {
 
@@ -53,10 +54,10 @@ public class PlayerArg extends PartialCommandArg<Player> {
         }
 
         if (!(sender instanceof Player)) {
-            throw new CommandUsageError("You have to specify a player.");
+            throw new CommandUsageError(messages.playerNeeded());
         }
 
-        return value((Player) sender);
+        return (Player) sender;
     }
 
     @Override
@@ -67,7 +68,7 @@ public class PlayerArg extends PartialCommandArg<Player> {
 
         List<Player> players = Util.matchPlayer(string);
         if (players.isEmpty()) {
-            throw new PlayerArg.NoSuchPlayer(messages, string);
+            throw new NoSuchPlayer(messages, string);
         }
 
         return players;
@@ -80,9 +81,9 @@ public class PlayerArg extends PartialCommandArg<Player> {
         }
 
         if (!(sender instanceof Player)) {
-            throw new CommandUsageError("You have to specify a player.");
+            throw new CommandUsageError(messages.playerNeeded());
         }
 
-        return match((Player) sender);
+        return Collections.<Player>singletonList((Player) sender);
     }
 }

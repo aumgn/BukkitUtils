@@ -10,9 +10,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
+import fr.aumgn.bukkitutils.command.arg.CommandListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
-import fr.aumgn.bukkitutils.command.arg.basic.ListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
 import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.ChatColorArg;
@@ -63,7 +63,7 @@ public class CommandArgs extends CommandArgsBase {
         return get(index, new PlayerArg.Factory());
     }
 
-    public ListArg<Player> getPlayers(int index) {
+    public CommandListArg<Player> getPlayers(int index) {
         return getList(index, new PlayerArg.Factory());
     }
 
