@@ -1,6 +1,5 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,7 +12,8 @@ import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
-import fr.aumgn.bukkitutils.util.Util;
+import fr.aumgn.bukkitutils.glob.Glob;
+import fr.aumgn.bukkitutils.glob.Glob.ToString;
 
 public class PlayerArg extends CommandArg<Player> {
 
@@ -33,18 +33,25 @@ public class PlayerArg extends CommandArg<Player> {
         }
     }
 
+    private static class PlayerToString implements ToString<Player> {
+        public String convert(Player player) {
+            return player.getName();
+        }
+    }
+
     public PlayerArg(Messages messages, String string) {
         super(messages, string);
     }
 
     @Override
     public Player value() {
-        Player player = Bukkit.getPlayer(string);
-        if (player == null) {
+        List<Player> players = match();
+
+        if (players.size() > 1) {
             throw new NoSuchPlayer(messages, string);
         }
 
-        return player;
+        return players.get(0);
     }
 
     @Override
@@ -62,11 +69,11 @@ public class PlayerArg extends CommandArg<Player> {
 
     @Override
     public List<Player> match() {
-        if (string.equals("*")) {
-            return Arrays.asList(Bukkit.getOnlinePlayers());
-        }
+        List<Player> players = new Glob(string)
+                .start().caseInsensitive()
+                .build(new PlayerToString())
+                .filter(Bukkit.getOnlinePlayers());
 
-        List<Player> players = Util.matchPlayer(string);
         if (players.isEmpty()) {
             throw new NoSuchPlayer(messages, string);
         }

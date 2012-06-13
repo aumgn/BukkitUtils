@@ -39,14 +39,14 @@ public class CommandArgsBukkitTest {
         assertEquals(player, args.getPlayer(1).value());
     }
 
-    /*@Test
+    @Test
     public void testMatchAllPlayers() {
         MockBukkit.mockPlayer("Player2");
         MockBukkit.mockPlayer("Player3");
         CommandArgs args = CommandArgsUtil.parse("*");
 
         assertEquals(3, args.getPlayers(0).match().size());
-    }*/
+    }
 
     @Test
     public void testMatchPlayer() {
