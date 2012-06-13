@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.util;
+package fr.aumgn.bukkitutils.glob;
 
 import java.util.List;
 
