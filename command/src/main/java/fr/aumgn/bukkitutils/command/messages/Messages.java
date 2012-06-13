@@ -87,4 +87,12 @@ public class Messages {
     public String positionNeeded() {
         return "You have to specify a position.";
     }
+
+    public String unknownTimeFormat() {
+        return "Unknown time format %s.";
+    }
+
+    public String unknownTimePeriod() {
+        return "Unknown time period %s (expected am or pm).";
+    }
 }

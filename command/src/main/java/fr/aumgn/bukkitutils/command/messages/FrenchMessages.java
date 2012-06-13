@@ -108,4 +108,12 @@ public class FrenchMessages extends Messages {
     public String positionNeeded() {
         return "Vous devez specifier une position.";
     }
+
+    public String unknownTimeFormat() {
+        return "Format de temps inconnu %s.";
+    }
+
+    public String unknownTimePeriod() {
+        return "Période de la journée inconnue %s (am ou pm attendu).";
+    }
 }
