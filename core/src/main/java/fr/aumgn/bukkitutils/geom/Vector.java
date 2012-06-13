@@ -212,6 +212,10 @@ public class Vector implements Iterable<Vector> {
         return to.subtract(this).toDirection();
     }
 
+    public org.bukkit.util.Vector toBukkit() {
+        return new org.bukkit.util.Vector(x, y, z);
+    }
+
     public Location toLocation(World world) {
         return toLocation(world, 0.0f, 0.0f);
     }
