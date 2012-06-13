@@ -87,8 +87,10 @@ public class CommandArgsBukkitTest {
     @Test
     public void testGetWorld() {
         CommandArgs args = CommandArgsUtil.parse("world");
+        CommandArgs args2 = CommandArgsUtil.parse("wor");
 
         assertEquals(world, args.getWorld(0).value());
+        assertEquals(world, args2.getWorld(0).value());
     }
 
     @Test(expected = NoSuchWorld.class)

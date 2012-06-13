@@ -1,9 +1,7 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -15,6 +13,8 @@ import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
+import fr.aumgn.bukkitutils.glob.Glob;
+import fr.aumgn.bukkitutils.glob.Glob.ToString;
 
 public class WorldArg extends CommandArg<World> {
 
@@ -38,14 +38,20 @@ public class WorldArg extends CommandArg<World> {
         }
     }
 
+    private static class WorldToString implements ToString<World> {
+        public String convert(World world) {
+            return world.getName();
+        }
+    }
+
     @Override
     public World value() {
-        World world = Bukkit.getWorld(string);
-        if (world == null) {
+        List<World> worlds = match();
+        if (worlds.size() > 1) {
             throw new NoSuchWorld(messages, string);
         }
 
-        return world;
+        return worlds.get(0);
     }
 
     @Override
@@ -63,18 +69,10 @@ public class WorldArg extends CommandArg<World> {
 
     @Override
     public List<World> match() {
-        if (string.equals("*")) {
-            return Bukkit.getWorlds();
-        }
-
-        String pattern = string.toLowerCase(Locale.ENGLISH);
-        List<World> worlds = new ArrayList<World>();
-
-        for (World world : Bukkit.getWorlds()) {
-            if (world.getName().toLowerCase().contains(pattern)) {
-                worlds.add(world);
-            }
-        }
+        List<World> worlds = new Glob(string)
+                .partial().caseInsensitive()
+                .build(new WorldToString())
+                .filter(Bukkit.getWorlds());
 
         if (worlds.isEmpty()) {
             throw new NoSuchWorld(messages, string);
