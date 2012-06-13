@@ -1,7 +1,8 @@
-package fr.aumgn.bukkitutils.util.glob;
+package fr.aumgn.bukkitutils.glob.matchers;
 
 import java.util.Collections;
 import java.util.List;
+
 
 public class WildcardMatcher implements GlobMatcher {
 
@@ -9,7 +10,7 @@ public class WildcardMatcher implements GlobMatcher {
 
     public WildcardMatcher(String pattern, int i) {
         this.matchers = Collections.unmodifiableList(
-                GlobPattern.parse(pattern, i));
+                GlobParser.parse(pattern, i));
     }
 
     public List<GlobMatcher> getMatchers() {

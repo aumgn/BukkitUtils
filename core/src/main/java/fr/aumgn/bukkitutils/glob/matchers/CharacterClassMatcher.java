@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.util.glob;
+package fr.aumgn.bukkitutils.glob.matchers;
 
 import java.util.Collections;
 import java.util.HashSet;

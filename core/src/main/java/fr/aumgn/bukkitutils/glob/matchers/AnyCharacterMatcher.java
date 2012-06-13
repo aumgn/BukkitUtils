@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.util.glob;
+package fr.aumgn.bukkitutils.glob.matchers;
 
 public class AnyCharacterMatcher implements GlobMatcher {
 
