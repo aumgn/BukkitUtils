@@ -45,6 +45,14 @@ public final class Util {
             }
         }
     }
+    
+    public static void broadcastOnlyToOp(String message) {
+    	for (Player player : Bukkit.getOnlinePlayers()) {
+    		if(player.isOp()) {
+    			player.sendMessage(message);
+    		}
+    	}
+    }
 
     public static List<Player> matchPlayer(String rawPattern) {
         String pattern = rawPattern.toLowerCase(Locale.ENGLISH);
