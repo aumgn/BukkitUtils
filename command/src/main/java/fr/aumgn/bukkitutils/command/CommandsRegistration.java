@@ -25,11 +25,15 @@ public class CommandsRegistration {
     public void register(Commands commands) {
         NestedCommands subCmdsAnnotation =
                 commands.getClass().getAnnotation(NestedCommands.class);
-        boolean subCommands;
+        boolean subCommands = false;
         if (subCmdsAnnotation != null) {
             subCommands = true;
-        } else {
-            subCommands = false;
+        }
+
+        Method preExecute = null;
+        try {
+            preExecute = commands.getClass().getMethod("preExecute", CommandSender.class, CommandArgs.class);
+        } catch (Exception e) {
         }
 
         for (Method method : commands.getClass().getMethods()) {
@@ -57,7 +61,7 @@ public class CommandsRegistration {
             if (command != null) {
                 CommandExecutor oldExecutor = command.getExecutor();
                 CommandExecutor executor = new MethodCommandExecutor(
-                        local, commands, method, cmdAnnotation);
+                        local, commands, preExecute, method, cmdAnnotation);
                 if (oldExecutor instanceof NestedCommandExecutor) {
                     ((NestedCommandExecutor) oldExecutor).setDefaultExecutor(executor);
                 } else {

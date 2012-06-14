@@ -24,6 +24,7 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private final Messages messages;
     private final Commands instance;
+    private final Method preExecute;
     private final Method method;
     private final int min;
     private final int max;
@@ -31,9 +32,10 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final Set<Character> argsFlags;
     private final boolean isPlayerCommand;
 
-    public MethodCommandExecutor(Messages messages, Commands instance, Method method, Command command) {
+    public MethodCommandExecutor(Messages messages, Commands instance, Method preExecute, Method method, Command command) {
         this.messages = messages;
         this.instance = instance;
+        this.preExecute = preExecute;
         this.method = method;
 
         this.min = command.min();
@@ -76,6 +78,9 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private void callCommand(String name, CommandSender sender, CommandArgs args) throws Throwable {
         try {
+            if (preExecute != null) {
+                preExecute.invoke(instance, sender, args);
+            }
             method.invoke(instance, sender, args);
         } catch (InvocationTargetException exc) {
             Throwable cause = exc.getCause();

@@ -28,12 +28,35 @@ public class MethodCommandExecutorTest {
         MockBukkit.tearDown();
     }
 
+    private CommandExecutor getExecutorFor(Commands commands) {
+        Method preExecute = null;
+        Method method = null;
+        for (Method declaredMethod : commands.getClass().getDeclaredMethods()) {
+            if (declaredMethod.getName().equals("preExecute")) {
+                preExecute = declaredMethod;
+                continue;
+            }
+            if (declaredMethod.getAnnotation(Command.class) != null) {
+                method = declaredMethod;
+            }
+        }
+
+        Command command = method.getAnnotation(Command.class);
+        return new MethodCommandExecutor(new Messages(),
+                commands, preExecute, method, command);
+    }
+
     @Test
     public void testExecution() {
-        TestCommands testCommands = new TestCommands();
-        Method method = TestCommands.class.getDeclaredMethods()[0];
-        Command command = method.getAnnotation(Command.class);
-        CommandExecutor executor = new MethodCommandExecutor(new Messages(), testCommands, method, command);
+        CommandExecutor executor = getExecutorFor(new TestCommands());
+        executor.onCommand(player, null, "test", new String[] { "Hi !" });
+
+        verify(player).sendMessage("Hi !");
+    }
+
+    @Test
+    public void testPreExecute() {
+        CommandExecutor executor = getExecutorFor(new TestPreExecuteCommands());
         executor.onCommand(player, null, "test", new String[] { "Hi !" });
 
         verify(player).sendMessage("Hi !");
