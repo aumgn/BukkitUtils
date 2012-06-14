@@ -22,7 +22,7 @@ public class EnchantmentArg extends CommandArg<Enchantment> {
         private static final long serialVersionUID = -4832133406864970323L;
 
         public NoSuchEnchantment(Messages messages, String name) {
-            super(String.format(messages.noSuchEnchant(), name));
+            super(messages.noSuchEnchant(name));
         }
     }
 

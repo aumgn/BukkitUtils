@@ -21,7 +21,7 @@ public class EntityTypeArg extends CommandArg<EntityType> {
         private static final long serialVersionUID = 6849291638184124428L;
 
         public NoSuchEntityType(Messages messages, String name) {
-            super(String.format(messages.noSuchEntityType(), name));
+            super(messages.noSuchEntityType(name));
         }
     }
 

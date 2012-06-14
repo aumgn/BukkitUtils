@@ -15,8 +15,7 @@ public class VectorArg extends CommandArg<Vector> {
         try {
             return Double.parseDouble(component);
         } catch (NumberFormatException exc) {
-            throw new CommandUsageError(
-                    String.format(messages.notAValidVectorComponent(), component));
+            throw new CommandUsageError(messages.notAValidVectorComponent(component));
         }
     }
 

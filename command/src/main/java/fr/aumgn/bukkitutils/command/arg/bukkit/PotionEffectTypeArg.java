@@ -21,7 +21,7 @@ public class PotionEffectTypeArg extends CommandArg<PotionEffectType> {
         private static final long serialVersionUID = 6849291638184124428L;
 
         public NoSuchPotionEffect(Messages messages, String name) {
-            super(String.format(messages.noSuchPotionEffect(), name));
+            super(messages.noSuchPotionEffect(name));
         }
     }
 

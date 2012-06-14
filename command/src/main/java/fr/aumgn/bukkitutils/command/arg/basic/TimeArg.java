@@ -29,10 +29,10 @@ public class TimeArg extends CommandArg<Integer> {
             return TimeUtil.parseTime(string);
         } catch (UnknownTimeFormatException exc) {
             throw new CommandError(
-                    String.format(messages.unknownTimeFormat(), exc.getTime()));
+                    messages.unknownTimeFormat(exc.getTime()));
         } catch (UnknownTimePeriodException exc) {
             throw new CommandError(
-                    String.format(messages.unknownTimePeriod(), exc.getPeriod()));
+                    messages.unknownTimePeriod(exc.getPeriod()));
         }
     }
 }

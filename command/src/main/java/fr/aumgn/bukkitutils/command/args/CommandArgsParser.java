@@ -61,7 +61,7 @@ public class CommandArgsParser {
 
         if (quoted) {
             throw new CommandUsageError(
-                    String.format(messages.missingEndingQuote(), current.toString()));
+                    messages.missingEndingQuote(current.toString()));
         }
 
         args = argsList.toArray(new String[argsList.size()]);
@@ -105,17 +105,14 @@ public class CommandArgsParser {
         }
 
         if (invalidFlags.length() > 0) {
-            throw new CommandUsageError(
-                    String.format(messages.invalidFlag(), invalidFlags.toString()));
+            throw new CommandUsageError(messages.invalidFlag(invalidFlags.toString()));
         }
 
         if (args.length < min) {
-            throw new CommandUsageError(String.format(messages.missingArguments(),
-                    args.length, min));
+            throw new CommandUsageError(messages.missingArguments(args.length, min));
         }
         if (max != -1 && args.length > max) {
-            throw new CommandUsageError(String.format(messages.tooManyArguments(),
-                    args.length, max));
+            throw new CommandUsageError(messages.tooManyArguments(args.length, max));
         }
     }
 

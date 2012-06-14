@@ -22,7 +22,7 @@ public class MaterialArg extends CommandArg<Material> {
         private static final long serialVersionUID = 6849291638184124428L;
 
         public NoSuchMaterial(Messages messages, String name) {
-            super(String.format(messages.noSuchMaterial(), name));
+            super(messages.noSuchMaterial(name));
         }
     }
 

@@ -4,7 +4,7 @@ import org.bukkit.Material;
 
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
-import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
+import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.itemtype.ItemType;
 
@@ -20,6 +20,14 @@ public class ItemTypeArg extends CommandArg<ItemType> {
         }
     }
 
+    public static class InvalidItemTypeFormat extends CommandError {
+        private static final long serialVersionUID = 1L;
+
+        public InvalidItemTypeFormat(Messages messages, String given) {
+            super(messages.invalidMaterialAndDataFormat(given));
+        }
+    }
+
     public ItemTypeArg(Messages messages, String string) {
         super(messages, string);
     }
@@ -28,7 +36,7 @@ public class ItemTypeArg extends CommandArg<ItemType> {
     public ItemType value() {
         String[] splitted = string.split(":");
         if (splitted.length > 2) {
-            throw new InvalidMaterialAndDataFormat(messages, string);
+            throw new InvalidItemTypeFormat(messages, string);
         }
 
         Material material = MaterialArg.getMaterial(messages, splitted[0]);
@@ -36,7 +44,7 @@ public class ItemTypeArg extends CommandArg<ItemType> {
         if (splitted.length == 2) {
             data = Util.parseDataFor(material, splitted[1]);
             if (data == null) {
-                throw new InvalidMaterialAndDataFormat(messages, string);
+                throw new InvalidItemTypeFormat(messages, string);
             }
         }
 

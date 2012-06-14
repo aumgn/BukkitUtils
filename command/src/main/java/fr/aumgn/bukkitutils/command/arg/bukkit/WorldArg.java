@@ -34,7 +34,7 @@ public class WorldArg extends CommandArg<World> {
         private static final long serialVersionUID = -4832133406864970323L;
 
         public NoSuchWorld(Messages messages, String name) {
-            super(String.format(messages.noSuchWorld(), name));
+            super(messages.noSuchWorld(name));
         }
     }
 

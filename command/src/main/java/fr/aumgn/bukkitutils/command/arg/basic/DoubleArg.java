@@ -24,8 +24,7 @@ public class DoubleArg extends CommandArg<Double> {
         try {
             return Double.parseDouble(string);
         } catch (NumberFormatException exc) {
-            throw new CommandUsageError(
-                    String.format(messages.notAValidNumber(), string));
+            throw new CommandUsageError(messages.notAValidNumber(string));
         }
     }
 }

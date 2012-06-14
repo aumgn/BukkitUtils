@@ -4,10 +4,10 @@ import org.bukkit.Material;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import fr.aumgn.bukkitutils.command.arg.bukkit.ItemTypeArg.InvalidItemTypeFormat;
 import fr.aumgn.bukkitutils.command.arg.bukkit.MaterialArg.NoSuchMaterial;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.command.exception.InvalidMaterialAndDataFormat;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.itemtype.ItemType;
@@ -139,14 +139,14 @@ public class CommandArgsTest {
         assertEquals(0, materialAndData.getData());
     }
 
-    @Test(expected = InvalidMaterialAndDataFormat.class)
+    @Test(expected = InvalidItemTypeFormat.class)
     public void testInvalidItemTypeFormat() {
         CommandArgs args = CommandArgsUtil.parse("stone:4:5");
 
         args.getItemType(0).value();
     }
 
-    @Test(expected = InvalidMaterialAndDataFormat.class)
+    @Test(expected = InvalidItemTypeFormat.class)
     public void testInvalidItemTypeData() {
         CommandArgs args = CommandArgsUtil.parse("stone:invaliddata");
 

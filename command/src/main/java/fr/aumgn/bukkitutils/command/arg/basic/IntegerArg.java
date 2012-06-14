@@ -24,8 +24,7 @@ public class IntegerArg extends CommandArg<Integer> {
         try {
             return Integer.parseInt(string);
         } catch (NumberFormatException exc) {
-            throw new CommandUsageError(
-                    String.format(messages.notAValidNumber(), string));
+            throw new CommandUsageError(messages.notAValidNumber(string));
         }
     }
 }
