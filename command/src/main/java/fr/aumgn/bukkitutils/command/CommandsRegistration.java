@@ -79,13 +79,15 @@ public class CommandsRegistration {
 
     private boolean isValidCommand(Method method) {
         Class<?>[] params = method.getParameterTypes();
-        if (params.length < 2) {
+        if (params.length == 0 || params.length > 2) {
             return false;
         }
+
         if (!CommandSender.class.isAssignableFrom(params[0])) {
             return false;
         }
-        if (!CommandArgs.class.isAssignableFrom(params[1])) {
+
+        if (params.length > 1 && !CommandArgs.class.isAssignableFrom(params[1])) {
             return false;
         }
 

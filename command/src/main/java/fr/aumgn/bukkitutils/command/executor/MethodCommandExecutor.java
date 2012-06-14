@@ -38,8 +38,13 @@ public class MethodCommandExecutor implements CommandExecutor {
         this.preExecute = preExecute;
         this.method = method;
 
-        this.min = command.min();
-        this.max = command.max();
+        if (method.getParameterTypes().length > 1) {
+            this.min = command.min();
+            this.max = command.max();
+        } else {
+            this.min = -1;
+            this.max = 0;
+        }
         this.flags = new HashSet<Character>();
         for (char flag : command.flags().toCharArray()) {
             this.flags.add(flag);
@@ -59,7 +64,16 @@ public class MethodCommandExecutor implements CommandExecutor {
             return true;
         }
         try {
-            CommandArgs args = getArgs(rawArgs);
+            CommandArgs args;
+            if (min > 0) {
+                args = getArgs(rawArgs);
+            } else {
+                if (rawArgs.length > 0) {
+                    throw new CommandUsageError(
+                            messages.tooManyArguments(rawArgs.length, 0));
+                }
+                args = null;
+            }
             callCommand(lbl, sender, args);
         } catch (CommandUsageError error) {
             sender.sendMessage(ChatColor.RED + error.getMessage());
@@ -81,7 +95,11 @@ public class MethodCommandExecutor implements CommandExecutor {
             if (preExecute != null) {
                 preExecute.invoke(instance, sender, args);
             }
-            method.invoke(instance, sender, args);
+            if (args != null) {
+                method.invoke(instance, sender, args);
+            } else {
+                method.invoke(instance, sender);
+            }
         } catch (InvocationTargetException exc) {
             Throwable cause = exc.getCause();
             if (cause instanceof CommandException) {
@@ -98,20 +116,22 @@ public class MethodCommandExecutor implements CommandExecutor {
     private void unhandledError(String name, CommandArgs args, Throwable exc) {
         if (!(exc instanceof org.bukkit.command.CommandException)) {
             Bukkit.getLogger().severe("Exception occured while executing \""+ name + "\"");
-            if (args.hasFlags()) {
-                StringBuilder flagsString = new StringBuilder();
-                for (char flag : args.flags()) {
-                    flagsString.append(flag);
+            if (args != null) {
+                if (args.hasFlags()) {
+                    StringBuilder flagsString = new StringBuilder();
+                    for (char flag : args.flags()) {
+                        flagsString.append(flag);
+                    }
+                    Bukkit.getLogger().severe("Flags : " + flagsString.toString());
                 }
-                Bukkit.getLogger().severe("Flags : " + flagsString.toString());
-            }
-            if (args.length() > 0) {
-                StringBuilder arguments = new StringBuilder();
-                for (String arg : args.asList()) {
-                    arguments.append(arg);
-                    arguments.append(" ");
+                if (args.length() > 0) {
+                    StringBuilder arguments = new StringBuilder();
+                    for (String arg : args.asList()) {
+                        arguments.append(arg);
+                        arguments.append(" ");
+                    }
+                    Bukkit.getLogger().severe("Arguments : " + arguments.toString());
                 }
-                Bukkit.getLogger().severe("Arguments : " + arguments.toString());
             }
         }
         Bukkit.getLogger().log(Level.SEVERE, "Exception : ", exc);

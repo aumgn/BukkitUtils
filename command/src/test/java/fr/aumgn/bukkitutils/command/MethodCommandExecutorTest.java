@@ -61,4 +61,12 @@ public class MethodCommandExecutorTest {
 
         verify(player).sendMessage("Hi !");
     }
+
+    @Test
+    public void testCommandWithoutArg() {
+        CommandExecutor executor = getExecutorFor(new TestCommandsWithoutArg());
+        executor.onCommand(player, null, "test", new String[] {});
+
+        verify(player).sendMessage("Hi !");
+    }
 }
