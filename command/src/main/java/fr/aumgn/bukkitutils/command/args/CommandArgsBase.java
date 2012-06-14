@@ -11,7 +11,7 @@ import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
-public class CommandArgsBase implements CommandArgsInterface {
+public class CommandArgsBase {
 
     protected final Messages messages;
     private final Set<Character> flags;
@@ -167,7 +167,6 @@ public class CommandArgsBase implements CommandArgsInterface {
         return asList().subList(startIndex, actualEndIndex);
     }
 
-    @Override
     public Iterator<String> iterator() {
         return asList().iterator();
     }

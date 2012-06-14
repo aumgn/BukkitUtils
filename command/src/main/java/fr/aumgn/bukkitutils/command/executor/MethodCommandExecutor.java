@@ -15,7 +15,6 @@ import org.bukkit.entity.Player;
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.Commands;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
-import fr.aumgn.bukkitutils.command.args.CommandArgsInterface;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -58,7 +57,7 @@ public class MethodCommandExecutor implements CommandExecutor {
             return true;
         }
         try {
-            CommandArgsInterface args = getArgs(rawArgs);
+            CommandArgs args = getArgs(rawArgs);
             callCommand(lbl, sender, args);
         } catch (CommandUsageError error) {
             sender.sendMessage(ChatColor.RED + error.getMessage());
@@ -69,13 +68,13 @@ public class MethodCommandExecutor implements CommandExecutor {
         return true;
     }
 
-    private CommandArgsInterface getArgs(String[] rawArgs){
+    private CommandArgs getArgs(String[] rawArgs){
         CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
         parser.validate(flags, argsFlags, min, max);
         return new CommandArgs(messages, parser);
     }
 
-    private void callCommand(String name, CommandSender sender, CommandArgsInterface args) throws Throwable {
+    private void callCommand(String name, CommandSender sender, CommandArgs args) throws Throwable {
         try {
             method.invoke(instance, sender, args);
         } catch (InvocationTargetException exc) {
@@ -91,7 +90,7 @@ public class MethodCommandExecutor implements CommandExecutor {
         }
     }
 
-    private void unhandledError(String name, CommandArgsInterface args, Throwable exc) {
+    private void unhandledError(String name, CommandArgs args, Throwable exc) {
         if (!(exc instanceof org.bukkit.command.CommandException)) {
             Bukkit.getLogger().severe("Exception occured while executing \""+ name + "\"");
             if (args.hasFlags()) {

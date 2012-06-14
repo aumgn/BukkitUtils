@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.aumgn.bukkitutils.command.args.CommandArgsInterface;
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
 import fr.aumgn.bukkitutils.command.messages.Messages;
@@ -81,7 +81,7 @@ public class CommandsRegistration {
         if (!CommandSender.class.isAssignableFrom(params[0])) {
             return false;
         }
-        if (!CommandArgsInterface.class.isAssignableFrom(params[1])) {
+        if (!CommandArgs.class.isAssignableFrom(params[1])) {
             return false;
         }
 
