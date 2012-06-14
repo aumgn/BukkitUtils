@@ -105,4 +105,12 @@ public class Messages {
     public String unknownTimePeriod(String token) {
         return format("Unknown time period %s (expected am or pm).", token);
     }
+
+    public String globUnbalancedSquareBracket(String token) {
+        return format("Unbalanced square bracket in : %s", token);
+    }
+
+    public String globaUnbalancedCharRange(String token) {
+        return format("Unbalanced char range in : %s", token);
+    }
 }

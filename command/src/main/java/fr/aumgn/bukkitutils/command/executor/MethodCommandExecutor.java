@@ -19,6 +19,9 @@ import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
+import fr.aumgn.bukkitutils.glob.exceptions.GlobException;
+import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedCharRangeException;
+import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
 
 public class MethodCommandExecutor implements CommandExecutor {
 
@@ -75,6 +78,8 @@ public class MethodCommandExecutor implements CommandExecutor {
                 args = null;
             }
             callCommand(lbl, sender, args);
+        } catch (GlobException exc) {
+            handleGlobException(exc);
         } catch (CommandUsageError error) {
             sender.sendMessage(ChatColor.RED + error.getMessage());
             return false;
@@ -111,6 +116,21 @@ public class MethodCommandExecutor implements CommandExecutor {
         } catch (IllegalAccessException exc) {
             unhandledError(name, args, exc);
         }
+    }
+
+    private void handleGlobException(GlobException exc) {
+        if (exc instanceof UnbalancedSquareBracketException) {
+            throw new CommandUsageError(
+                    messages.globUnbalancedSquareBracket(
+                            ((UnbalancedSquareBracketException) exc).getGlob()));
+        }
+        if (exc instanceof UnbalancedCharRangeException) {
+            throw new CommandUsageError(
+                    messages.globaUnbalancedCharRange(
+                            ((UnbalancedCharRangeException) exc).getCharClass()));
+        }
+
+        throw new RuntimeException(exc);
     }
 
     private void unhandledError(String name, CommandArgs args, Throwable exc) {

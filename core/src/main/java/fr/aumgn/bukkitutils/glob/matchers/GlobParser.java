@@ -3,6 +3,7 @@ package fr.aumgn.bukkitutils.glob.matchers;
 import java.util.ArrayList;
 import java.util.List;
 
+import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
 
 public class GlobParser {
 
@@ -25,7 +26,7 @@ public class GlobParser {
                 while (i < pattern.length() && pattern.charAt(i) != ']') {
                     i++;
                     if (i >= pattern.length()) {
-                        throw new RuntimeException("");
+                        throw new UnbalancedSquareBracketException(pattern);
                     }
                 }
                 matchers.add(new CharacterClassMatcher(pattern.substring(

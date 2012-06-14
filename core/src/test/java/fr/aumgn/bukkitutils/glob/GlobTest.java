@@ -6,6 +6,9 @@ import org.junit.Test;
 
 import fr.aumgn.bukkitutils.glob.Glob;
 import fr.aumgn.bukkitutils.glob.GlobPattern;
+import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedCharRangeException;
+import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
+import fr.aumgn.bukkitutils.glob.patterns.StringGlobPattern;
 
 import static org.junit.Assert.*;
 
@@ -37,10 +40,10 @@ public class GlobTest {
 
     @Test
     public void testWildcard() {
-        assertMatch("*", "");
-        assertMatch("*", "a");
-        assertMatch("*", "aaa");
-        assertMatch("*", "aaaaaa");
+        assertDontMatch("a*", "");
+        assertMatch("a*", "a");
+        assertMatch("a*", "aaa");
+        assertMatch("a*", "aaaaaa");
     }
 
     @Test
@@ -56,12 +59,27 @@ public class GlobTest {
         assertDontMatch("[ab]", "c");
     }
 
+    @Test(expected = UnbalancedSquareBracketException.class)
+    public void testInvalidCharClass() {
+        new StringGlobPattern("[abcdef");
+    }
+
     @Test
     public void testCharRange() {
         assertMatch("[a-c]", "a");
         assertMatch("[a-c]", "b");
         assertMatch("[a-c]", "c");
         assertDontMatch("[a-c]", "d");
+    }
+
+    @Test(expected = UnbalancedCharRangeException.class)
+    public void testInvalidCharRange() {
+        new StringGlobPattern("[-a]");
+    }
+
+    @Test(expected = UnbalancedCharRangeException.class)
+    public void testInvalidCharRange2() {
+        new StringGlobPattern("[as-]");
     }
 
     @Test

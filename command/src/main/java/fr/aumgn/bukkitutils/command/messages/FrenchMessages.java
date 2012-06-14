@@ -128,4 +128,12 @@ public class FrenchMessages extends Messages {
     public String unknownTimePeriod(String token) {
         return format("Période de la journée inconnue %s (am ou pm attendu).", token);
     }
+
+    public String globUnbalancedSquareBracket(String token) {
+        return format("Il manque un crochet fermant dans : %s", token);
+    }
+
+    public String globaUnbalancedCharRange(String token) {
+        return format("L'intervalle de caractère est invalide dans : %s", token);
+    }
 }

@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedCharRangeException;
+
 public class CharacterClassMatcher implements GlobMatcher {
 
     private final Set<Character> characters;
@@ -15,8 +17,8 @@ public class CharacterClassMatcher implements GlobMatcher {
 
         if (string.length() > 0) {
             char[] chars = string.toCharArray();
-            if (chars[0] == '-') { 
-                throw new RuntimeException();
+            if (chars[0] == '-') {
+                throw new UnbalancedCharRangeException(string);
             }
 
             for (int i = 0; i < chars.length; i++) {
@@ -24,7 +26,7 @@ public class CharacterClassMatcher implements GlobMatcher {
                 if (j < chars.length && chars[j] == '-') {
                     j++;
                     if (j >= chars.length) {
-                        throw new RuntimeException();
+                        throw new UnbalancedCharRangeException(string);
                     }
                     rangesBuilder.add(new CharRange(chars[i], chars[j]));
                     i = j;
