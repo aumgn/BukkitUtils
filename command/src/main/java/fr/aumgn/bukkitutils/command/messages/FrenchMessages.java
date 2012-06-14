@@ -62,8 +62,18 @@ public class FrenchMessages extends Messages {
     }
 
     @Override
+    public String moreThanOneWorldFound(String token) {
+        return format("Plus d'un monde trouvé pour %s", token);
+    }
+
+    @Override
     public String noSuchPlayer(String token) {
         return format("Le joueur (%s) n'existe pas.", token);
+    }
+
+    @Override
+    public String moreThanOnePlayerFound(String token) {
+        return format("Plus d'un joueur trouvé pour %s", token);
     }
 
     @Override

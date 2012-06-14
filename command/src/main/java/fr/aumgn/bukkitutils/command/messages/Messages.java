@@ -50,8 +50,16 @@ public class Messages {
         return format("No such world %s.", token);
     }
 
+    public String moreThanOneWorldFound(String token) {
+        return format("More than one world found for %s", token);
+    }
+
     public String noSuchPlayer(String token) {
         return format("No such player %s.", token);
+    }
+
+    public String moreThanOnePlayerFound(String token) {
+        return format("More than one player found for %s", token);
     }
 
     public String noSuchMaterial(String token) {

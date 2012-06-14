@@ -33,6 +33,14 @@ public class PlayerArg extends CommandArg<Player> {
         }
     }
 
+    public static class MoreThanOnePlayerFound extends CommandError {
+        private static final long serialVersionUID = 7101062818304484950L;
+
+        public MoreThanOnePlayerFound(Messages messages, String name) {
+            super(messages.moreThanOnePlayerFound(name));
+        }
+    }
+
     private static class PlayerToString implements ToString<Player> {
         public String convert(Player player) {
             return player.getName();
@@ -48,7 +56,7 @@ public class PlayerArg extends CommandArg<Player> {
         List<Player> players = match();
 
         if (players.size() > 1) {
-            throw new NoSuchPlayer(messages, string);
+            throw new MoreThanOnePlayerFound(messages, string);
         }
 
         return players.get(0);

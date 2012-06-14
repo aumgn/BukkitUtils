@@ -38,6 +38,14 @@ public class WorldArg extends CommandArg<World> {
         }
     }
 
+    public static class MoreThanOneWorldFound extends CommandError {
+        private static final long serialVersionUID = 7101062818304484950L;
+
+        public MoreThanOneWorldFound(Messages messages, String name) {
+            super(messages.moreThanOneWorldFound(name));
+        }
+    }
+
     private static class WorldToString implements ToString<World> {
         public String convert(World world) {
             return world.getName();
@@ -48,7 +56,7 @@ public class WorldArg extends CommandArg<World> {
     public World value() {
         List<World> worlds = match();
         if (worlds.size() > 1) {
-            throw new NoSuchWorld(messages, string);
+            throw new MoreThanOneWorldFound(messages, string);
         }
 
         return worlds.get(0);
