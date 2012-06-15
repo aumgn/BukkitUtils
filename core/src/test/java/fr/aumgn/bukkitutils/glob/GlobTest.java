@@ -72,6 +72,19 @@ public class GlobTest {
         assertDontMatch("[a-c]", "d");
     }
 
+    @Test
+    public void testInvertedCharRange() {
+        assertMatch("[^]", "^");
+        assertMatch("[a^]", "^");
+        assertMatch("[a^]", "a");
+
+        assertDontMatch("[^a]", "a");
+        assertMatch("[^a]", "b");
+
+        assertDontMatch("[^a-c]", "b");
+        assertMatch("[^a-c]", "d");
+    }
+
     @Test(expected = UnbalancedCharRangeException.class)
     public void testInvalidCharRange() {
         new StringGlobPattern("[-a]");
