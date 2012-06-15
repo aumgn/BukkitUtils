@@ -144,7 +144,7 @@ public class MethodCommandExecutor implements CommandExecutor {
                     }
                     Bukkit.getLogger().severe("Flags : " + flagsString.toString());
                 }
-                if (args.length() > 0) {
+                if (args.length() >= 0) {
                     StringBuilder arguments = new StringBuilder();
                     for (String arg : args.asList()) {
                         arguments.append(arg);
