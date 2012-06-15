@@ -30,11 +30,7 @@ public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
     }
 
     @Override
-    public OfflinePlayer value(CommandSender sender) {
-        if (string != null) {
-            return value();
-        }
-
+    protected OfflinePlayer defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
             throw new CommandUsageError(messages.playerNeeded());
         }

@@ -1,6 +1,5 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -63,11 +62,7 @@ public class PlayerArg extends CommandArg<Player> {
     }
 
     @Override
-    public Player value(CommandSender sender) {
-        if (string != null) {
-            return value();
-        }
-
+    protected Player defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
             throw new CommandUsageError(messages.playerNeeded());
         }
@@ -87,18 +82,5 @@ public class PlayerArg extends CommandArg<Player> {
         }
 
         return players;
-    }
-
-    @Override
-    public List<Player> match(CommandSender sender) {
-        if (string != null) {
-            return match();
-        }
-
-        if (!(sender instanceof Player)) {
-            throw new CommandUsageError(messages.playerNeeded());
-        }
-
-        return Collections.<Player>singletonList((Player) sender);
     }
 }

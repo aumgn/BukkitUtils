@@ -54,11 +54,7 @@ public class VectorArg extends CommandArg<Vector> {
     }
 
     @Override
-    public Vector value(CommandSender sender) {
-        if (string != null) {
-            value();
-        }
-
+    protected Vector defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
             throw new CommandUsageError(messages.positionNeeded());
         }

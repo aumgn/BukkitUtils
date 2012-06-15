@@ -41,15 +41,11 @@ public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
     }
 
     @Override
-    public List<V> value(CommandSender sender) {
-        if (string == null) {
-            V value = factory
-                    .createCommandArg(messages, null)
-                    .value(sender);
-            return Collections.<V>singletonList(value);
-        }
-
-        return value();
+    protected List<V> defaultFor(CommandSender sender) {
+        V value = factory
+                .createCommandArg(messages, null)
+                .defaultFor(sender);
+        return Collections.<V>singletonList(value);
     }
 
     @Override
@@ -77,13 +73,9 @@ public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
     }
 
     @Override
-    public List<V> match(CommandSender sender) {
-        if (string == null) {
-            return factory
-                    .createCommandArg(messages, null)
-                    .match(sender);
-        }
-
-        return match();
+    protected List<V> defaultMatchFor(CommandSender sender) {
+        return factory
+                .createCommandArg(messages, null)
+                .defaultMatchFor(sender);
     }
 }

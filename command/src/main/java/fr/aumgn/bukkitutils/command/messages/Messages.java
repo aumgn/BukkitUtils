@@ -113,4 +113,8 @@ public class Messages {
     public String globaUnbalancedCharRange(String token) {
         return format("Unbalanced char range in : %s", token);
     }
+
+    public String missingPermissionForOther(String permission) {
+        return format("You don't have permission to use this command on others.");
+    }
 }

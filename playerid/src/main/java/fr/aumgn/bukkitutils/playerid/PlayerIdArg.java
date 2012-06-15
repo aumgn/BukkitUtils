@@ -31,15 +31,12 @@ public class PlayerIdArg extends CommandArg<PlayerId> {
         return PlayerId.get(string);
     }
 
-    public PlayerId value(CommandSender sender) {
-        if (string != null) {
-            return value();
-        }
-
+    @Override
+    protected PlayerId defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
             throw new CommandUsageError(messages.playerNeeded());
         }
 
-        return PlayerId.get(((Player)sender).getName());
+        return PlayerId.get((Player)sender);
     }
 }

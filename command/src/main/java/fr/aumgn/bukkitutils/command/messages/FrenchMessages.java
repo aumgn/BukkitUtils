@@ -136,4 +136,8 @@ public class FrenchMessages extends Messages {
     public String globaUnbalancedCharRange(String token) {
         return format("L'intervalle de caractère est invalide dans : %s", token);
     }
+
+    public String missingPermissionForOther(String permission) {
+        return format("Vous n'avez pas la permission d'utilisez cette commande pour les autres.");
+    }
 }

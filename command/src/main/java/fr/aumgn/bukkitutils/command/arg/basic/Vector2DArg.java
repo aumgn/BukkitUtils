@@ -49,11 +49,7 @@ public class Vector2DArg extends CommandArg<Vector2D> {
     }
 
     @Override
-    public Vector2D value(CommandSender sender) {
-        if (string != null) {
-            value();
-        }
-
+    protected Vector2D defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
             throw new CommandUsageError(messages.positionNeeded());
         }

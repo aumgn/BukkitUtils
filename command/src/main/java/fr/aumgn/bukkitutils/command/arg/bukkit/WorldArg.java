@@ -1,6 +1,5 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -63,11 +62,7 @@ public class WorldArg extends CommandArg<World> {
     }
 
     @Override
-    public World value(CommandSender sender) {
-        if (string != null) {
-            return value();
-        }
-
+    protected World defaultFor(CommandSender sender) {
         if (!(sender instanceof Player)) {
             throw new CommandUsageError("You have to specify a world.");
         }
@@ -87,18 +82,5 @@ public class WorldArg extends CommandArg<World> {
         }
 
         return worlds;
-    }
-
-    @Override
-    public List<World> match(CommandSender sender) {
-        if (string != null) {
-            return match();
-        }
-
-        if (!(sender instanceof Player)) {
-            throw new CommandUsageError(messages.worldNeeded());
-        }
-
-        return Collections.<World>singletonList(((Player) sender).getWorld());
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public abstract class AbstractCommandArg<V, W> {
@@ -27,8 +28,29 @@ public abstract class AbstractCommandArg<V, W> {
         return value();
     }
 
-    public V value(CommandSender sender) {
+    protected V defaultFor(CommandSender sender) {
         throw new UnsupportedOperationException();
+    }
+
+    public V value(CommandSender sender) {
+        if (string != null) {
+            return value();
+        }
+
+        return defaultFor(sender);
+    }
+
+    public V value(CommandSender sender, String permissionOther) {
+        if (string != null) {
+            if (!sender.hasPermission(permissionOther)) {
+                throw new CommandError(
+                        messages.missingPermissionForOther(permissionOther));
+            }
+
+            return value();
+        }
+
+        return defaultFor(sender);
     }
 
     public abstract List<W> match();
@@ -49,7 +71,28 @@ public abstract class AbstractCommandArg<V, W> {
         return match();
     }
 
-    public List<W> match(CommandSender sender) {
+    protected List<W> defaultMatchFor(CommandSender sender) {
         throw new UnsupportedOperationException();
+    }
+
+    public List<W> match(CommandSender sender) {
+        if (string != null) {
+            return match();
+        }
+
+        return defaultMatchFor(sender);
+    }
+
+    public List<W> match(CommandSender sender, String permissionOther) {
+        if (string != null) {
+            if (!sender.hasPermission(permissionOther)) {
+                throw new CommandError(
+                        messages.missingPermissionForOther(permissionOther));
+            }
+
+            return match();
+        }
+
+        return defaultMatchFor(sender);
     }
 }
