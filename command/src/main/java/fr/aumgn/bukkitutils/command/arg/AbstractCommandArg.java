@@ -52,5 +52,4 @@ public abstract class AbstractCommandArg<V, W> {
     public List<W> match(CommandSender sender) {
         throw new UnsupportedOperationException();
     }
-
 }

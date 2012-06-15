@@ -17,6 +17,11 @@
 			<artifactId>mockbukkit</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>fr.aumgn.bukkitutils</groupId>
+			<artifactId>command</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 	</dependencies>
 
 	<build>
