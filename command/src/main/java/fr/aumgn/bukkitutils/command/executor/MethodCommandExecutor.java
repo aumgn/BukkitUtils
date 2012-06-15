@@ -68,7 +68,7 @@ public class MethodCommandExecutor implements CommandExecutor {
         }
         try {
             CommandArgs args;
-            if (min > 0) {
+            if (min >= 0) {
                 args = getArgs(rawArgs);
             } else {
                 if (rawArgs.length > 0) {
@@ -144,7 +144,7 @@ public class MethodCommandExecutor implements CommandExecutor {
                     }
                     Bukkit.getLogger().severe("Flags : " + flagsString.toString());
                 }
-                if (args.length() >= 0) {
+                if (args.length() > 0) {
                     StringBuilder arguments = new StringBuilder();
                     for (String arg : args.asList()) {
                         arguments.append(arg);
