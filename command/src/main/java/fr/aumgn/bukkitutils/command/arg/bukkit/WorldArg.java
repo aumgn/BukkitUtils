@@ -1,6 +1,8 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.bukkit.Bukkit;
 import org.bukkit.World;
@@ -12,8 +14,6 @@ import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
-import fr.aumgn.bukkitutils.glob.Glob;
-import fr.aumgn.bukkitutils.glob.Glob.ToString;
 
 public class WorldArg extends CommandArg<World> {
 
@@ -37,28 +37,14 @@ public class WorldArg extends CommandArg<World> {
         }
     }
 
-    public static class MoreThanOneWorldFound extends CommandError {
-        private static final long serialVersionUID = 7101062818304484950L;
-
-        public MoreThanOneWorldFound(Messages messages, String name) {
-            super(messages.moreThanOneWorldFound(name));
-        }
-    }
-
-    private static class WorldToString implements ToString<World> {
-        public String convert(World world) {
-            return world.getName();
-        }
-    }
-
     @Override
     public World value() {
-        List<World> worlds = match();
-        if (worlds.size() > 1) {
-            throw new MoreThanOneWorldFound(messages, string);
+        World world = Bukkit.getWorld(string);
+        if (world == null) {
+            throw new NoSuchWorld(messages, string);
         }
 
-        return worlds.get(0);
+        return world;
     }
 
     @Override
@@ -72,10 +58,18 @@ public class WorldArg extends CommandArg<World> {
 
     @Override
     public List<World> match() {
-        List<World> worlds = new Glob(string)
-                .partial().caseInsensitive()
-                .build(new WorldToString())
-                .filter(Bukkit.getWorlds());
+        if (string.equals("*")) {
+            return Bukkit.getWorlds();
+        }
+
+        String pattern = string.toLowerCase(Locale.ENGLISH);
+        List<World> worlds = new ArrayList<World>();
+
+        for (World world : Bukkit.getWorlds()) {
+            if (world.getName().toLowerCase().contains(pattern)) {
+                worlds.add(world);
+            }
+        }
 
         if (worlds.isEmpty()) {
             throw new NoSuchWorld(messages, string);
