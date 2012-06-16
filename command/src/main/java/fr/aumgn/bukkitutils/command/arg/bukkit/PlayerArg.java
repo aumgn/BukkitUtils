@@ -6,13 +6,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.google.common.base.Function;
+
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.glob.Glob;
-import fr.aumgn.bukkitutils.glob.Glob.ToString;
 
 public class PlayerArg extends CommandArg<Player> {
 
@@ -40,8 +41,9 @@ public class PlayerArg extends CommandArg<Player> {
         }
     }
 
-    private static class PlayerToString implements ToString<Player> {
-        public String convert(Player player) {
+    private static class PlayerToString implements Function<Player, String> {
+        @Override
+        public String apply(Player player) {
             return player.getName();
         }
     }

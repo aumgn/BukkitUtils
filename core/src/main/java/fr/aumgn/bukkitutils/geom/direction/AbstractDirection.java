@@ -1,9 +1,11 @@
 package fr.aumgn.bukkitutils.geom.direction;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
+
 import fr.aumgn.bukkitutils.geom.Direction;
 import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateRotation;
 
-public abstract class AbstractDirection implements Direction {
+abstract class AbstractDirection implements Direction {
 
     @Override
     public Direction rotate(float angle) {
@@ -12,11 +14,10 @@ public abstract class AbstractDirection implements Direction {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result + Float.floatToIntBits(getYaw());
-        result = prime * result + Float.floatToIntBits(getPitch());
-        return result;
+        return new HashCodeBuilder(41, 19)
+            .append(getYaw())
+            .append(getPitch())
+            .toHashCode();
     }
 
     @Override
@@ -25,7 +26,7 @@ public abstract class AbstractDirection implements Direction {
             return true;
         }
 
-        if (!(obj instanceof Direction)) {
+        if (!(obj instanceof AbstractDirection)) {
             return false;
         }
 

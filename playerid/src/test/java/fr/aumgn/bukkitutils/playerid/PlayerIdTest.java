@@ -30,7 +30,7 @@ public class PlayerIdTest {
     }
 
     @Test
-    public void testPlayerIdCaseInsentitvity() {
+    public void testPlayerIdCaseInsensitivity() {
         PlayerId playerId1 = PlayerId.get("Player");
         PlayerId playerId2 = PlayerId.get("player");
 

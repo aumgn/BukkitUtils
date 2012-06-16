@@ -1,21 +1,25 @@
-package fr.aumgn.bukkitutils.geom;
+package fr.aumgn.bukkitutils.geom.vector;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class Vector2DIterator implements Iterator<Vector2D> {
+import fr.aumgn.bukkitutils.geom.Vector;
 
-    private Vector2D min;
-    private Vector2D max;
+public class VectorIterator implements Iterator<Vector> {
+
+    private Vector min;
+    private Vector max;
     private boolean hasNext;
     private double nextX;
+    private double nextY;
     private double nextZ;
 
-    public Vector2DIterator(Vector2D min, Vector2D max) {
+    public VectorIterator(Vector min, Vector max) {
         this.min = min;
         this.max = max;
         this.hasNext = true;
         this.nextX = min.getX();
+        this.nextY = min.getY();
         this.nextZ = min.getZ();
     }
 
@@ -23,12 +27,12 @@ public class Vector2DIterator implements Iterator<Vector2D> {
         return hasNext;
     }
 
-    public Vector2D next() {
+    public Vector next() {
         if (!hasNext) {
             throw new NoSuchElementException();
         }
 
-        Vector2D answer = new Vector2D(nextX, nextZ);
+        Vector answer = new Vector(nextX, nextY, nextZ);
         if (++nextX <= max.getX()) {
             return answer;
         }
@@ -38,11 +42,15 @@ public class Vector2DIterator implements Iterator<Vector2D> {
             return answer;
         }
 
+        nextZ = min.getZ();
+        if (++nextY <= max.getY()) {
+            return answer;
+        }
+
         hasNext = false;
         return answer;
     }
 
-    @Override
     public void remove() {
         throw new UnsupportedOperationException();
     }

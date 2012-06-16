@@ -1,19 +1,17 @@
 package fr.aumgn.bukkitutils.glob.matchers;
 
+import org.apache.commons.lang.CharSet;
+
 public class CharacterClassMatcher implements GlobMatcher {
 
-    private final CharClass charactersClass;
+    private final CharSet charSet;
 
     public CharacterClassMatcher(String string) {
-        if (string.length() > 1 && string.charAt(0) == '^') {
-            this.charactersClass = new InvertedCharClass(string.substring(1));
-        } else {
-            this.charactersClass = new CharClass(string);
-        }
+        charSet = CharSet.getInstance(string);
     }
 
-    public CharClass getCharactersClass() {
-        return charactersClass;
+    public CharSet getCharSet() {
+        return charSet;
     }
 
     @Override
@@ -23,7 +21,7 @@ public class CharacterClassMatcher implements GlobMatcher {
         }
 
         char character = str.charAt(from);
-        if (charactersClass.contains(character)) {
+        if (charSet.contains(character)) {
             return from + 1;
         }
 

@@ -2,6 +2,8 @@ package fr.aumgn.bukkitutils.glob;
 
 import java.util.Locale;
 
+import com.google.common.base.Function;
+
 import fr.aumgn.bukkitutils.glob.patterns.GenericGlobPattern;
 import fr.aumgn.bukkitutils.glob.patterns.StringCIGlobPattern;
 import fr.aumgn.bukkitutils.glob.patterns.StringGlobPattern;
@@ -9,21 +11,17 @@ import fr.aumgn.bukkitutils.glob.patterns.WildcardGlobPattern;
 
 public class Glob {
 
-    public static interface ToString<T> {
-        String convert(T obj);
-    }
+    private static class CaseInsensitiveToString<T> implements Function<T, String> {
 
-    private static class CaseInsensitiveToString<T> implements ToString<T> {
+        private final Function<T, String> toString;
 
-        private final ToString<T> toString;
-
-        public CaseInsensitiveToString(ToString<T> toString) {
+        public CaseInsensitiveToString(Function<T, String> toString) {
             this.toString = toString;
         }
 
         @Override
-        public String convert(T obj) {
-            return toString.convert(obj).toLowerCase(Locale.ENGLISH);
+        public String apply(T obj) {
+            return toString.apply(obj).toLowerCase(Locale.ENGLISH);
         }
     }
 
@@ -103,12 +101,12 @@ public class Glob {
         }
     }
 
-    public <T> GlobPattern<T> build(ToString<T> toString) {
+    public <T> GlobPattern<T> build(Function<T, String> toString) {
         if (rawPattern == "*") {
             return new WildcardGlobPattern<T>();
         }
 
-        ToString<T> caseAwareToString = toString; 
+        Function<T, String> caseAwareToString = toString; 
         if (caseInsensitive) {
             caseAwareToString = new CaseInsensitiveToString<T>(toString);
         }

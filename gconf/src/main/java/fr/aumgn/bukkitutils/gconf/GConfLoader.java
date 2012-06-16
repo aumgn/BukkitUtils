@@ -8,10 +8,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Type;
-import java.nio.charset.Charset;
 
 import org.bukkit.plugin.Plugin;
 
+import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
@@ -24,13 +24,6 @@ public class GConfLoader {
     public GConfLoader(Gson gson, Plugin plugin) {
         this.gson = gson;
         this.plugin = plugin;
-    }
-
-    private Charset charset() {
-        if (Charset.isSupported("UTF-8")) {
-            return Charset.forName("UTF-8");
-        }
-        return Charset.defaultCharset();
     }
 
     private File getFile(String filename)
@@ -81,7 +74,7 @@ public class GConfLoader {
 
     private <T> T load(File file, Type klass) throws IOException {
         InputStreamReader isr = new InputStreamReader(
-                new FileInputStream(file), charset());
+                new FileInputStream(file), Charsets.UTF_8);
         JsonReader reader = new JsonReader(isr);
 
         try {
@@ -101,7 +94,7 @@ public class GConfLoader {
 
     private void write(File file, Object object) throws IOException {
         OutputStreamWriter osw = new OutputStreamWriter(
-                new FileOutputStream(file), charset());
+                new FileOutputStream(file), Charsets.UTF_8);
         BufferedWriter writer = new BufferedWriter(osw);
 
         try {

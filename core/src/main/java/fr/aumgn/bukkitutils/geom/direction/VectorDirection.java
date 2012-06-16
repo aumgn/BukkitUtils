@@ -1,18 +1,22 @@
 package fr.aumgn.bukkitutils.geom.direction;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculatePitch;
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateYaw;
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
 
-public class VectorDirection extends AbstractDirection implements Direction {
+public final class VectorDirection extends AbstractDirection implements Direction {
 
     private final Vector vector;
     private float yaw;
     private float pitch;
 
     public VectorDirection(Vector vector) {
-        this.vector = vector;
+        checkArgument(!vector.isZero(),
+                "Cannot create a direction with a null vector.");
+        this.vector = vector.normalize();
         this.yaw = Float.NaN;
         this.pitch = Float.NaN;
     }

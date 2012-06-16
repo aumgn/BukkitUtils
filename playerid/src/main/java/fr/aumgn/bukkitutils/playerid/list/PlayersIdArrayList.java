@@ -1,15 +1,17 @@
 package fr.aumgn.bukkitutils.playerid.list;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
 import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.iterator.OfflinePlayersIterator;
-import fr.aumgn.bukkitutils.playerid.iterator.PlayersIterator;
+import fr.aumgn.bukkitutils.playerid.PlayersIterable;
+import fr.aumgn.bukkitutils.playerid.ToOfflinePlayer;
 
 public class PlayersIdArrayList
             extends ArrayList<PlayerId> implements PlayersIdList {
@@ -51,41 +53,22 @@ public class PlayersIdArrayList
 
     @Override
     public Iterable<OfflinePlayer> offlinePlayers() {
-        return new Iterable<OfflinePlayer>() {
-            public Iterator<OfflinePlayer> iterator() {
-                return new OfflinePlayersIterator(
-                        PlayersIdArrayList.this.iterator());
-            }
-        };
+        return Iterables.transform(
+                PlayersIdArrayList.this, new ToOfflinePlayer());
     }
 
     @Override
     public Iterable<Player> players() {
-        return new Iterable<Player>() {
-            public Iterator<Player> iterator() {
-                return new PlayersIterator(
-                        PlayersIdArrayList.this.iterator());
-            }
-        };
+        return new PlayersIterable(PlayersIdArrayList.this);
     }
 
     @Override
     public List<OfflinePlayer> getOfflinePlayers() {
-        List<OfflinePlayer> players = new ArrayList<OfflinePlayer>();
-        for (OfflinePlayer player : offlinePlayers()) {
-            players.add(player);
-        }
-
-        return players;
+        return Lists.transform(this, new ToOfflinePlayer());
     }
 
     @Override
     public List<Player> getPlayers() {
-        List<Player> players = new ArrayList<Player>();
-        for (Player player : players()) {
-            players.add(player);
-        }
-
-        return players;
+        return Lists.newArrayList(players());
     }
 }

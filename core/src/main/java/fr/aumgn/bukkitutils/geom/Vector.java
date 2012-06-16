@@ -2,12 +2,14 @@ package fr.aumgn.bukkitutils.geom;
 
 import java.util.Iterator;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
 import fr.aumgn.bukkitutils.geom.direction.VectorDirection;
+import fr.aumgn.bukkitutils.geom.vector.VectorIterator;
 
 public class Vector implements Iterable<Vector> {
 
@@ -253,16 +255,11 @@ public class Vector implements Iterable<Vector> {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        long temp;
-        temp = Double.doubleToLongBits(x);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(y);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(z);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return new HashCodeBuilder(23, 11)
+                .append(x)
+                .append(y)
+                .append(z)
+                .toHashCode();
     }
 
     @Override

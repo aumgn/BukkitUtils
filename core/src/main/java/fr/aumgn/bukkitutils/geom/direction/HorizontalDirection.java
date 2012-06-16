@@ -5,7 +5,7 @@ import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
 
-public class HorizontalDirection extends AbstractDirection {
+public final class HorizontalDirection extends AbstractDirection {
 
     protected final float yaw;
     private Vector2D vector;

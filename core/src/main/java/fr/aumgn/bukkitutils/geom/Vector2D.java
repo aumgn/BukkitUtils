@@ -2,12 +2,14 @@ package fr.aumgn.bukkitutils.geom;
 
 import java.util.Iterator;
 
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
 import fr.aumgn.bukkitutils.geom.direction.Vector2DDirection;
+import fr.aumgn.bukkitutils.geom.vector.Vector2DIterator;
 
 public class Vector2D implements Iterable<Vector2D> {
 
@@ -218,14 +220,10 @@ public class Vector2D implements Iterable<Vector2D> {
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        long temp;
-        temp = Double.doubleToLongBits(x);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        temp = Double.doubleToLongBits(z);
-        result = prime * result + (int) (temp ^ (temp >>> 32));
-        return result;
+        return new HashCodeBuilder(29, 13)
+                .append(x)
+                .append(z)
+                .toHashCode();
     }
 
     @Override

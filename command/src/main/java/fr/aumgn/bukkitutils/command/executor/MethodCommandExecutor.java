@@ -20,7 +20,6 @@ import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.glob.exceptions.GlobException;
-import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedCharRangeException;
 import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
 
 public class MethodCommandExecutor implements CommandExecutor {
@@ -123,11 +122,6 @@ public class MethodCommandExecutor implements CommandExecutor {
             throw new CommandUsageError(
                     messages.globUnbalancedSquareBracket(
                             ((UnbalancedSquareBracketException) exc).getGlob()));
-        }
-        if (exc instanceof UnbalancedCharRangeException) {
-            throw new CommandUsageError(
-                    messages.globaUnbalancedCharRange(
-                            ((UnbalancedCharRangeException) exc).getCharClass()));
         }
 
         throw new RuntimeException(exc);

@@ -37,5 +37,10 @@ public interface Direction {
         public Direction rotate(float angle) {
             return NONE;
         }
+
+        @Override
+        public int hashCode() {
+            return 41;
+        }
     };
 }

@@ -116,10 +116,10 @@ public class DirectionTest {
     @Test
     public void testEquality() {
         assertEquals(
-                Face.NORTH,
+                Faces.NORTH,
                 new Vector2D(-1, 0).toDirection());
         assertEquals(
-                Face.UP_SOUTH,
+                Faces.UP_SOUTH,
                 new Vector(1, 1, 0).toDirection());
         assertEquals(
                 new HorizontalDirection(270f),

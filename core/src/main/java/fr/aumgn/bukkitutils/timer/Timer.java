@@ -6,6 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
+import com.google.common.base.Stopwatch;
+
 public abstract class Timer implements Runnable {
 
     private static final int TICKS_PER_SECONDS = 20;
@@ -20,7 +22,7 @@ public abstract class Timer implements Runnable {
     private int remainingTime;
 
     private int taskId;
-    private long taskStartTime;
+    private Stopwatch watch;
     private int currentDelay;
     private int pauseDelay;
 
@@ -51,17 +53,13 @@ public abstract class Timer implements Runnable {
         };
     }
 
-    private long getCurrentTimeSeconds() {
-        return TimeUnit.MILLISECONDS.toSeconds(
-                System.currentTimeMillis());
-    }
-
     private void scheduleAndPrintTime(int delay) {
         long minutes = TimeUnit.SECONDS.toMinutes(remainingTime);
         String msg = String.format(format, minutes, remainingTime % 60);
         sendTimeMessage(getCurrentColor() + msg);
         currentDelay = delay;
-        taskStartTime = getCurrentTimeSeconds();
+        watch = new Stopwatch();
+        watch.start();
         taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(
                 plugin, this, (long) delay * TICKS_PER_SECONDS);
     }
@@ -103,7 +101,8 @@ public abstract class Timer implements Runnable {
 
     public void pause() {
         cancel();
-        pauseDelay = (int) (getCurrentTimeSeconds() - taskStartTime);
+        watch.stop();
+        pauseDelay = (int) watch.elapsedTime(TimeUnit.SECONDS);
         remainingTime -= pauseDelay;
     }
 

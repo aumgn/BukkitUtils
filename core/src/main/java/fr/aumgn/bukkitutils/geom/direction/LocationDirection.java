@@ -3,15 +3,17 @@ package fr.aumgn.bukkitutils.geom.direction;
 import org.bukkit.Location;
 
 import fr.aumgn.bukkitutils.geom.Vector;
+import fr.aumgn.bukkitutils.geom.Vector2D;
 import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
 
-public class LocationDirection extends HorizontalDirection {
+public final class LocationDirection extends AbstractDirection {
 
+    private final float yaw;
     private final float pitch;
     private Vector vector;
 
     public LocationDirection(float yaw, float pitch) {
-        super(yaw);
+        this.yaw = yaw % 360;
         if (pitch < -180f || pitch > 180f) {
             throw new IllegalArgumentException("Invalid pitch");
         }
@@ -23,14 +25,26 @@ public class LocationDirection extends HorizontalDirection {
         this(location.getYaw(), location.getPitch());
     }
 
+    @Override
+    public float getYaw() {
+        return yaw;
+    }
+
+    @Override
     public float getPitch() {
         return pitch;
     }
 
     @Override
+    public Vector2D getVector2D() {
+        return getVector().to2D();
+    }
+
+    @Override
     public Vector getVector() {
         if (vector == null) {
-            vector = calculateVector(getVector2D(), pitch);
+            Vector2D vec2D = calculateVector2D(yaw);
+            vector = calculateVector(vec2D, pitch);
         }
 
         return vector;

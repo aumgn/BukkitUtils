@@ -2,6 +2,7 @@ package fr.aumgn.bukkitutils.command;
 
 import java.lang.reflect.Method;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
@@ -33,18 +34,30 @@ public class CommandsRegistration {
         Method preExecute = null;
         try {
             preExecute = commands.getClass().getMethod("preExecute", CommandSender.class, CommandArgs.class);
+            Class<?>[] params = preExecute.getParameterTypes();
+            Validate.isTrue(params.length == 2,
+                    "preExecute method must define two arguments.");
+            Validate.isTrue(CommandSender.class.isAssignableFrom(params[0]),
+                    "First argument must be of type CommandSender.");
+            Validate.isTrue(CommandSender.class.isAssignableFrom(params[1]),
+                    "Second argument must be of type CommandArgs.");
         } catch (Exception e) {
         }
 
         for (Method method : commands.getClass().getMethods()) {
             Command cmdAnnotation = method.getAnnotation(Command.class);
-            if (cmdAnnotation == null || !isValidCommand(method)) {
+            if (cmdAnnotation == null) {
                 continue;
             }
+            validateCommand(method);
+            Validate.notEmpty(cmdAnnotation.name());
 
-            PluginCommand command;
+            String cmdName;
             if (subCommands) {
                 String[] nestedCmds = subCmdsAnnotation.name();
+                Validate.notEmpty(nestedCmds);
+                Validate.notEmpty(nestedCmds[0]);
+
                 StringBuilder cmd = new StringBuilder();
                 cmd.append(nestedCmds[0]);
                 for (int i = 1; i < nestedCmds.length; i++) {
@@ -53,10 +66,13 @@ public class CommandsRegistration {
                     cmd.append(nestedCmds[i]);
                 }
                 registerSubCommand(cmd.toString(), cmdAnnotation.name());
-                command = plugin.getCommand(cmd + " " + cmdAnnotation.name());
+                cmdName = cmd + " " + cmdAnnotation.name();
             } else {
-                command = plugin.getCommand(cmdAnnotation.name());
+                cmdName = cmdAnnotation.name();
             }
+            PluginCommand command = plugin.getCommand(cmdName);
+            Validate.notNull(command,
+                    String.format("Command '%s' does not exist", cmdName));
 
             if (command != null) {
                 CommandExecutor oldExecutor = command.getExecutor();
@@ -77,25 +93,20 @@ public class CommandsRegistration {
         command.setPermissionMessage(local.permissionMessage());
     }
 
-    private boolean isValidCommand(Method method) {
+    private void validateCommand(Method method) {
         Class<?>[] params = method.getParameterTypes();
-        if (params.length == 0 || params.length > 2) {
-            return false;
-        }
-
-        if (!CommandSender.class.isAssignableFrom(params[0])) {
-            return false;
-        }
-
-        if (params.length > 1 && !CommandArgs.class.isAssignableFrom(params[1])) {
-            return false;
-        }
-
-        return true;
+        Validate.isTrue(params.length == 1 || params.length == 2,
+                "Command method must define one or two parameter(s).");
+        Validate.isTrue(CommandSender.class.isAssignableFrom(params[0]),
+                "First parameter of command method must be of type CommandSender");
+        Validate.isTrue(params.length == 1
+                || CommandArgs.class.isAssignableFrom(params[1]),
+                "Second parameter of command method must be of type CommandArgs");
     }
 
     private void registerSubCommand(String name, String subCmdName) {
         PluginCommand command = plugin.getCommand(name);
+        Validate.notNull(command, String.format("Command '%s' does not exist", name));
         CommandExecutor executor = command.getExecutor();
         if (executor instanceof NestedCommandExecutor) {
             ((NestedCommandExecutor) executor).addSubCommand(subCmdName);

@@ -6,7 +6,6 @@ import org.junit.Test;
 
 import fr.aumgn.bukkitutils.glob.Glob;
 import fr.aumgn.bukkitutils.glob.GlobPattern;
-import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedCharRangeException;
 import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
 import fr.aumgn.bukkitutils.glob.patterns.StringGlobPattern;
 
@@ -85,14 +84,19 @@ public class GlobTest {
         assertMatch("[^a-c]", "d");
     }
 
-    @Test(expected = UnbalancedCharRangeException.class)
+    @Test
     public void testInvalidCharRange() {
-        new StringGlobPattern("[-a]");
-    }
+        StringGlobPattern pattern = new StringGlobPattern("[c-]");
+        assertTrue(pattern.match("c"));
+        assertTrue(pattern.match("-"));
+        assertFalse(pattern.match("b"));
+        assertFalse(pattern.match("d"));
 
-    @Test(expected = UnbalancedCharRangeException.class)
-    public void testInvalidCharRange2() {
-        new StringGlobPattern("[as-]");
+        pattern = new StringGlobPattern("[-c]");
+        assertTrue(pattern.match("c"));
+        assertTrue(pattern.match("-"));
+        assertFalse(pattern.match("b"));
+        assertFalse(pattern.match("d"));
     }
 
     @Test
