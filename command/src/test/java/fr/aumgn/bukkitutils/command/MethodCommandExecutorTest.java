@@ -42,7 +42,7 @@ public class MethodCommandExecutorTest {
         }
 
         Command command = method.getAnnotation(Command.class);
-        return new MethodCommandExecutor(new Messages(),
+        return new MethodCommandExecutor(new Messages(null),
                 commands, preExecute, method, command);
     }
 

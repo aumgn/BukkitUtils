@@ -1,6 +1,7 @@
 package fr.aumgn.bukkitutils.command.args;
 
 import java.util.Collections;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -13,7 +14,7 @@ public class CommandArgsUtil {
     private static final Set<Character> NO_FLAGS;
 
     static {
-        MESSAGES = new Messages();
+        MESSAGES = new Messages(ResourceBundle.getBundle("commands"));
         NO_FLAGS = Collections.<Character>emptySet();
     }
 

@@ -1,6 +1,8 @@
 package fr.aumgn.bukkitutils.command;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.command.CommandExecutor;
@@ -12,15 +14,28 @@ import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
 import fr.aumgn.bukkitutils.command.messages.Messages;
+import fr.aumgn.bukkitutils.localization.Localizable;
 
 public class CommandsRegistration {
 
-    private JavaPlugin plugin;
-    private Messages local;
+    private final JavaPlugin plugin;
+    private final Messages messages;
 
-    public CommandsRegistration(JavaPlugin plugin, Messages local) {
+    @Deprecated
+    public CommandsRegistration(JavaPlugin plugin, Messages messages) {
         this.plugin = plugin;
-        this.local = local;
+        this.messages = messages;
+    }
+
+    public CommandsRegistration(JavaPlugin plugin, Locale locale) {
+        this.plugin = plugin;
+        this.messages = new Messages(
+                ResourceBundle.getBundle("commands", locale,
+                        plugin.getClass().getClassLoader()));
+    }
+
+    public <T extends JavaPlugin & Localizable> CommandsRegistration(T plugin) {
+        this(plugin, plugin.getLocale());
     }
 
     public void register(Commands commands) {
@@ -77,7 +92,7 @@ public class CommandsRegistration {
             if (command != null) {
                 CommandExecutor oldExecutor = command.getExecutor();
                 CommandExecutor executor = new MethodCommandExecutor(
-                        local, commands, preExecute, method, cmdAnnotation);
+                        messages, commands, preExecute, method, cmdAnnotation);
                 if (oldExecutor instanceof NestedCommandExecutor) {
                     ((NestedCommandExecutor) oldExecutor).setDefaultExecutor(executor);
                 } else {
@@ -89,8 +104,8 @@ public class CommandsRegistration {
     }
 
     private void setCommandMessages(PluginCommand command) {
-        command.setUsage(local.usagePrefix() + command.getUsage());
-        command.setPermissionMessage(local.permissionMessage());
+        command.setUsage(messages.usagePrefix() + command.getUsage());
+        command.setPermissionMessage(messages.permissionMessage());
     }
 
     private void validateCommand(Method method) {

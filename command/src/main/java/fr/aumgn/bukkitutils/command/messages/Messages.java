@@ -1,116 +1,125 @@
 package fr.aumgn.bukkitutils.command.messages;
 
-import org.bukkit.ChatColor;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-import static java.lang.String.format;
+import static java.text.MessageFormat.format;
+import static fr.aumgn.bukkitutils.util.Util.parseColorsMarkup;
 
 public class Messages {
 
+    private final ResourceBundle bundle;
+
+    @Deprecated
+    public Messages() {
+        this.bundle = ResourceBundle.getBundle("commands", Locale.ENGLISH);
+    }
+
+    public Messages(ResourceBundle bundle) {
+        this.bundle = bundle;
+    }
+
     public String usagePrefix() {
-        return ChatColor.GREEN + "Usage : " + ChatColor.YELLOW + "/<command> ";
+        return parseColorsMarkup(bundle.getString("usage-prefix"));
     }
 
     public String permissionMessage() {
-        return ChatColor.RED + "You don't have the permission to do that.";
+        return parseColorsMarkup(bundle.getString("permission-message"));
     }
 
     public String playerOnly() {
-        return ChatColor.RED + "This command can only be used as a player.";
+        return parseColorsMarkup(bundle.getString("player-only"));
     }
 
     public String missingEndingQuote(String command) {
-        return format("Missing ending quote in %s.", command);
+        return format(bundle.getString("missing-ending-quote"), command);
     }
 
     public String invalidFlag(String flags) {
-        return format("Invalid Flag(s) : %s.", flags);
+        return format(bundle.getString("invalid-flag"), flags);
     }
 
     public String missingArguments(int given, int min) {
-        return format("Missing argument(s) (%d / %d min).", given, min);
+        return format(bundle.getString("missing-arguments"), given, min);
     }
 
     public String tooManyArguments(int given, int max) {
-        return format("Too many argument(s) (%d / %d max).", given, max);
+        return format(bundle.getString("too-many-arguments"), given, max);
     }
 
     public String notAValidNumber(String token) {
-        return format("Invalid number : %s.", token);
+        return format(bundle.getString("invalid-number"), token);
     }
 
     public String unexpectedError() {
-        return "An unexpected error ocurred while trying to execute command.";
+        return bundle.getString("unexpected-error");
     }
 
     public String noSuchColor(String token) {
-        return format("No such color %s.", token);
+        return format(bundle.getString("no-such-color"), token);
     }
 
     public String noSuchWorld(String token) {
-        return format("No such world %s.", token);
+        return format(bundle.getString("no-such-world"), token);
     }
 
     public String noSuchPlayer(String token) {
-        return format("No such player %s.", token);
+        return format(bundle.getString("no-such-player"), token);
     }
 
     public String moreThanOnePlayerFound(String token) {
-        return format("More than one player found for %s", token);
+        return format(bundle.getString("too-many-players-found"), token);
     }
 
     public String noSuchMaterial(String token) {
-        return format("No such material %s.", token);
+        return format(bundle.getString("no-such-material"), token);
     }
 
     public String invalidMaterialAndDataFormat(String token) {
-        return format("Invalid material and data format : %s.", token);
+        return format(bundle.getString("invalid-itemtype-format"), token);
     }
 
     public String notAValidVectorComponent(String token) {
-        return format("Invalid vector component : %s.", token);
+        return format(bundle.getString("not-a-valid-vector-component"), token);
     }
 
     public String noSuchPotionEffect(String token) {
-        return format("No such potion effect %s.", token);
+        return format(bundle.getString("no-such-potioneffect"), token);
     }
 
     public String noSuchEnchant(String token) {
-        return format("No such enchant %s.", token);
+        return format(bundle.getString("no-such-enchantment"), token);
     }
 
     public String noSuchEntityType(String token) {
-        return format("No such entity (%s).", token);
+        return format(bundle.getString("no-such-entitytype"), token);
     }
 
     public String playerNeeded() {
-        return "You have to specify a player.";
+        return bundle.getString("player-needed");
     }
 
     public String worldNeeded() {
-        return "You have to specify a world.";
+        return bundle.getString("world-needed");
     }
 
     public String positionNeeded() {
-        return "You have to specify a position.";
+        return bundle.getString("position-needed");
     }
 
     public String unknownTimeFormat(String token) {
-        return format("Unknown time format %s.", token);
+        return format(bundle.getString("unknown-time-format"), token);
     }
 
     public String unknownTimePeriod(String token) {
-        return format("Unknown time period %s (expected am or pm).", token);
+        return format(bundle.getString("unknown-time-period"), token);
     }
 
     public String globUnbalancedSquareBracket(String token) {
-        return format("Unbalanced square bracket in : %s", token);
-    }
-
-    public String globaUnbalancedCharRange(String token) {
-        return format("Unbalanced char range in : %s", token);
+        return format(bundle.getString("glob-unbalanced-square-bracket"), token);
     }
 
     public String missingPermissionForOther(String permission) {
-        return format("You don't have permission to use this command on others.");
+        return format(bundle.getString("missing-permission-for-other"));
     }
 }
