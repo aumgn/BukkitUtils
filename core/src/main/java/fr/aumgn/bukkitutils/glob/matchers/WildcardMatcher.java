@@ -9,6 +9,13 @@ public class WildcardMatcher implements GlobMatcher {
     private final List<GlobMatcher> matchers;
 
     public WildcardMatcher(String pattern, int i) {
+        // "**" is strictly equivalent to "*"
+        // So forward to first non wildcard character
+        // to avoid unnecessary treatment.
+        while (i < pattern.length() && pattern.charAt(i) == '*') {
+            i++;
+        }
+
         this.matchers = Collections.unmodifiableList(
                 GlobParser.parse(pattern, i));
     }
