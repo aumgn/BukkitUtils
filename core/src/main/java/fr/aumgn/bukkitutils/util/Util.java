@@ -1,8 +1,11 @@
 package fr.aumgn.bukkitutils.util;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -11,6 +14,7 @@ import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
 
 public final class Util {
 
+    private static final Pattern COLORS_PATTERN = Pattern.compile("\\{([A-Za-z]+)\\}");
     private static final Random RANDOM = new Random();
 
     private Util() {
@@ -65,5 +69,19 @@ public final class Util {
         }
 
         return parser.parse(token);
+    }
+
+    public static String parseColorsMarkup(String message) {
+        StringBuffer parsed = new StringBuffer();
+        Matcher matcher = COLORS_PATTERN.matcher(message);
+        while (matcher.find()) {
+            try {
+                ChatColor color = ChatColor.valueOf(matcher.group(1).toUpperCase());
+                matcher.appendReplacement(parsed, color.toString());
+            } catch (IllegalArgumentException exc) {
+            }
+        }
+        matcher.appendTail(parsed);
+        return parsed.toString();
     }
 }
