@@ -47,9 +47,13 @@ public class CommandArgsParser {
                 }
 
                 if (token.charAt(0) == '"') {
-                    quoted = true;
-                    current = new StringBuilder();
-                    current.append(token.substring(1));
+                    if (token.charAt(token.length() - 1) == '\"') {
+                        argsList.add(token.substring(1, token.length() - 1));
+                    } else {
+                        quoted = true;
+                        current = new StringBuilder();
+                        current.append(token.substring(1));
+                    }
                 } else if (token.charAt(0) == '-' && token.length() > 1
                         && Character.isLetter(token.charAt(1))) {
                     parseFlags(token.substring(1));
