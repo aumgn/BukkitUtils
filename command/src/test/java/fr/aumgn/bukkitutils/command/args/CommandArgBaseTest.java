@@ -61,12 +61,27 @@ public class CommandArgBaseTest {
 
     @Test
     public void testParseQuotedArgs() {
-        CommandArgs args = parse(0, -1, "arg1", "\"arg2", "", "with", "spaces\"", "arg3");
+        CommandArgs args = parse(0, -1,
+                "arg1 arg2 arg3".split(" "));
+        CommandArgs args2 = parse(0, -1,
+                "arg1 \"arg2\" arg3".split(" "));
+        CommandArgs args3 = parse(0, -1,
+                "arg1 \"arg2  with spaces\" arg3".split(" "));
 
         assertEquals(3, args.length());
         assertEquals("arg1", args.get(0));
-        assertEquals("arg2  with spaces", args.get(1));
+        assertEquals("arg2", args.get(1));
         assertEquals("arg3", args.get(2));
+
+        assertEquals(3, args2.length());
+        assertEquals("arg1", args2.get(0));
+        assertEquals("arg2", args2.get(1));
+        assertEquals("arg3", args2.get(2));
+
+        assertEquals(3, args3.length());
+        assertEquals("arg1", args3.get(0));
+        assertEquals("arg2  with spaces", args3.get(1));
+        assertEquals("arg3", args3.get(2));
     }
 
     @Test(expected = CommandUsageError.class)
