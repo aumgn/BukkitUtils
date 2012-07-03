@@ -26,6 +26,6 @@ public class PluginResourceBundles {
         return ResourceBundle.getBundle(
                 name, locale,
                 plugin.getClass().getClassLoader(),
-                new PluginResourceBundleControl(resourcesFolder));
+                new PluginResourceBundleControl(plugin, resourcesFolder));
     }
 }
