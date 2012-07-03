@@ -1,5 +1,6 @@
 package fr.aumgn.bukkitutils.localization.bundle;
 
+import java.text.MessageFormat;
 import java.util.Enumeration;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -41,5 +42,9 @@ public class PluginResourceBundle extends ResourceBundle {
     @Override
     protected Set<String> handleKeySet() {
         return map.keySet();
+    }
+
+    public String getString(String key, Object... arguments) {
+        return MessageFormat.format(getString(key), arguments);
     }
 }

@@ -17,6 +17,7 @@ import com.google.common.base.Charsets;
 
 import fr.aumgn.bukkitutils.localization.bundle.PluginJsonResourceBundle;
 import fr.aumgn.bukkitutils.localization.bundle.PluginPropertyResourceBundle;
+import fr.aumgn.bukkitutils.localization.bundle.PluginResourceBundle;
 import fr.aumgn.bukkitutils.localization.bundle.PluginYmlResourceBundle;
 
 public class PluginResourceBundleControl extends ResourceBundle.Control {
@@ -42,18 +43,12 @@ public class PluginResourceBundleControl extends ResourceBundle.Control {
         list.add("pluginjar.yml");
         list.add("pluginjar.properties");
 
-        list.add("java.class");
-
         return list;
     }
 
     @Override
-    public ResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload)
+    public PluginResourceBundle newBundle(String baseName, Locale locale, String format, ClassLoader loader, boolean reload)
             throws IOException, IllegalAccessException, InstantiationException {
-        if (format.equals("java.class")) {
-            return super.newBundle(baseName, locale, format, loader, reload);
-        }
-
         InputStream iStream;
         String type;
         if (format.startsWith("pluginjar.")) {

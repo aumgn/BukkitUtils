@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.aumgn.bukkitutils.localization.bundle.PluginResourceBundle;
+
 public class PluginResourceBundles {
 
     private final JavaPlugin plugin;
@@ -22,8 +24,8 @@ public class PluginResourceBundles {
         this(plugin, plugin.getLocale(), plugin.getResourcesFolder());
     }
 
-    public ResourceBundle get(String name) {
-        return ResourceBundle.getBundle(
+    public PluginResourceBundle get(String name) {
+        return (PluginResourceBundle) ResourceBundle.getBundle(
                 name, locale,
                 plugin.getClass().getClassLoader(),
                 new PluginResourceBundleControl(plugin, resourcesFolder));
