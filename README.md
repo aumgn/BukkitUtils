@@ -1,4 +1,4 @@
-BukkitUtils
+BukkitUtils [![Travis CI](https://secure.travis-ci.org/aumgn/BukkitUtils.png)](http://travis-ci.org/#!/aumgn/BukkitUtils)
 =============
 
 Personal set of utilities for Bukkit.
