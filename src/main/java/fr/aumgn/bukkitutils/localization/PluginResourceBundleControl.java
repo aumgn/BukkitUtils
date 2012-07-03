@@ -83,10 +83,10 @@ public class PluginResourceBundleControl extends ResourceBundle.Control {
     }
 
     private String getType(String format) {
-        return format.split(".")[1];
+        return format.split("\\.")[1];
     }
 
     private String toBundleName(String baseName, Locale locale, String extension) {
-        return toBundleName(baseName, locale) + extension;
+        return toBundleName(baseName, locale) + "." + extension;
     }
 }
