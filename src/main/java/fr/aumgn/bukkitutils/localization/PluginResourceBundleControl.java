@@ -72,11 +72,11 @@ public class PluginResourceBundleControl extends ResourceBundle.Control {
 
         Reader reader = new InputStreamReader(iStream, Charsets.UTF_8);
         if (type.equals("json")) {
-            return new PluginJsonResourceBundle(reader);
+            return new PluginJsonResourceBundle(reader, locale);
         } else if (type.equals("yml")) {
-            return new PluginYmlResourceBundle(reader);
+            return new PluginYmlResourceBundle(reader, locale);
         } else if (type.equals("properties")) {
-            return new PluginPropertyResourceBundle(reader);
+            return new PluginPropertyResourceBundle(reader, locale);
         } else {
             throw new IllegalArgumentException("Unknown format: " + format);
         }

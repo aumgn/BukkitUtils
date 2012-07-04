@@ -1,6 +1,7 @@
 package fr.aumgn.bukkitutils.localization.bundle;
 
 import java.io.Reader;
+import java.util.Locale;
 import java.util.Map;
 
 import com.google.gson.Gson;
@@ -19,7 +20,7 @@ public class PluginJsonResourceBundle extends PluginResourceBundle {
         return (Map<String, Object>) gson.fromJson(reader, typeToken.getRawType());
     }
 
-    public PluginJsonResourceBundle(Reader reader) {
-        super(readJson(reader));
+    public PluginJsonResourceBundle(Reader reader, Locale locale) {
+        super(readJson(reader), locale);
     }
 }

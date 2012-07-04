@@ -2,6 +2,7 @@ package fr.aumgn.bukkitutils.localization.bundle;
 
 import java.text.MessageFormat;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -15,7 +16,8 @@ public class PluginResourceBundle extends ResourceBundle {
 
     private Map<String,Object> map;
 
-    public PluginResourceBundle(Map<String, Object> map) {
+    public PluginResourceBundle(Map<String, Object> map, Locale locale) {
+        Validate.notNull(locale);
         Validate.notNull(map);
         this.map = map;
 
@@ -23,7 +25,10 @@ public class PluginResourceBundle extends ResourceBundle {
         for (Entry<String, Object> entry : map.entrySet()) {
             Object obj = entry.getValue();
             if (obj instanceof String) {
-                entry.setValue(Util.parseColorsMarkup((String) obj));
+                String message = Util.parseColorsMarkup((String) obj);
+                message = message.replaceAll("'", "''");
+                message = message.replaceAll("\\\\", "'");
+                entry.setValue(new MessageFormat(message, locale));
             }
         }
     }
@@ -34,6 +39,20 @@ public class PluginResourceBundle extends ResourceBundle {
         return map.get(key);
     }
 
+    public String get(String key) {
+        return get(key, new Object[0]);
+    }
+
+    public String get(String key, Object... arguments) {
+        Object obj = getObject(key);
+        if (obj instanceof MessageFormat) {
+            MessageFormat message = (MessageFormat) obj;
+            return message.format(arguments);
+        } else {
+            return (String) obj;
+        }
+    }
+
     @Override
     public Enumeration<String> getKeys() {
         throw new UnsupportedOperationException();
@@ -42,9 +61,5 @@ public class PluginResourceBundle extends ResourceBundle {
     @Override
     protected Set<String> handleKeySet() {
         return map.keySet();
-    }
-
-    public String getString(String key, Object... arguments) {
-        return MessageFormat.format(getString(key), arguments);
     }
 }

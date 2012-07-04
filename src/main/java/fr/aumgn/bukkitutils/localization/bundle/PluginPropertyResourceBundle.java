@@ -3,6 +3,7 @@ package fr.aumgn.bukkitutils.localization.bundle;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 
@@ -15,7 +16,7 @@ public class PluginPropertyResourceBundle extends PluginResourceBundle {
         return new HashMap(properties);
     }
 
-    public PluginPropertyResourceBundle(Reader reader) throws IOException {
-        super(readProperties(reader));
+    public PluginPropertyResourceBundle(Reader reader, Locale locale) throws IOException {
+        super(readProperties(reader), locale);
     }
 }

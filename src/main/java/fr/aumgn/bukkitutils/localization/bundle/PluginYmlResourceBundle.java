@@ -2,6 +2,7 @@ package fr.aumgn.bukkitutils.localization.bundle;
 
 import java.io.Reader;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.Map;
 
 import org.yaml.snakeyaml.Yaml;
@@ -19,7 +20,7 @@ public class PluginYmlResourceBundle extends PluginResourceBundle {
         return (Map<String, Object>) obj;
     }
 
-    public PluginYmlResourceBundle(Reader reader) {
-        super(readYml(reader));
+    public PluginYmlResourceBundle(Reader reader, Locale locale) {
+        super(readYml(reader), locale);
     }
 }
