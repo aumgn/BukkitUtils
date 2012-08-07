@@ -17,6 +17,7 @@ import org.apache.commons.lang.NotImplementedException;
 import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
+import org.bukkit.Warning.WarningState;
 import org.bukkit.World;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandException;
@@ -471,5 +472,20 @@ public class MockServer implements Server {
     @Override
     public void sendPluginMessage(Plugin arg0, String arg1, byte[] arg2) {
         throw new NotImplementedException();
+    }
+
+    @Override
+    public String getMotd() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public WarningState getWarningState() {
+        throw new NotImplementedException();
+    }
+
+    @Override
+    public boolean isPrimaryThread() {
+        return anyBoolean();
     }
 }
