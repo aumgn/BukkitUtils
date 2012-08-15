@@ -49,7 +49,7 @@ public class PluginResourceBundle extends ResourceBundle {
             MessageFormat message = (MessageFormat) obj;
             return message.format(arguments);
         } else {
-            return (String) obj;
+            return (String) MessageFormat.format((String) obj, arguments);
         }
     }
 

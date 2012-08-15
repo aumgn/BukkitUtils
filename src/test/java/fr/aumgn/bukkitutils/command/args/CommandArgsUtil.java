@@ -14,7 +14,8 @@ public class CommandArgsUtil {
     private static final Set<Character> NO_FLAGS;
 
     static {
-        MESSAGES = new Messages(ResourceBundle.getBundle("commands"));
+        MESSAGES = new Messages(
+                ResourceBundle.getBundle("fr/aumgn/bukkitutils/commands"));
         NO_FLAGS = Collections.<Character>emptySet();
     }
 

@@ -29,8 +29,8 @@ public class CommandsRegistration {
 
     public CommandsRegistration(JavaPlugin plugin, Locale locale) {
         this.plugin = plugin;
-        this.messages = new Messages(
-                ResourceBundle.getBundle("commands", locale));
+        this.messages = new Messages(ResourceBundle.getBundle(
+                "fr/aumgn/bukkitutils/commands", locale));
     }
 
     public <T extends JavaPlugin & Localizable> CommandsRegistration(T plugin) {

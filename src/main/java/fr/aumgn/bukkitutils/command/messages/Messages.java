@@ -12,7 +12,8 @@ public class Messages {
 
     @Deprecated
     public Messages() {
-        this.bundle = ResourceBundle.getBundle("commands", Locale.ENGLISH);
+        this.bundle = ResourceBundle.getBundle(
+                "fr/aumgn/bukkitutils/commands", Locale.ENGLISH);
     }
 
     public Messages(ResourceBundle bundle) {

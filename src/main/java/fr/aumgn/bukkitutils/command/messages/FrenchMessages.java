@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 public class FrenchMessages extends Messages {
 
     public FrenchMessages() {
-        super(ResourceBundle.getBundle("commands", Locale.FRENCH));
+        super(ResourceBundle.getBundle(
+                "fr/aumgn/bukkitutils/commands", Locale.FRENCH));
     }
 }

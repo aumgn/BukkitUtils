@@ -53,7 +53,8 @@ public class PluginResourceBundleControl extends ResourceBundle.Control {
         String type;
         if (format.startsWith("pluginjar.")) {
             type = getType(format);
-            iStream = plugin.getResource(toBundleName(baseName, locale, type));
+            iStream = plugin.getClass()
+                    .getResourceAsStream(toBundleName(baseName, locale, type));
             if (iStream == null) {
                 return null;
             }

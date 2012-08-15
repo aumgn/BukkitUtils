@@ -59,9 +59,9 @@
 
 		<resources>
 			<resource>
-				<targetPath>.</targetPath>
+				<targetPath>fr/aumgn/bukkitutils</targetPath>
 				<filtering>false</filtering>
-				<directory>${basedir}/src/main/resources</directory>
+				<directory>${basedir}/src/main/resources/fr/aumgn/bukkitutils</directory>
 				<includes>
 					<include>*.properties</include>
 				</includes>
