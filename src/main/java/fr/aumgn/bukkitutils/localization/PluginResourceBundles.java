@@ -14,6 +14,10 @@ public class PluginResourceBundles {
     private final Locale locale;
     private final File resourcesFolder;
 
+    public static void clearCache(JavaPlugin plugin) {
+        ResourceBundle.clearCache(plugin.getClass().getClassLoader());
+    }
+
     public PluginResourceBundles(JavaPlugin plugin, Locale locale, File resourcesFolder) {
         this.plugin = plugin;
         this.locale = locale;
