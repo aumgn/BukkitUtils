@@ -1,12 +1,15 @@
 package fr.aumgn.bukkitutils.playerid;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import fr.aumgn.bukkitutils.mockbukkit.MockBukkit;
-
-import static org.junit.Assert.*;
+import fr.aumgn.mockbukkit.MockBukkit;
 
 public class PlayerIdTest {
 

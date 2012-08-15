@@ -1,5 +1,7 @@
 package fr.aumgn.bukkitutils.command;
 
+import static org.mockito.Mockito.verify;
+
 import java.lang.reflect.Method;
 
 import org.bukkit.command.CommandExecutor;
@@ -7,11 +9,10 @@ import org.bukkit.entity.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Mockito.*;
 
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.messages.Messages;
-import fr.aumgn.bukkitutils.mockbukkit.MockBukkit;
+import fr.aumgn.mockbukkit.MockBukkit;
 
 public class MethodCommandExecutorTest {
 

@@ -1,5 +1,7 @@
 package fr.aumgn.bukkitutils.command.args;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.List;
 
 import org.bukkit.World;
@@ -7,12 +9,10 @@ import org.bukkit.entity.Player;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
-import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerArg.NoSuchPlayer;
 import fr.aumgn.bukkitutils.command.arg.bukkit.WorldArg.NoSuchWorld;
-import fr.aumgn.bukkitutils.mockbukkit.MockBukkit;
+import fr.aumgn.mockbukkit.MockBukkit;
 
 public class CommandArgsBukkitTest {
 
