@@ -72,15 +72,21 @@ public class PluginResourceBundleControl extends ResourceBundle.Control {
         }
 
         Reader reader = new InputStreamReader(iStream, Charsets.UTF_8);
+        PluginResourceBundle bundle = null;
         if (type.equals("json")) {
-            return new PluginJsonResourceBundle(reader, locale);
+            bundle = new PluginJsonResourceBundle(reader, locale);
         } else if (type.equals("yml")) {
-            return new PluginYmlResourceBundle(reader, locale);
+            bundle = new PluginYmlResourceBundle(reader, locale);
         } else if (type.equals("properties")) {
-            return new PluginPropertyResourceBundle(reader, locale);
-        } else {
+            bundle = new PluginPropertyResourceBundle(reader, locale);
+        }
+
+        reader.close();
+
+        if (bundle == null) {
             throw new IllegalArgumentException("Unknown format: " + format);
         }
+        return bundle;
     }
 
     private String getType(String format) {
