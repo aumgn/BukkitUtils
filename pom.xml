@@ -28,6 +28,10 @@
 			<id>bukkit-repo</id>
 			<url>http://repo.bukkit.org/content/groups/public</url>
 		</repository>
+		<repository>
+			<id>aumgn-repo</id>
+			<url>http://aumgn.fr/maven</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
