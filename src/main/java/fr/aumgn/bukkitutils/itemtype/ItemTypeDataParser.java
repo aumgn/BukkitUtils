@@ -16,7 +16,9 @@ public abstract class ItemTypeDataParser {
         if (material == Material.WOOD
                 || material == Material.SAPLING
                 || material == Material.LOG
-                || material == Material.LEAVES) {
+                || material == Material.LEAVES
+                || material == Material.WOOD_DOUBLE_STEP
+                || material == Material.WOOD_STEP) {
             return new WoodDataParser();
         }
 
@@ -31,6 +33,14 @@ public abstract class ItemTypeDataParser {
 
         if (material == Material.POTION) {
             return new PotionDataParser();
+        }
+
+        if (material == Material.MONSTER_EGG) {
+            return new MonsterEggDataParser();
+        }
+
+        if (material == Material.MONSTER_EGGS) {
+            return new MonsterEggsDataParser();
         }
 
         return null;
