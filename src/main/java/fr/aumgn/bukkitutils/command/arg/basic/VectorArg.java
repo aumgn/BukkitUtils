@@ -3,10 +3,10 @@ package fr.aumgn.bukkitutils.command.arg.basic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.geom.Vector;
 
 public class VectorArg extends CommandArg<Vector> {

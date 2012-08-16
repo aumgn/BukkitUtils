@@ -1,6 +1,5 @@
-package fr.aumgn.bukkitutils.command.messages;
+package fr.aumgn.bukkitutils.command;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static java.text.MessageFormat.format;
@@ -9,12 +8,6 @@ import static fr.aumgn.bukkitutils.util.Util.parseColorsMarkup;
 public class Messages {
 
     private final ResourceBundle bundle;
-
-    @Deprecated
-    public Messages() {
-        this.bundle = ResourceBundle.getBundle(
-                "fr/aumgn/bukkitutils/commands", Locale.ENGLISH);
-    }
 
     public Messages(ResourceBundle bundle) {
         this.bundle = bundle;

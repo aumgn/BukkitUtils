@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandArgsParser {
 

@@ -6,10 +6,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandArgsBase {
 

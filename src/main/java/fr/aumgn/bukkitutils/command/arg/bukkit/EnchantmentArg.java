@@ -2,10 +2,10 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.enchantments.Enchantment;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class EnchantmentArg extends CommandArg<Enchantment> {
 

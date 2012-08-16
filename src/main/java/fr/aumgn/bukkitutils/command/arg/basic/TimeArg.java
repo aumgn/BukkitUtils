@@ -1,9 +1,9 @@
 package fr.aumgn.bukkitutils.command.arg.basic;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.util.TimeUtil;
 import fr.aumgn.bukkitutils.util.TimeUtil.UnknownTimeFormatException;
 import fr.aumgn.bukkitutils.util.TimeUtil.UnknownTimePeriodException;

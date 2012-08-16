@@ -13,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.localization.Localizable;
 
 public class CommandsRegistration {
@@ -21,16 +20,16 @@ public class CommandsRegistration {
     private final JavaPlugin plugin;
     private final Messages messages;
 
-    @Deprecated
-    public CommandsRegistration(JavaPlugin plugin, Messages messages) {
-        this.plugin = plugin;
-        this.messages = messages;
-    }
-
     public CommandsRegistration(JavaPlugin plugin, Locale locale) {
         this.plugin = plugin;
+        // Hack. `locale` is user specified and will most likely be the same as 
+        // Locale.getDefault() which is also used by ResourceBundle.
+        // As such, using Locale.US as the default Locale makes more sense.
+        Locale defaultLocale = Locale.getDefault();
+        Locale.setDefault(Locale.US);
         this.messages = new Messages(ResourceBundle.getBundle(
                 "fr/aumgn/bukkitutils/commands", locale));
+        Locale.setDefault(defaultLocale);
     }
 
     public <T extends JavaPlugin & Localizable> CommandsRegistration(T plugin) {

@@ -8,11 +8,11 @@ import org.bukkit.entity.Player;
 
 import com.google.common.base.Function;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.glob.Glob;
 
 public class PlayerArg extends CommandArg<Player> {

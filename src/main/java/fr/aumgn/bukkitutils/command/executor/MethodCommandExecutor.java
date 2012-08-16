@@ -14,11 +14,11 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.Commands;
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.glob.exceptions.GlobException;
 import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
 

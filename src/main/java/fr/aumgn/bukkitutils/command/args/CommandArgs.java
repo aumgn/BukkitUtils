@@ -9,6 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
@@ -24,7 +25,6 @@ import fr.aumgn.bukkitutils.command.arg.bukkit.OfflinePlayerArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PotionEffectTypeArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.WorldArg;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 import fr.aumgn.bukkitutils.itemtype.ItemType;

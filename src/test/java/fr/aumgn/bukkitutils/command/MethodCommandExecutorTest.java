@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 import fr.aumgn.mockbukkit.MockBukkit;
 
 public class MethodCommandExecutorTest {

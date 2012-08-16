@@ -6,7 +6,7 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import fr.aumgn.bukkitutils.command.messages.Messages;
+import fr.aumgn.bukkitutils.command.Messages;
 
 public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
 

@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public abstract class AbstractCommandArg<V, W> {
 

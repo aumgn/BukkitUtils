@@ -4,9 +4,9 @@ import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
-import fr.aumgn.bukkitutils.command.messages.Messages;
 
 public class CommandArgsUtil {
 
