@@ -10,17 +10,24 @@ import fr.aumgn.bukkitutils.command.Messages;
 
 public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
 
+    private final String separator;
     private final CommandArgFactory<V> factory;
 
-    public CommandListArg(CommandArgFactory<V> factory,
-            Messages messages, String string) {
+    public CommandListArg(Messages messages,
+            CommandArgFactory<V> factory, String string) {
+        this(messages, ",", factory, string);
+    }
+
+    public CommandListArg(Messages messages, String separator,
+            CommandArgFactory<V> factory, String string) {
         super(messages, string);
+        this.separator = separator;
         this.factory = factory;
     }
 
     @Override
     public List<V> value() {
-        String[] splitted = string.split(",");
+        String[] splitted = string.split(separator);
         List<V> list = new ArrayList<V>();
 
         for (String subArg : splitted) {
@@ -51,7 +58,7 @@ public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
 
     @Override
     public List<V> match() {
-        String[] splitted = string.split(",");
+        String[] splitted = string.split(separator);
         List<V> list = new ArrayList<V>();
 
         for (String subArg : splitted) {

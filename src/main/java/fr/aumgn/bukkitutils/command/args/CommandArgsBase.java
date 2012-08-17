@@ -113,7 +113,13 @@ public class CommandArgsBase {
 
     public <T> CommandListArg<T> getList(
             int index, CommandArgFactory<T> factory) {
-        return new CommandListArg<T>(factory, messages, getOrNull(index));
+        return new CommandListArg<T>(messages, factory, getOrNull(index));
+    }
+
+    public <T> CommandListArg<T> getList(
+            int index, String separator, CommandArgFactory<T> factory) {
+        return new CommandListArg<T>(messages, separator,
+                factory, getOrNull(index));
     }
 
     public <T> CommandListArg<T> getList(int index, Class<T> klass) {
@@ -121,15 +127,33 @@ public class CommandArgsBase {
         return getList(index, factory);
     }
 
+    public <T> CommandListArg<T> getList(int index, String separator,
+            Class<T> klass) {
+        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+        return getList(index, separator, factory);
+    }
+
     public <T> CommandListArg<T> getList(
             char flag, CommandArgFactory<T> factory) {
-        return new CommandListArg<T>(factory, messages, getOrNull(flag));
+        return new CommandListArg<T>(messages, factory, getOrNull(flag));
+    }
+
+    public <T> CommandListArg<T> getList(
+            char flag, String separator, CommandArgFactory<T> factory) {
+        return new CommandListArg<T>(messages, separator,
+                factory, getOrNull(flag));
     }
 
     public <T> CommandListArg<T> getList(
             char flag, Class<T> klass) {
         CommandArgFactory<T> factory = CommandArgFactory.get(klass);
         return getList(flag, factory);
+    }
+
+    public <T> CommandListArg<T> getList(
+            char flag, String separator, Class<T> klass) {
+        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+        return getList(flag, separator, factory);
     }
 
     public String get(int index, int rawEndIndex) {
