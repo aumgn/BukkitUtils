@@ -34,7 +34,8 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final Set<Character> argsFlags;
     private final boolean isPlayerCommand;
 
-    public MethodCommandExecutor(Messages messages, Commands instance, Method preExecute, Method method, Command command) {
+    public MethodCommandExecutor(Messages messages, Commands instance,
+            Method preExecute, Method method, Command command) {
         this.messages = messages;
         this.instance = instance;
         this.preExecute = preExecute;
@@ -60,7 +61,8 @@ public class MethodCommandExecutor implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
+    public boolean onCommand(CommandSender sender,
+            org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
         if (isPlayerCommand && !(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + messages.playerOnly());
             return true;
@@ -94,7 +96,8 @@ public class MethodCommandExecutor implements CommandExecutor {
         return new CommandArgs(messages, parser);
     }
 
-    private void callCommand(String name, CommandSender sender, CommandArgs args) throws Throwable {
+    private void callCommand(String name, CommandSender sender,
+            CommandArgs args) throws Throwable {
         try {
             if (preExecute != null) {
                 preExecute.invoke(instance, sender, args);
@@ -119,9 +122,10 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private void handleGlobException(GlobException exc) {
         if (exc instanceof UnbalancedSquareBracketException) {
+            UnbalancedSquareBracketException usbExc;
+            usbExc = ((UnbalancedSquareBracketException) exc);
             throw new CommandUsageError(
-                    messages.globUnbalancedSquareBracket(
-                            ((UnbalancedSquareBracketException) exc).getGlob()));
+                    messages.globUnbalancedSquareBracket(usbExc.getGlob()));
         }
 
         throw new RuntimeException(exc);
@@ -129,14 +133,16 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private void unhandledError(String name, CommandArgs args, Throwable exc) {
         if (!(exc instanceof org.bukkit.command.CommandException)) {
-            Bukkit.getLogger().severe("Exception occured while executing \""+ name + "\"");
+            Bukkit.getLogger().severe(
+                    "Exception occured while executing \""+ name + "\"");
             if (args != null) {
                 if (args.hasFlags()) {
                     StringBuilder flagsString = new StringBuilder();
                     for (char flag : args.flags()) {
                         flagsString.append(flag);
                     }
-                    Bukkit.getLogger().severe("Flags : " + flagsString.toString());
+                    Bukkit.getLogger().severe(
+                            "Flags : " + flagsString.toString());
                 }
                 if (args.length() > 0) {
                     StringBuilder arguments = new StringBuilder();
@@ -144,7 +150,8 @@ public class MethodCommandExecutor implements CommandExecutor {
                         arguments.append(arg);
                         arguments.append(" ");
                     }
-                    Bukkit.getLogger().severe("Arguments : " + arguments.toString());
+                    Bukkit.getLogger().severe(
+                            "Arguments : " + arguments.toString());
                 }
             }
         }

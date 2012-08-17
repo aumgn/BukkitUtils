@@ -110,7 +110,8 @@ public class Messages {
     }
 
     public String globUnbalancedSquareBracket(String token) {
-        return format(bundle.getString("glob-unbalanced-square-bracket"), token);
+        return format(bundle.getString("glob-unbalanced-square-bracket"),
+                token);
     }
 
     public String missingPermissionForOther(String permission) {

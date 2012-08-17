@@ -12,7 +12,8 @@ public class PotionEffectTypeArg extends CommandArg<PotionEffectType> {
     public static class Factory extends CommandArgFactory<PotionEffectType> {
 
         @Override
-        public PotionEffectTypeArg createCommandArg(Messages messages, String string) {
+        public PotionEffectTypeArg createCommandArg(
+                Messages messages, String string) {
             return new PotionEffectTypeArg(messages, string);
         }
     }

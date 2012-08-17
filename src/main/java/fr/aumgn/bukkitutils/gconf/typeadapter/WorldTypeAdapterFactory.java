@@ -41,7 +41,8 @@ public class WorldTypeAdapterFactory implements TypeAdapterFactory {
                 UUID uuid = gson.fromJson(reader, UUID.class);
                 World world = Bukkit.getWorld(uuid);
                 if (world == null && throwsException) {
-                    throw new GConfLoadRuntimeException("Unable to load world for uuid :" + uuid);
+                    throw new GConfLoadRuntimeException(
+                            "Unable to load world for uuid :" + uuid);
                 }
 
                 return (T) world;
@@ -54,5 +55,4 @@ public class WorldTypeAdapterFactory implements TypeAdapterFactory {
             }
         };
     }
-
 }

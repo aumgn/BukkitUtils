@@ -24,7 +24,8 @@ public class NestedCommandExecutor implements CommandExecutor {
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(CommandSender sender,
+            Command cmd, String label, String[] args) {
         if (args.length == 0) {
             if (defaultExecutor == null) {
                 return false;
@@ -34,7 +35,8 @@ public class NestedCommandExecutor implements CommandExecutor {
         }
 
         PluginCommand subCommand = plugin.getCommand(name + " " + args[0]);
-        if (subCommand == null || !subCommands.contains(subCommand.getName())) {
+        if (subCommand == null
+                || !subCommands.contains(subCommand.getName())) {
             return false;
         }
 

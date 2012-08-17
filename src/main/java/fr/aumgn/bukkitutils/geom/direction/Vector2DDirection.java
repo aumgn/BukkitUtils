@@ -7,7 +7,8 @@ import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 
-public final class Vector2DDirection extends AbstractDirection implements Direction {
+public final class Vector2DDirection extends AbstractDirection
+        implements Direction {
 
     private final Vector2D vector;
     private float yaw;

@@ -28,5 +28,4 @@ public class OfflinePlayerMapEntry<T> implements Entry<OfflinePlayer, T> {
     public T setValue(T value) {
         return entry.setValue(value);
     }
-
 }

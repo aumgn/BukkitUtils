@@ -109,14 +109,17 @@ public class CommandArgsParser {
         }
 
         if (invalidFlags.length() > 0) {
-            throw new CommandUsageError(messages.invalidFlag(invalidFlags.toString()));
+            throw new CommandUsageError(
+                    messages.invalidFlag(invalidFlags.toString()));
         }
 
         if (args.length < min) {
-            throw new CommandUsageError(messages.missingArguments(args.length, min));
+            throw new CommandUsageError(
+                    messages.missingArguments(args.length, min));
         }
         if (max != -1 && args.length > max) {
-            throw new CommandUsageError(messages.tooManyArguments(args.length, max));
+            throw new CommandUsageError(
+                    messages.tooManyArguments(args.length, max));
         }
     }
 

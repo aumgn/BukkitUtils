@@ -44,9 +44,11 @@ public class BukkitConfigTypeAdapterFactory implements TypeAdapterFactory {
         @Override
         public void write(JsonWriter writer, T obj) throws IOException {
             Map<String, Object> map = new LinkedHashMap<String, Object>();
-            ConfigurationSerializable serializable = (ConfigurationSerializable) obj;
+            ConfigurationSerializable serializable =
+                    (ConfigurationSerializable) obj;
             map.put(SERIALIZED_TYPE_KEY,
-                    ConfigurationSerialization.getAlias(serializable.getClass()));
+                    ConfigurationSerialization.getAlias(
+                            serializable.getClass()));
             map.putAll(serializable.serialize());
 
             gson.toJson(map, BUKKIT_SERIAL_TYPE, writer);
@@ -55,11 +57,11 @@ public class BukkitConfigTypeAdapterFactory implements TypeAdapterFactory {
 
     @Override
     public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> token) {
-        if (!ConfigurationSerializable.class.isAssignableFrom(token.getRawType())) {
+        if (!ConfigurationSerializable.class.isAssignableFrom(
+                token.getRawType())) {
             return null;
         }
 
         return new BukkitConfigTypeAdapter<T>(gson);
     }
-
 }

@@ -11,7 +11,7 @@ public class WildcardMatcher implements GlobMatcher {
     public WildcardMatcher(String pattern, int i) {
         // "**" is strictly equivalent to "*"
         // So forward to first non wildcard character
-        // to avoid unnecessary treatment.
+        // to avoid unnecessary calculation.
         while (i < pattern.length() && pattern.charAt(i) == '*') {
             i++;
         }

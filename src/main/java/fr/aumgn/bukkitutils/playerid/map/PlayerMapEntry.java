@@ -28,5 +28,4 @@ public class PlayerMapEntry<T> implements Entry<Player, T> {
     public T setValue(T value) {
         return entry.setValue(value);
     }
-
 }

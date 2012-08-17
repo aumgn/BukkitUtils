@@ -4,13 +4,13 @@ public class MonsterEggsDataParser extends ItemTypeDataParser {
 
     @Override
     public Short parse(String token) {
-        if (token.equals("stone")) {
+        if (token.equalsIgnoreCase("stone")) {
             return 0;
         }
-        if (token.equals("cobblestone")) {
+        if (token.equalsIgnoreCase("cobblestone")) {
             return 1;
         }
-        if (token.equals("smooth_brick")) {
+        if (token.equalsIgnoreCase("smooth_brick")) {
             return 2;
         }
 

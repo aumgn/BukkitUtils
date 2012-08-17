@@ -15,17 +15,13 @@ public final class Face extends AbstractDirection {
 
     private final float yaw;
     private final float pitch;
-    private final int x;
-    private final int y;
-    private final int z;
+    private final Vector vector;
 
     public Face(float yaw, float pitch, int x, int y, int z) {
         Validate.isTrue(!done);
         this.yaw = yaw;
         this.pitch = pitch;
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.vector = new Vector(x, y, z);
     }
 
     @Override
@@ -40,11 +36,11 @@ public final class Face extends AbstractDirection {
 
     @Override
     public Vector2D getVector2D() {
-        return new Vector2D(x, z);
+        return vector.to2D();
     }
 
     @Override
     public Vector getVector() {
-        return new Vector(x, y, z);
+        return vector;
     }
 }

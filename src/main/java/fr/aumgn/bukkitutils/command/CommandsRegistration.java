@@ -46,7 +46,8 @@ public class CommandsRegistration {
 
         Method preExecute = null;
         try {
-            preExecute = commands.getClass().getMethod("preExecute", CommandSender.class, CommandArgs.class);
+            preExecute = commands.getClass().getMethod("preExecute",
+                    CommandSender.class, CommandArgs.class);
             Class<?>[] params = preExecute.getParameterTypes();
             Validate.isTrue(params.length == 2,
                     "preExecute method must define two arguments.");
@@ -54,7 +55,7 @@ public class CommandsRegistration {
                     "First argument must be of type CommandSender.");
             Validate.isTrue(CommandSender.class.isAssignableFrom(params[1]),
                     "Second argument must be of type CommandArgs.");
-        } catch (Exception e) {
+        } catch (NoSuchMethodException exc) {
         }
 
         for (Method method : commands.getClass().getMethods()) {
@@ -92,7 +93,8 @@ public class CommandsRegistration {
                 CommandExecutor executor = new MethodCommandExecutor(
                         messages, commands, preExecute, method, cmdAnnotation);
                 if (oldExecutor instanceof NestedCommandExecutor) {
-                    ((NestedCommandExecutor) oldExecutor).setDefaultExecutor(executor);
+                    ((NestedCommandExecutor) oldExecutor)
+                            .setDefaultExecutor(executor);
                 } else {
                     setCommandMessages(command);
                     command.setExecutor(executor);
@@ -111,20 +113,24 @@ public class CommandsRegistration {
         Validate.isTrue(params.length == 1 || params.length == 2,
                 "Command method must define one or two parameter(s).");
         Validate.isTrue(CommandSender.class.isAssignableFrom(params[0]),
-                "First parameter of command method must be of type CommandSender");
+                "First parameter of command method must "
+                + "be of type CommandSender");
         Validate.isTrue(params.length == 1
                 || CommandArgs.class.isAssignableFrom(params[1]),
-                "Second parameter of command method must be of type CommandArgs");
+                "Second parameter of command method must "
+                + "be of type CommandArgs");
     }
 
     private void registerSubCommand(String name, String subCmdName) {
         PluginCommand command = plugin.getCommand(name);
-        Validate.notNull(command, String.format("Command '%s' does not exist", name));
+        Validate.notNull(command, String.format("Command '%s' does not exist",
+                name));
         CommandExecutor executor = command.getExecutor();
         if (executor instanceof NestedCommandExecutor) {
             ((NestedCommandExecutor) executor).addSubCommand(subCmdName);
         } else {
-            NestedCommandExecutor nestedExecutor = new NestedCommandExecutor(plugin, name);
+            NestedCommandExecutor nestedExecutor =
+                    new NestedCommandExecutor(plugin, name);
             nestedExecutor.setDefaultExecutor(executor);
             nestedExecutor.addSubCommand(subCmdName);
             if (!(executor instanceof MethodCommandExecutor)) {

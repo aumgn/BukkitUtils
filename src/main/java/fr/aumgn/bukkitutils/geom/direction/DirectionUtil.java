@@ -40,7 +40,8 @@ class DirectionUtil {
         return new LocationDirection(oppositeYaw, oppositePitch);
     }
 
-    public static Direction calculateHorizontalRotation(Direction dir, float angle) {
+    public static Direction calculateHorizontalRotation(
+            Direction dir, float angle) {
         float oppositeYaw = (dir.getYaw() + 180f) % 360f;
         return new HorizontalDirection(oppositeYaw);
     }

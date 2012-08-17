@@ -111,7 +111,8 @@ public class CommandArgsBase {
         return def;
     }
 
-    public <T> CommandListArg<T> getList(int index, CommandArgFactory<T> factory) {
+    public <T> CommandListArg<T> getList(
+            int index, CommandArgFactory<T> factory) {
         return new CommandListArg<T>(factory, messages, getOrNull(index));
     }
 
@@ -120,11 +121,13 @@ public class CommandArgsBase {
         return getList(index, factory);
     }
 
-    public <T> CommandListArg<T> getList(char flag, CommandArgFactory<T> factory) {
+    public <T> CommandListArg<T> getList(
+            char flag, CommandArgFactory<T> factory) {
         return new CommandListArg<T>(factory, messages, getOrNull(flag));
     }
 
-    public <T> CommandListArg<T> getList(char flag, Class<T> klass) {
+    public <T> CommandListArg<T> getList(
+            char flag, Class<T> klass) {
         CommandArgFactory<T> factory = CommandArgFactory.get(klass);
         return getList(flag, factory);
     }

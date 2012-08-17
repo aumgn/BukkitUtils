@@ -236,9 +236,9 @@ public class Vector2D implements Iterable<Vector2D> {
             return false;
         }
 
-        Vector2D other = (Vector2D) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)
-                || Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) {
+        Vector2D o = (Vector2D) obj;
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(o.x)
+                || Double.doubleToLongBits(z) != Double.doubleToLongBits(o.z)) {
             return false;
         }
 

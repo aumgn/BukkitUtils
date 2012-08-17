@@ -45,7 +45,8 @@ public class GConfLoader {
     @SuppressWarnings("unchecked")
     public <T> T loadOrCreate(String filename, TypeToken<T> typeToken)
             throws GConfLoadException {
-        return (T) loadOrCreate(filename, typeToken.getType(), typeToken.getRawType());
+        return (T) loadOrCreate(filename, typeToken.getType(),
+                typeToken.getRawType());
     }
 
     private <T> T loadOrCreate(String filename, Type type, Class<T> klass)
@@ -84,7 +85,8 @@ public class GConfLoader {
         }
     }
 
-    public void write(String filename, Object object) throws GConfLoadException {
+    public void write(String filename, Object object)
+            throws GConfLoadException {
         try {
             write(getFile(filename), object);
         } catch (IOException exc) {

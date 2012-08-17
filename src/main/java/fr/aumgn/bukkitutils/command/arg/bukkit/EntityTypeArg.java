@@ -12,7 +12,8 @@ public class EntityTypeArg extends CommandArg<EntityType> {
     public static class Factory extends CommandArgFactory<EntityType> {
 
         @Override
-        public EntityTypeArg createCommandArg(Messages messages, String string) {
+        public EntityTypeArg createCommandArg(
+                Messages messages, String string) {
             return new EntityTypeArg(messages, string);
         }
     }

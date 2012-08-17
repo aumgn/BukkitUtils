@@ -12,7 +12,8 @@ public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
 
     private final CommandArgFactory<V> factory;
 
-    public CommandListArg(CommandArgFactory<V> factory, Messages messages, String string) {
+    public CommandListArg(CommandArgFactory<V> factory,
+            Messages messages, String string) {
         super(messages, string);
         this.factory = factory;
     }

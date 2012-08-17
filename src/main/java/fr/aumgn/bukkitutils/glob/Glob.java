@@ -11,7 +11,8 @@ import fr.aumgn.bukkitutils.glob.patterns.WildcardGlobPattern;
 
 public class Glob {
 
-    private static class CaseInsensitiveToString<T> implements Function<T, String> {
+    private static class CaseInsensitiveToString<T>
+            implements Function<T, String> {
 
         private final Function<T, String> toString;
 

@@ -89,7 +89,8 @@ public class Localization {
             MessagesLoader loader = it.next();
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
-                InputStream iStream = plugin.getClass().getResourceAsStream(name);
+                InputStream iStream = plugin.getClass()
+                        .getResourceAsStream(name);
                 if (iStream != null) {
                     Reader reader =
                             new InputStreamReader(iStream, Charsets.UTF_8);
@@ -117,8 +118,8 @@ public class Localization {
                 if (file.exists()) {
                     try {
                         InputStream iStream = new FileInputStream(file);
-                        Reader reader =
-                                new InputStreamReader(iStream, Charsets.UTF_8);
+                        Reader reader = new InputStreamReader(
+                                iStream, Charsets.UTF_8);
                         map.putAll(loader.load(locale, reader));
                         reader.close();
                         return;

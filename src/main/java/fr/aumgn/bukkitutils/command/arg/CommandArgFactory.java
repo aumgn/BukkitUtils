@@ -61,5 +61,6 @@ public abstract class CommandArgFactory<T> {
         return (CommandArgFactory<T>) MAP.get(klass);
     }
 
-    public abstract CommandArg<T> createCommandArg(Messages messages, String string);
+    public abstract CommandArg<T> createCommandArg(
+            Messages messages, String string);
 }

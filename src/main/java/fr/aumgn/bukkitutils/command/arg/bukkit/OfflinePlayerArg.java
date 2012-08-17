@@ -15,7 +15,8 @@ public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
     public static class Factory extends CommandArgFactory<OfflinePlayer> {
 
         @Override
-        public OfflinePlayerArg createCommandArg(Messages messages, String string) {
+        public OfflinePlayerArg createCommandArg(
+                Messages messages, String string) {
             return new OfflinePlayerArg(messages, string);
         }
     }

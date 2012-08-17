@@ -12,7 +12,8 @@ public class EnchantmentArg extends CommandArg<Enchantment> {
     public static class Factory extends CommandArgFactory<Enchantment> {
 
         @Override
-        public EnchantmentArg createCommandArg(Messages messages, String string) {
+        public EnchantmentArg createCommandArg(
+                Messages messages, String string) {
             return new EnchantmentArg(messages, string);
         }
     }

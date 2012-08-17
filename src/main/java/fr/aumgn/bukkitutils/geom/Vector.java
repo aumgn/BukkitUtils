@@ -272,10 +272,10 @@ public class Vector implements Iterable<Vector> {
             return false;
         }
 
-        Vector other = (Vector) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(other.x)
-                || Double.doubleToLongBits(y) != Double.doubleToLongBits(other.y)
-                || Double.doubleToLongBits(z) != Double.doubleToLongBits(other.z)) {
+        Vector o = (Vector) obj;
+        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(o.x)
+                || Double.doubleToLongBits(y) != Double.doubleToLongBits(o.y)
+                || Double.doubleToLongBits(z) != Double.doubleToLongBits(o.z)) {
             return false;
         }
 

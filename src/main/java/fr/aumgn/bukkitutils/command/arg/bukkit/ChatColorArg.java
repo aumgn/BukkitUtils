@@ -12,7 +12,8 @@ public class ChatColorArg extends CommandArg<ChatColor> {
     public static class Factory extends CommandArgFactory<ChatColor> {
 
         @Override
-        public ChatColorArg createCommandArg(Messages messages, String string) {
+        public ChatColorArg createCommandArg(
+                Messages messages, String string) {
             return new ChatColorArg(messages, string);
         }
     }

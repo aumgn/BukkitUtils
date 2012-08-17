@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid;
+package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -7,6 +7,7 @@ import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
+import fr.aumgn.bukkitutils.playerid.PlayerId;
 
 public class PlayerIdArg extends CommandArg<PlayerId> {
 
