@@ -32,12 +32,12 @@ public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
     }
 
     @Override
-    public List<V> value(List<V> def) {
-        return super.value(def);
+    public List<V> valueOr(List<V> def) {
+        return super.valueOr(def);
     }
 
-    public List<V> valueSingleton(V def) {
-        return value(Collections.<V>singletonList(def));
+    public List<V> valueOrSingleton(V def) {
+        return valueOr(Collections.<V>singletonList(def));
     }
 
     @Override
@@ -63,13 +63,13 @@ public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
     }
 
     @Override
-    public List<V> match(List<V> def) {
-        return super.match(def);
+    public List<V> matchOr(List<V> def) {
+        return super.matchOr(def);
     }
 
     @Override
-    public List<V> match(V def) {
-        return match(Collections.<V>singletonList(def));
+    public List<V> matchOr(V def) {
+        return matchOr(Collections.<V>singletonList(def));
     }
 
     @Override

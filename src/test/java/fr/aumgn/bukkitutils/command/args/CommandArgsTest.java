@@ -32,8 +32,8 @@ public class CommandArgsTest {
     public void testDefaultIntegerArg() {
         CommandArgs args = CommandArgsUtil.parse("10");
 
-        assertEquals(10, (int) args.getInteger(0).value(1));
-        assertEquals(1, (int) args.getInteger(1).value(1));
+        assertEquals(10, (int) args.getInteger(0).valueOr(1));
+        assertEquals(1, (int) args.getInteger(1).valueOr(1));
     }
     @Test
     public void testDoubleArgs() {

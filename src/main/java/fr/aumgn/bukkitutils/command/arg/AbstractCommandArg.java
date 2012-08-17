@@ -20,7 +20,7 @@ public abstract class AbstractCommandArg<V, W> {
 
     public abstract V value();
 
-    public V value(V def) {
+    public V valueOr(V def) {
         if (string == null) {
             return def;
         }
@@ -32,7 +32,7 @@ public abstract class AbstractCommandArg<V, W> {
         throw new UnsupportedOperationException();
     }
 
-    public V value(CommandSender sender) {
+    public V valueOr(CommandSender sender) {
         if (string != null) {
             return value();
         }
@@ -40,11 +40,11 @@ public abstract class AbstractCommandArg<V, W> {
         return defaultFor(sender);
     }
 
-    public V value(CommandSender sender, String permissionOther) {
+    public V valueWithPermOr(String permission, CommandSender sender) {
         if (string != null) {
-            if (!sender.hasPermission(permissionOther)) {
+            if (!sender.hasPermission(permission)) {
                 throw new CommandError(
-                        messages.missingPermissionForOther(permissionOther));
+                        messages.missingPermissionForOther(permission));
             }
 
             return value();
@@ -55,7 +55,7 @@ public abstract class AbstractCommandArg<V, W> {
 
     public abstract List<W> match();
 
-    public List<W> match(List<W> def) {
+    public List<W> matchOr(List<W> def) {
         if (string == null) {
             return def;
         }
@@ -63,7 +63,7 @@ public abstract class AbstractCommandArg<V, W> {
         return match();
     }
 
-    public List<W> match(W def) {
+    public List<W> matchOr(W def) {
         if (string == null) {
             return Collections.<W>singletonList(def);
         }
@@ -75,7 +75,7 @@ public abstract class AbstractCommandArg<V, W> {
         throw new UnsupportedOperationException();
     }
 
-    public List<W> match(CommandSender sender) {
+    public List<W> matchOr(CommandSender sender) {
         if (string != null) {
             return match();
         }
@@ -83,7 +83,7 @@ public abstract class AbstractCommandArg<V, W> {
         return defaultMatchFor(sender);
     }
 
-    public List<W> match(CommandSender sender, String permissionOther) {
+    public List<W> matchWithPermOr(String permissionOther, CommandSender sender) {
         if (string != null) {
             if (!sender.hasPermission(permissionOther)) {
                 throw new CommandError(
