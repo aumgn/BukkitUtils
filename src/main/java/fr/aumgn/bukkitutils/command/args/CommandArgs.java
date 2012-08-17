@@ -84,10 +84,66 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public CommandArg<Enchantment> getEnchantment(int index) {
-        return get(index,new EnchantmentArg.Factory());
+        return get(index, new EnchantmentArg.Factory());
     }
 
     public CommandArg<EntityType> getEntityType(int index) {
         return get(index, new EntityTypeArg.Factory());
+    }
+
+    public CommandArg<Integer> getInteger(char flag) {
+        return get(flag, new IntegerArg.Factory());
+    }
+
+    public CommandArg<Double> getDouble(char flag) {
+        return get(flag, new DoubleArg.Factory());
+    }
+
+    public CommandArg<ChatColor> getChatColor(char flag) {
+        return get(flag, new ChatColorArg.Factory());
+    }
+
+    public CommandArg<Vector> getVector(char flag) {
+        return get(flag, new VectorArg.Factory());
+    }
+
+    public CommandArg<Vector2D> getVector2D(char flag) {
+        return get(flag, new Vector2DArg.Factory());
+    }
+
+    public CommandArg<World> getWorld(char flag) {
+        return get(flag, new WorldArg.Factory());
+    }
+
+    public CommandArg<Player> getPlayer(char flag) {
+        return get(flag, new PlayerArg.Factory());
+    }
+
+    public CommandListArg<Player> getPlayers(char flag) {
+        return getList(flag, new PlayerArg.Factory());
+    }
+
+    public CommandArg<OfflinePlayer> getOfflinePlayer(char flag) {
+        return get(flag, new OfflinePlayerArg.Factory());
+    }
+
+    public CommandArg<Material> getMaterial(char flag) {
+        return get(flag, new MaterialArg.Factory());
+    }
+
+    public CommandArg<ItemType> getItemType(char flag) {
+        return get(flag, new ItemTypeArg.Factory());
+    }
+
+    public CommandArg<PotionEffectType> getPotionEffectType(char flag) {
+        return get(flag, new PotionEffectTypeArg.Factory());
+    }
+
+    public CommandArg<Enchantment> getEnchantment(char flag) {
+        return get(flag, new EnchantmentArg.Factory());
+    }
+
+    public CommandArg<EntityType> getEntityType(char flag) {
+        return get(flag, new EntityTypeArg.Factory());
     }
 }
