@@ -13,7 +13,7 @@ public class Position {
     private Vector coord;
     private Direction direction;
 
-    private WeakReference<World> worldRef;
+    private transient WeakReference<World> worldRef = null;
 
     public Position(Location location) {
         setWorld(location.getWorld());
