@@ -1,6 +1,7 @@
 package fr.aumgn.bukkitutils.util;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -83,5 +84,20 @@ public final class Util {
         }
         matcher.appendTail(parsed);
         return parsed.toString();
+    }
+
+    public static Locale parseLocale(String localeStr) {
+        return parseLocale(localeStr, "_");
+    }
+
+    public static Locale parseLocale(String localeStr, String delimiter) {
+        String[] splitted = localeStr.split(delimiter);
+        if (splitted.length == 0) {
+            return Locale.getDefault();
+        } else if (splitted.length == 1) {
+            return new Locale(splitted[0]);
+        } else {
+            return new Locale(splitted[0], splitted[1]);
+        }
     }
 }
