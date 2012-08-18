@@ -68,7 +68,7 @@ public class CommandsRegistration {
 
             String cmdName;
             if (subCommands) {
-                String[] nestedCmds = subCmdsAnnotation.name();
+                String[] nestedCmds = subCmdsAnnotation.value();
                 Validate.notEmpty(nestedCmds);
                 Validate.notEmpty(nestedCmds[0]);
 
