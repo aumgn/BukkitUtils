@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.gconf.typeadapter;
+package fr.aumgn.bukkitutils.gson.typeadapter;
 
 import java.io.IOException;
 import java.lang.reflect.Type;

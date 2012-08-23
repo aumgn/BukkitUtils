@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.gconf.typeadapter;
+package fr.aumgn.bukkitutils.gson.typeadapter;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
-import fr.aumgn.bukkitutils.gconf.GConfLoadRuntimeException;
+import fr.aumgn.bukkitutils.gson.GsonLoadRuntimeException;
 
 @SuppressWarnings("unchecked")
 public class WorldTypeAdapterFactory implements TypeAdapterFactory {
@@ -41,7 +41,7 @@ public class WorldTypeAdapterFactory implements TypeAdapterFactory {
                 UUID uuid = gson.fromJson(reader, UUID.class);
                 World world = Bukkit.getWorld(uuid);
                 if (world == null && throwsException) {
-                    throw new GConfLoadRuntimeException(
+                    throw new GsonLoadRuntimeException(
                             "Unable to load world for uuid :" + uuid);
                 }
 
