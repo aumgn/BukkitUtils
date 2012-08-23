@@ -29,8 +29,9 @@ public class GsonLoader {
     private File getFile(String filename)
             throws GsonLoadException {
         File file = new File(plugin.getDataFolder(), filename);
-        if (!file.getParentFile().mkdirs()) {
-            throw new GsonLoadException("Impossible de créer le dossier :"
+        File folder = file.getParentFile();
+        if (!file.exists() && !folder.exists() && !folder.mkdirs()) {
+            throw new GsonLoadException("Unable to create directory : "
                     + plugin.getDataFolder().getPath());
         }
 
