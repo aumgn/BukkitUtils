@@ -36,6 +36,15 @@ public final class PlayerId {
         return name;
     }
 
+    public String getDisplayName() {
+        Player player = getPlayer();
+        if (player != null) {
+            return player.getDisplayName();
+        } else {
+            return getName();
+        }
+    }
+
     public boolean isOnline() {
         return (getPlayer() != null);
     }
