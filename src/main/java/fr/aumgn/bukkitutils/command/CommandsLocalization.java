@@ -1,6 +1,9 @@
 package fr.aumgn.bukkitutils.command;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
@@ -36,8 +39,18 @@ class CommandsLocalization extends Localization {
         for (MessagesLoader loader : Localization.loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
-                InputStream iStream = getClass()
-                        .getResourceAsStream(name);
+
+                InputStream iStream = null;
+                URL res = getClass().getResource(name);
+                if (res != null) {
+                    try {
+                        URLConnection connection = res.openConnection();
+                        connection.setUseCaches(false);
+                        iStream = connection.getInputStream();
+                    } catch (IOException _) {
+                    }
+                }
+
                 if (iStream != null) {
                     loadStream(map, locale, loader, iStream);
                     return;

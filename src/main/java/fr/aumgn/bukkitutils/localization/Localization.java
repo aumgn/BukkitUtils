@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.MessageFormat;
 import java.util.ArrayDeque;
 import java.util.Deque;
@@ -104,9 +106,18 @@ public class Localization {
         for (MessagesLoader loader : loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
-                InputStream iStream = plugin.getClass()
-                        .getResourceAsStream(name);
-                System.out.print(plugin.getClass().getResource(name));
+
+                InputStream iStream = null;
+                URL res = plugin.getClass().getResource(name);
+                if (res != null) {
+                    try {
+                        URLConnection connection = res.openConnection();
+                        connection.setUseCaches(false);
+                        iStream = connection.getInputStream();
+                    } catch (IOException _) {
+                    }
+                }
+
                 if (iStream != null) {
                     loadStream(map, locale, loader, iStream);
                     return;
