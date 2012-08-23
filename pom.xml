@@ -4,7 +4,7 @@
 
 	<groupId>fr.aumgn</groupId>
 	<artifactId>bukkitutils</artifactId>
-	<version>1.0.0-RC1</version>
+	<version>1.0.0-RC2</version>
 
 	<name>BukkitUtils</name>
 	<description>Set of bukkit utilities</description>
@@ -38,7 +38,7 @@
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
-			<version>2.1</version>
+			<version>2.2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>org.bukkit</groupId>
@@ -83,7 +83,28 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>2.3.2</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>com.google.code.gson:gson</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>
