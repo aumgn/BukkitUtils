@@ -6,17 +6,17 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class CommandArgsParser {
 
-    private Messages messages;
+    private CommandsMessages messages;
     private String[] args;
     private Set<Character> flags;
     private Map<Character, String> argsFlags;
 
-    public CommandArgsParser(Messages messages, String[] tokens) {
+    public CommandArgsParser(CommandsMessages messages, String[] tokens) {
         this.messages = messages;
         parse(tokens);
     }

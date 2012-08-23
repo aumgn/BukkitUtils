@@ -3,7 +3,7 @@ package fr.aumgn.bukkitutils.command.arg.basic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -15,12 +15,12 @@ public class Vector2DArg extends CommandArg<Vector2D> {
     public static class Factory extends CommandArgFactory<Vector2D> {
 
         @Override
-        public Vector2DArg createCommandArg(Messages messages, String string) {
+        public Vector2DArg createCommandArg(CommandsMessages messages, String string) {
             return new Vector2DArg(messages, string);
         }
     }
 
-    public Vector2DArg(Messages messages, String string) {
+    public Vector2DArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

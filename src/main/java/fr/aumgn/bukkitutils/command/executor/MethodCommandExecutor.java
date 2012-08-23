@@ -14,7 +14,7 @@ import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.Commands;
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import fr.aumgn.bukkitutils.command.exception.CommandException;
@@ -24,7 +24,7 @@ import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
 
 public class MethodCommandExecutor implements CommandExecutor {
 
-    private final Messages messages;
+    private final CommandsMessages messages;
     private final Commands instance;
     private final Method preExecute;
     private final Method method;
@@ -34,7 +34,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final Set<Character> argsFlags;
     private final boolean isPlayerCommand;
 
-    public MethodCommandExecutor(Messages messages, Commands instance,
+    public MethodCommandExecutor(CommandsMessages messages, Commands instance,
             Method preExecute, Method method, Command command) {
         this.messages = messages;
         this.instance = instance;

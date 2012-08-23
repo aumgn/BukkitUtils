@@ -28,7 +28,7 @@ import fr.aumgn.bukkitutils.localization.loaders.YamlMessagesLoader;
 
 public class Localization {
 
-    private static final Locale DEFAULT_LOCALE = Locale.US;
+    public static final Locale DEFAULT_LOCALE = Locale.US;
 
     private static final Deque<MessagesLoader> loaders =
             new ArrayDeque<MessagesLoader>();

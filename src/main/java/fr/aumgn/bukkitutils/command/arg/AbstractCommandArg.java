@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 
 public abstract class AbstractCommandArg<V, W> {
 
-    protected final Messages messages;
+    protected final CommandsMessages messages;
     protected final String string;
 
-    public AbstractCommandArg(Messages messages, String string) {
+    public AbstractCommandArg(CommandsMessages messages, String string) {
         this.messages = messages;
         this.string = string;
     }

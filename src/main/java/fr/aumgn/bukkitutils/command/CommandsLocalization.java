@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.MessageFormat;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.aumgn.bukkitutils.localization.Localization;
 import fr.aumgn.bukkitutils.localization.loaders.MessagesLoader;
 
-class CommandsLocalization extends Localization {
+public class CommandsLocalization extends Localization {
 
     public CommandsLocalization(Locale locale) {
         super(null, locale, null);
@@ -21,6 +22,14 @@ class CommandsLocalization extends Localization {
 
     public CommandsLocalization(JavaPlugin plugin, Locale locale) {
         super(plugin, locale);
+    }
+
+    @Override
+    public CommandsMessages get(String name) {
+        Map<String, MessageFormat> map = new HashMap<String, MessageFormat>();
+        loadAll(name, map, DEFAULT_LOCALE);
+        loadAll(name, map, locale);
+        return new CommandsMessages(map);
     }
 
     @Override

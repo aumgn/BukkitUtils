@@ -13,26 +13,17 @@ import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
 import fr.aumgn.bukkitutils.localization.Localizable;
-import fr.aumgn.bukkitutils.localization.Localization;
 
 public class CommandsRegistration {
 
     private final JavaPlugin plugin;
-    private final Messages messages;
-
-    public static Localization getLocalization(Locale locale) {
-        return new CommandsLocalization(locale);
-    }
-
-    public static Localization getLocalization(JavaPlugin plugin,
-            Locale locale) {
-        return new CommandsLocalization(plugin, locale);
-    }
+    private final CommandsMessages messages;
 
     public CommandsRegistration(JavaPlugin plugin, Locale locale) {
         this.plugin = plugin;
-        Localization localisation = getLocalization(locale);
-        this.messages = new Messages(localisation.get("commands"));
+        CommandsLocalization localisation =
+                new CommandsLocalization(plugin, locale);
+        this.messages = localisation.get("commands");
     }
 
     public <T extends JavaPlugin & Localizable> CommandsRegistration(T plugin) {

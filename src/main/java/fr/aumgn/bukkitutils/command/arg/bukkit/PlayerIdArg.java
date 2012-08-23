@@ -3,7 +3,7 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -18,12 +18,12 @@ public class PlayerIdArg extends CommandArg<PlayerId> {
         }
 
         @Override
-        public PlayerIdArg createCommandArg(Messages messages, String string) {
+        public PlayerIdArg createCommandArg(CommandsMessages messages, String string) {
             return new PlayerIdArg(messages, string);
         }
     }
 
-    public PlayerIdArg(Messages messages, String string) {
+    public PlayerIdArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

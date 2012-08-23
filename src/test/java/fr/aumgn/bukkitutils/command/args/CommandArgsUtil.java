@@ -4,21 +4,20 @@ import java.util.Collections;
 import java.util.Locale;
 import java.util.Set;
 
-import fr.aumgn.bukkitutils.command.CommandsRegistration;
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsLocalization;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
-import fr.aumgn.bukkitutils.localization.Localization;
 
 public class CommandArgsUtil {
 
-    private static final Messages MESSAGES;
+    private static final CommandsMessages MESSAGES;
     private static final Set<Character> NO_FLAGS;
 
     static {
-        Localization localization =
-                CommandsRegistration.getLocalization(Locale.US);
-        MESSAGES = new Messages(localization.get("commands"));
+        CommandsLocalization localization =
+                new CommandsLocalization(Locale.US);
+        MESSAGES = localization.get("commands");
         NO_FLAGS = Collections.<Character>emptySet();
     }
 

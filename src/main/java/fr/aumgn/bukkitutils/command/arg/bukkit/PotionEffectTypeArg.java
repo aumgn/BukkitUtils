@@ -2,7 +2,7 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.potion.PotionEffectType;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -13,7 +13,7 @@ public class PotionEffectTypeArg extends CommandArg<PotionEffectType> {
 
         @Override
         public PotionEffectTypeArg createCommandArg(
-                Messages messages, String string) {
+                CommandsMessages messages, String string) {
             return new PotionEffectTypeArg(messages, string);
         }
     }
@@ -21,12 +21,12 @@ public class PotionEffectTypeArg extends CommandArg<PotionEffectType> {
     public static class NoSuchPotionEffect extends CommandError {
         private static final long serialVersionUID = 6849291638184124428L;
 
-        public NoSuchPotionEffect(Messages messages, String name) {
+        public NoSuchPotionEffect(CommandsMessages messages, String name) {
             super(messages.noSuchPotionEffect(name));
         }
     }
 
-    public PotionEffectTypeArg(Messages messages, String string) {
+    public PotionEffectTypeArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

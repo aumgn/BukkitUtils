@@ -3,7 +3,7 @@ package fr.aumgn.bukkitutils.command.arg.basic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -11,7 +11,7 @@ import fr.aumgn.bukkitutils.geom.Vector;
 
 public class VectorArg extends CommandArg<Vector> {
 
-    static double parseVectorComponent(Messages messages, String component) {
+    static double parseVectorComponent(CommandsMessages messages, String component) {
         try {
             return Double.parseDouble(component);
         } catch (NumberFormatException exc) {
@@ -24,12 +24,12 @@ public class VectorArg extends CommandArg<Vector> {
     public static class Factory extends CommandArgFactory<Vector> {
 
         @Override
-        public VectorArg createCommandArg(Messages messages, String string) {
+        public VectorArg createCommandArg(CommandsMessages messages, String string) {
             return new VectorArg(messages, string);
         }
     }
 
-    public VectorArg(Messages messages, String string) {
+    public VectorArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

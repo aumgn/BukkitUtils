@@ -2,7 +2,7 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.Material;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -15,7 +15,7 @@ public class ItemTypeArg extends CommandArg<ItemType> {
     public static class Factory extends CommandArgFactory<ItemType> {
 
         @Override
-        public ItemTypeArg createCommandArg(Messages messages, String string) {
+        public ItemTypeArg createCommandArg(CommandsMessages messages, String string) {
             return new ItemTypeArg(messages, string);
         }
     }
@@ -23,12 +23,12 @@ public class ItemTypeArg extends CommandArg<ItemType> {
     public static class InvalidItemTypeFormat extends CommandError {
         private static final long serialVersionUID = 1L;
 
-        public InvalidItemTypeFormat(Messages messages, String given) {
+        public InvalidItemTypeFormat(CommandsMessages messages, String given) {
             super(messages.invalidMaterialAndDataFormat(given));
         }
     }
 
-    public ItemTypeArg(Messages messages, String string) {
+    public ItemTypeArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

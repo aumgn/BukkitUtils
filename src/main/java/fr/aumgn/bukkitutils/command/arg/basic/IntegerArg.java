@@ -1,6 +1,6 @@
 package fr.aumgn.bukkitutils.command.arg.basic;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -10,12 +10,12 @@ public class IntegerArg extends CommandArg<Integer> {
     public static class Factory extends CommandArgFactory<Integer> {
 
         @Override
-        public IntegerArg createCommandArg(Messages messages, String string) {
+        public IntegerArg createCommandArg(CommandsMessages messages, String string) {
             return new IntegerArg(messages, string);
         }
     }
 
-    public IntegerArg(Messages messages, String string) {
+    public IntegerArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

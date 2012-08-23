@@ -9,7 +9,7 @@ import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -20,19 +20,19 @@ public class WorldArg extends CommandArg<World> {
     public static class Factory extends CommandArgFactory<World> {
 
         @Override
-        public WorldArg createCommandArg(Messages messages, String string) {
+        public WorldArg createCommandArg(CommandsMessages messages, String string) {
             return new WorldArg(messages, string);
         }
     }
 
-    public WorldArg(Messages messages, String string) {
+    public WorldArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 
     public static class NoSuchWorld extends CommandError {
         private static final long serialVersionUID = -4832133406864970323L;
 
-        public NoSuchWorld(Messages messages, String name) {
+        public NoSuchWorld(CommandsMessages messages, String name) {
             super(messages.noSuchWorld(name));
         }
     }

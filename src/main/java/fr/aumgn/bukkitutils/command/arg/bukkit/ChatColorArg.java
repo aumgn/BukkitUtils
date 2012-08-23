@@ -2,7 +2,7 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.ChatColor;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -13,7 +13,7 @@ public class ChatColorArg extends CommandArg<ChatColor> {
 
         @Override
         public ChatColorArg createCommandArg(
-                Messages messages, String string) {
+                CommandsMessages messages, String string) {
             return new ChatColorArg(messages, string);
         }
     }
@@ -22,12 +22,12 @@ public class ChatColorArg extends CommandArg<ChatColor> {
 
         private static final long serialVersionUID = 2534023126371443961L;
 
-        public NoSuchColor(Messages messages, String name) {
+        public NoSuchColor(CommandsMessages messages, String name) {
             super(messages.noSuchColor(name));
         }
     }
 
-    public ChatColorArg(Messages messages, String string) {
+    public ChatColorArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

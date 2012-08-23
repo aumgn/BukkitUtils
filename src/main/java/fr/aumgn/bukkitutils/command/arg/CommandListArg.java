@@ -6,19 +6,19 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 
 public class CommandListArg<V> extends AbstractCommandArg<List<V>, V> {
 
     private final String separator;
     private final CommandArgFactory<V> factory;
 
-    public CommandListArg(Messages messages,
+    public CommandListArg(CommandsMessages messages,
             CommandArgFactory<V> factory, String string) {
         this(messages, ",", factory, string);
     }
 
-    public CommandListArg(Messages messages, String separator,
+    public CommandListArg(CommandsMessages messages, String separator,
             CommandArgFactory<V> factory, String string) {
         super(messages, string);
         this.separator = separator;

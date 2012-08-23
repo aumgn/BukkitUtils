@@ -5,7 +5,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
@@ -16,12 +16,12 @@ public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
 
         @Override
         public OfflinePlayerArg createCommandArg(
-                Messages messages, String string) {
+                CommandsMessages messages, String string) {
             return new OfflinePlayerArg(messages, string);
         }
     }
 
-    public OfflinePlayerArg(Messages messages, String string) {
+    public OfflinePlayerArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

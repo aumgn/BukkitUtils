@@ -3,6 +3,7 @@ package fr.aumgn.bukkitutils.command;
 import static org.mockito.Mockito.verify;
 
 import java.lang.reflect.Method;
+import java.util.Locale;
 
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
@@ -42,7 +43,8 @@ public class MethodCommandExecutorTest {
         }
 
         Command command = method.getAnnotation(Command.class);
-        return new MethodCommandExecutor(new Messages(null),
+        return new MethodCommandExecutor(
+                new CommandsLocalization(Locale.US).get("commands"),
                 commands, preExecute, method, command);
     }
 

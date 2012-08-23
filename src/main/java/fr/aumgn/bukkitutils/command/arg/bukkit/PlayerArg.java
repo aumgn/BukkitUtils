@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 
 import com.google.common.base.Function;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -20,7 +20,7 @@ public class PlayerArg extends CommandArg<Player> {
     public static class Factory extends CommandArgFactory<Player> {
 
         @Override
-        public PlayerArg createCommandArg(Messages messages, String string) {
+        public PlayerArg createCommandArg(CommandsMessages messages, String string) {
             return new PlayerArg(messages, string);
         }
     }
@@ -28,7 +28,7 @@ public class PlayerArg extends CommandArg<Player> {
     public static class NoSuchPlayer extends CommandError {
         private static final long serialVersionUID = -4832133406864970323L;
 
-        public NoSuchPlayer(Messages messages, String name) {
+        public NoSuchPlayer(CommandsMessages messages, String name) {
             super(messages.noSuchPlayer(name));
         }
     }
@@ -36,7 +36,7 @@ public class PlayerArg extends CommandArg<Player> {
     public static class MoreThanOnePlayerFound extends CommandError {
         private static final long serialVersionUID = 7101062818304484950L;
 
-        public MoreThanOnePlayerFound(Messages messages, String name) {
+        public MoreThanOnePlayerFound(CommandsMessages messages, String name) {
             super(messages.moreThanOnePlayerFound(name));
         }
     }
@@ -48,7 +48,7 @@ public class PlayerArg extends CommandArg<Player> {
         }
     }
 
-    public PlayerArg(Messages messages, String string) {
+    public PlayerArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

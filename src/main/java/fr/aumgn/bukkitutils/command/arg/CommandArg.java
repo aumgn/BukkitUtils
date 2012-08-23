@@ -5,11 +5,11 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 
 public abstract class CommandArg<V> extends AbstractCommandArg<V, V> {
 
-    public CommandArg(Messages messages, String string) {
+    public CommandArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

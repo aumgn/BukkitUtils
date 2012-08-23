@@ -9,7 +9,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
@@ -31,7 +31,7 @@ import fr.aumgn.bukkitutils.itemtype.ItemType;
 
 public class CommandArgs extends CommandArgsBase {
 
-    public CommandArgs(Messages messages, CommandArgsParser parser) {
+    public CommandArgs(CommandsMessages messages, CommandArgsParser parser) {
         super(messages, parser);
     }
 

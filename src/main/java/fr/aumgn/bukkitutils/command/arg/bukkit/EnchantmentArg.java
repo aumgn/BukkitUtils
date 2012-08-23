@@ -2,7 +2,7 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.enchantments.Enchantment;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -13,7 +13,7 @@ public class EnchantmentArg extends CommandArg<Enchantment> {
 
         @Override
         public EnchantmentArg createCommandArg(
-                Messages messages, String string) {
+                CommandsMessages messages, String string) {
             return new EnchantmentArg(messages, string);
         }
     }
@@ -22,13 +22,13 @@ public class EnchantmentArg extends CommandArg<Enchantment> {
 
         private static final long serialVersionUID = -4832133406864970323L;
 
-        public NoSuchEnchantment(Messages messages, String name) {
+        public NoSuchEnchantment(CommandsMessages messages, String name) {
             super(messages.noSuchEnchant(name));
         }
     }
 
 
-    public EnchantmentArg(Messages messages, String string) {
+    public EnchantmentArg(CommandsMessages messages, String string) {
         super(messages, string);
     }
 

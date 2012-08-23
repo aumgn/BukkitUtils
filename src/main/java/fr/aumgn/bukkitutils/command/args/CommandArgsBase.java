@@ -6,19 +6,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
 
 public class CommandArgsBase {
 
-    protected final Messages messages;
+    protected final CommandsMessages messages;
     private final Set<Character> flags;
     private final Map<Character, String> argsFlags;
     private final String[] args;
 
-    public CommandArgsBase(Messages messages, CommandArgsParser parser) {
+    public CommandArgsBase(CommandsMessages messages, CommandArgsParser parser) {
         this.messages = messages;
         this.flags = parser.getFlags();
         this.argsFlags = parser.getArgsFlags();

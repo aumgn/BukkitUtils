@@ -12,7 +12,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
-import fr.aumgn.bukkitutils.command.Messages;
+import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
@@ -62,5 +62,5 @@ public abstract class CommandArgFactory<T> {
     }
 
     public abstract CommandArg<T> createCommandArg(
-            Messages messages, String string);
+            CommandsMessages messages, String string);
 }
