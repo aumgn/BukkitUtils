@@ -26,7 +26,7 @@ import fr.aumgn.bukkitutils.localization.loaders.YamlMessagesLoader;
 
 public class Localization {
 
-    private static final Locale DEFAULT_LOCALE = Locale.ENGLISH;
+    private static final Locale DEFAULT_LOCALE = Locale.US;
 
     private static final Deque<MessagesLoader> loaders =
             new ArrayDeque<MessagesLoader>();
@@ -35,15 +35,24 @@ public class Localization {
         loaders.push(loader);
     }
 
+    public static Iterable<MessagesLoader> loaders() {
+        return new Iterable<MessagesLoader>() {
+            @Override
+            public Iterator<MessagesLoader> iterator() {
+                return loaders.descendingIterator();
+            }
+        };
+    }
+
     static {
         register(new PropertiesMessagesLoader());
         register(new YamlMessagesLoader());
         register(new JsonMessagesLoader());
     }
 
-    private final JavaPlugin plugin;
-    private final Locale locale;
-    private final File dir;
+    protected final JavaPlugin plugin;
+    protected final File dir;
+    protected final Locale locale;
 
     public Localization(JavaPlugin plugin) {
         this(plugin, DEFAULT_LOCALE);
@@ -61,56 +70,54 @@ public class Localization {
 
     public PluginMessages get(String name) {
         Map<String, MessageFormat> map = new HashMap<String, MessageFormat>();
+        loadAll(name, map, DEFAULT_LOCALE);
+        loadAll(name, map, locale);
+        return new PluginMessages(map);
+    }
 
-        if (!locale.getLanguage().equals(DEFAULT_LOCALE.getLanguage())) {
-            loadBundled(map, DEFAULT_LOCALE,
-                    name + "_" + DEFAULT_LOCALE.getLanguage());
-            loadUser(map, DEFAULT_LOCALE,
-                    name + "_" + DEFAULT_LOCALE.getLanguage());
-        }
-
+    protected void loadAll(String name, Map<String, MessageFormat> map,
+            Locale locale) {
         loadBundled(map, locale, name + "_" + locale.getLanguage());
         if (!locale.getCountry().isEmpty()) {
             loadBundled(map, locale, name + "_" + locale.toString());
         }
+
         loadUser(map, locale, name + "_" + locale.getLanguage());
         if (!locale.getCountry().isEmpty()) {
             loadUser(map, locale, name + "_" + locale.toString());
         }
-
-        return new PluginMessages(map);
     }
 
-    private void loadBundled(
-            Map<String, MessageFormat> map, Locale locale, String baseName) {
-        Iterator<MessagesLoader> it = loaders.descendingIterator();
+    protected void loadStream(Map<String, MessageFormat> map, Locale locale,
+            MessagesLoader loader, InputStream iStream) {
+        Reader reader =
+                new InputStreamReader(iStream, Charsets.UTF_8);
+        map.putAll(loader.load(locale, reader));
+        try {
+            reader.close();
+        } catch (IOException exc) {
+        }
+    }
 
-        while (it.hasNext()) {
-            MessagesLoader loader = it.next();
+    private void loadBundled(Map<String, MessageFormat> map,  Locale locale,
+            String baseName) {
+        for (MessagesLoader loader : loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
                 InputStream iStream = plugin.getClass()
                         .getResourceAsStream(name);
+                System.out.print(plugin.getClass().getResource(name));
                 if (iStream != null) {
-                    Reader reader =
-                            new InputStreamReader(iStream, Charsets.UTF_8);
-                    map.putAll(loader.load(locale, reader));
-                    try {
-                        reader.close();
-                    } catch (IOException exc) {
-                    }
+                    loadStream(map, locale, loader, iStream);
                     return;
                 }
             }
         }
     }
 
-    private void loadUser(
-            Map<String, MessageFormat> map, Locale locale, String baseName) {
-        Iterator<MessagesLoader> it = loaders.descendingIterator();
-
-        while (it.hasNext()) {
-            MessagesLoader loader = it.next();
+    private void loadUser(Map<String, MessageFormat> map, Locale locale,
+            String baseName) {
+        for (MessagesLoader loader : loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
 
@@ -118,11 +125,7 @@ public class Localization {
                 if (file.exists()) {
                     try {
                         InputStream iStream = new FileInputStream(file);
-                        Reader reader = new InputStreamReader(
-                                iStream, Charsets.UTF_8);
-                        map.putAll(loader.load(locale, reader));
-                        reader.close();
-                        return;
+                        loadStream(map, locale, loader, iStream);
                     } catch (IOException exc) {
                     }
                 }

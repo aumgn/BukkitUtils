@@ -1,12 +1,14 @@
 package fr.aumgn.bukkitutils.command.args;
 
 import java.util.Collections;
-import java.util.ResourceBundle;
+import java.util.Locale;
 import java.util.Set;
 
+import fr.aumgn.bukkitutils.command.CommandsRegistration;
 import fr.aumgn.bukkitutils.command.Messages;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
+import fr.aumgn.bukkitutils.localization.Localization;
 
 public class CommandArgsUtil {
 
@@ -14,8 +16,9 @@ public class CommandArgsUtil {
     private static final Set<Character> NO_FLAGS;
 
     static {
-        MESSAGES = new Messages(
-                ResourceBundle.getBundle("fr/aumgn/bukkitutils/commands"));
+        Localization localization =
+                CommandsRegistration.getLocalization(Locale.US);
+        MESSAGES = new Messages(localization.get("commands"));
         NO_FLAGS = Collections.<Character>emptySet();
     }
 
