@@ -57,6 +57,10 @@ public abstract class Timer implements Runnable {
         long minutes = TimeUnit.SECONDS.toMinutes(remainingTime);
         String msg = String.format(format, minutes, remainingTime % 60);
         sendTimeMessage(getCurrentColor() + msg);
+        schedule(delay);
+    }
+
+    private void schedule(int delay) {
         currentDelay = delay;
         watch = new Stopwatch();
         watch.start();
@@ -76,6 +80,19 @@ public abstract class Timer implements Runnable {
 
     public int getRemainingTime() {
         return remainingTime;
+    }
+
+    public void start() {
+        remainingTime -= currentDelay;
+        if (remainingTime > majorDelay) {
+            schedule(majorDelay);
+        } else if (remainingTime > minorDelay) {
+            schedule(minorDelay);
+        } else if (remainingTime > 0) {
+            schedule(1);
+        } else {
+            runnable.run();
+        }
     }
 
     @Override
