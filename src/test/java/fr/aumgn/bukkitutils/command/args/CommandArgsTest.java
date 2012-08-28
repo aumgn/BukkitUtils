@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+import fr.aumgn.bukkitutils.command.arg.basic.EnumArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.ItemTypeArg.InvalidItemTypeFormat;
 import fr.aumgn.bukkitutils.command.arg.bukkit.MaterialArg.NoSuchMaterial;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
@@ -81,6 +82,34 @@ public class CommandArgsTest {
         CommandArgs args = CommandArgsUtil.parse("1,invalid");
 
         args.getVector2D(0).value();
+    }
+
+    public enum TestArg {
+        Value1,
+        Value2
+    }
+
+    @Test
+    public void testEnum() {
+        CommandArgs args = CommandArgsUtil.parse("value1", "v*2", "v*");
+
+        assertSame(TestArg.Value1, args.get(0, TestArg.class).value());
+        assertSame(TestArg.Value2, args.get(1, TestArg.class).value());
+        assertEquals(2, args.get(2, TestArg.class).match().size());
+    }
+
+    @Test(expected = EnumArg.EnumArgNotFound.class)
+    public void testNotFound() {
+        CommandArgs args = CommandArgsUtil.parse("a");
+
+        args.get(0, TestArg.class).value();
+    }
+
+    @Test(expected = EnumArg.MoreThanOneValidValueFound.class)
+    public void testMoreThanOneValidValueFound() {
+        CommandArgs args = CommandArgsUtil.parse("v");
+
+        args.get(0, TestArg.class).value();
     }
 
     @Test

@@ -14,6 +14,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
+import fr.aumgn.bukkitutils.command.arg.basic.EnumArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
 import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
@@ -56,9 +57,17 @@ public abstract class CommandArgFactory<T> {
         MAP.put(klass, factory);
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({ "unchecked", "rawtypes"})
     public static <T> CommandArgFactory<T> get(Class<T> klass) {
-        return (CommandArgFactory<T>) MAP.get(klass);
+        CommandArgFactory<T> factory = (CommandArgFactory<T>) MAP.get(klass);
+        if (factory != null) {
+            return factory;
+        }
+
+        if (Enum.class.isAssignableFrom(klass)) {
+            return new EnumArg.Factory(klass);
+        }
+        return null;
     }
 
     public abstract CommandArg<T> createCommandArg(
