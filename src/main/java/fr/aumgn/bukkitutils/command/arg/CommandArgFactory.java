@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
+import fr.aumgn.bukkitutils.command.arg.basic.ShortArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
 import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.ChatColorArg;
@@ -49,6 +50,7 @@ public abstract class CommandArgFactory<T> {
         register(PotionEffectType.class, new PotionEffectTypeArg.Factory());
         register(Enchantment.class, new EnchantmentArg.Factory());
         register(EntityType.class, new EntityTypeArg.Factory());
+        register(Short.class, new ShortArg.Factory());
     }
 
     public static <T> void register(Class<T> klass,
