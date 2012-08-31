@@ -16,6 +16,7 @@ import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
 import fr.aumgn.bukkitutils.command.arg.basic.EnumArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
+import fr.aumgn.bukkitutils.command.arg.basic.ShortArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
 import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.ChatColorArg;
@@ -38,6 +39,7 @@ public abstract class CommandArgFactory<T> {
     static {
         MAP = new HashMap<Class<?>, CommandArgFactory<?>>();
         register(Integer.class, new IntegerArg.Factory());
+        register(Short.class, new ShortArg.Factory());
         register(Double.class, new DoubleArg.Factory());
         register(ChatColor.class, new ChatColorArg.Factory());
         register(Vector.class, new VectorArg.Factory());

@@ -14,6 +14,7 @@ import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
+import fr.aumgn.bukkitutils.command.arg.basic.ShortArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
 import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.ChatColorArg;
@@ -37,6 +38,10 @@ public class CommandArgs extends CommandArgsBase {
 
     public CommandArg<Integer> getInteger(int index) {
         return get(index, new IntegerArg.Factory());
+    }
+
+    public CommandArg<Short> getShort(int index) {
+        return get(index, new ShortArg.Factory());
     }
 
     public CommandArg<Double> getDouble(int index) {
@@ -93,6 +98,10 @@ public class CommandArgs extends CommandArgsBase {
 
     public CommandArg<Integer> getInteger(char flag) {
         return get(flag, new IntegerArg.Factory());
+    }
+
+    public CommandArg<Short> getShort(char flag) {
+        return get(flag, new ShortArg.Factory());
     }
 
     public CommandArg<Double> getDouble(char flag) {
