@@ -12,7 +12,7 @@ import fr.aumgn.bukkitutils.util.Util;
 
 public class ItemTypeArg extends CommandArg<ItemType> {
 
-    public static class Factory extends CommandArgFactory<ItemType> {
+    public static class Factory extends CommandArgFactory<ItemTypeArg> {
 
         @Override
         public ItemTypeArg createCommandArg(CommandsMessages messages, String string) {

@@ -17,7 +17,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class WorldArg extends CommandArg<World> {
 
-    public static class Factory extends CommandArgFactory<World> {
+    public static class Factory extends CommandArgFactory<WorldArg> {
 
         @Override
         public WorldArg createCommandArg(CommandsMessages messages, String string) {

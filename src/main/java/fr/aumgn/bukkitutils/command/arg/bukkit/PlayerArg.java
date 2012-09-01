@@ -17,7 +17,7 @@ import fr.aumgn.bukkitutils.glob.Glob;
 
 public class PlayerArg extends CommandArg<Player> {
 
-    public static class Factory extends CommandArgFactory<Player> {
+    public static class Factory extends CommandArgFactory<PlayerArg> {
 
         @Override
         public PlayerArg createCommandArg(CommandsMessages messages, String string) {

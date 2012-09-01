@@ -144,9 +144,9 @@ public class CommandArgBaseTest {
                 "-t=Test", "-d=14", "args1", "args2");
 
         assertTrue(args.hasArgFlag('t'));
-        assertEquals("Test", args.getArgFlag('t'));
+        assertEquals("Test", args.get('t'));
         assertTrue(args.hasArgFlag('d'));
-        assertEquals("14", args.getArgFlag('d'));
+        assertEquals("14", args.get('d'));
         assertFalse(args.hasFlag('p'));
     }
 

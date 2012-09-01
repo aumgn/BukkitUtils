@@ -10,10 +10,10 @@ import fr.aumgn.bukkitutils.util.TimeUtil.UnknownTimePeriodException;
 
 public class TimeArg extends CommandArg<Integer> {
 
-    public static class Factory extends CommandArgFactory<Integer> {
+    public static class Factory extends CommandArgFactory<TimeArg> {
 
         @Override
-        public CommandArg<Integer> createCommandArg(CommandsMessages messages,
+        public TimeArg createCommandArg(CommandsMessages messages,
                 String string) {
             return new TimeArg(messages, string);
         }

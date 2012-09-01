@@ -12,7 +12,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
 
-    public static class Factory extends CommandArgFactory<OfflinePlayer> {
+    public static class Factory extends CommandArgFactory<OfflinePlayerArg> {
 
         @Override
         public OfflinePlayerArg createCommandArg(

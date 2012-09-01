@@ -7,7 +7,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class DoubleArg extends CommandArg<Double> {
 
-    public static class Factory extends CommandArgFactory<Double> {
+    public static class Factory extends CommandArgFactory<DoubleArg> {
 
         @Override
         public DoubleArg createCommandArg(CommandsMessages messages, String string) {

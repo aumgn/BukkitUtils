@@ -10,6 +10,7 @@ import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.arg.CommandListArg;
+import fr.aumgn.bukkitutils.command.arg.basic.EnumArg;
 
 public class CommandArgsBase {
 
@@ -81,78 +82,77 @@ public class CommandArgsBase {
         return get(flag, (String) null);
     }
 
-    public <T> CommandArg<T> get(int index, CommandArgFactory<T> factory) {
+    public <T extends CommandArg<?>> T get(int index, CommandArgFactory<T> factory) {
         return factory.createCommandArg(messages, getOrNull(index));
     }
 
-    public <T> CommandArg<T> get(int index, Class<T> klass) {
+    public <T extends CommandArg<?>> T get(int index, Class<T> klass) {
         CommandArgFactory<T> factory = CommandArgFactory.get(klass);
         return get(index, factory);
     }
 
-    public <T> CommandArg<T> get(char flag, CommandArgFactory<T> factory) {
+    public <T extends CommandArg<?>> T get(char flag, CommandArgFactory<T> factory) {
         return factory.createCommandArg(messages, getOrNull(flag));
     }
 
-    public <T> CommandArg<T> get(char flag, Class<T> klass) {
+    public <T extends CommandArg<?>> T get(char flag, Class<T> klass) {
         CommandArgFactory<T> factory = CommandArgFactory.get(klass);
         return get(flag, factory);
     }
 
-    public String getArgFlag(char character) {
-        return argsFlags.get(character);
+    public <T extends Enum<T>> EnumArg<T> getEnum(int index,
+            Class<T> enumClass) {
+        return new EnumArg<T>(messages, getOrNull(index), enumClass);
     }
 
-    public String getArgFlag(char character, String def) {
-        if (hasArgFlag(character)) {
-            return getArgFlag(character);
-        }
-
-        return def;
+    public <T extends Enum<T>> EnumArg<T> getEnum(char flag,
+            Class<T> enumClass) {
+        return new EnumArg<T>(messages, getOrNull(flag), enumClass);
     }
 
-    public <T> CommandListArg<T> getList(
-            int index, CommandArgFactory<T> factory) {
+    public <T> CommandListArg<T> getList(int index,
+            CommandArgFactory<? extends CommandArg<T>> factory) {
         return new CommandListArg<T>(messages, factory, getOrNull(index));
     }
 
-    public <T> CommandListArg<T> getList(
-            int index, String separator, CommandArgFactory<T> factory) {
+    public <T> CommandListArg<T> getList(int index,
+            String separator, CommandArgFactory<? extends CommandArg<T>> factory) {
         return new CommandListArg<T>(messages, separator,
                 factory, getOrNull(index));
     }
 
-    public <T> CommandListArg<T> getList(int index, Class<T> klass) {
-        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+    public <T> CommandListArg<T> getList(int index,
+            Class<? extends CommandArg<T>> klass) {
+        CommandArgFactory<? extends CommandArg<T>> factory = CommandArgFactory.get(klass);
         return getList(index, factory);
     }
 
     public <T> CommandListArg<T> getList(int index, String separator,
-            Class<T> klass) {
-        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+            Class<? extends CommandArg<T>> klass) {
+        CommandArgFactory<? extends CommandArg<T>> factory = CommandArgFactory.get(klass);
         return getList(index, separator, factory);
     }
 
-    public <T> CommandListArg<T> getList(
-            char flag, CommandArgFactory<T> factory) {
-        return new CommandListArg<T>(messages, factory, getOrNull(flag));
+    public <U> CommandListArg<U> getList(char flag,
+            CommandArgFactory<CommandArg<U>> factory) {
+        return new CommandListArg<U>(messages, factory, getOrNull(flag));
     }
 
-    public <T> CommandListArg<T> getList(
-            char flag, String separator, CommandArgFactory<T> factory) {
+    public <T> CommandListArg<T> getList(char flag, String separator,
+            CommandArgFactory<CommandArg<T>> factory) {
         return new CommandListArg<T>(messages, separator,
                 factory, getOrNull(flag));
     }
 
-    public <T> CommandListArg<T> getList(
-            char flag, Class<T> klass) {
-        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+    public <T> CommandListArg<T> getList(char flag,
+            Class<CommandArg<T>> klass) {
+        CommandArgFactory<? extends CommandArg<T>> factory = CommandArgFactory.get(klass);
         return getList(flag, factory);
     }
 
-    public <T> CommandListArg<T> getList(
-            char flag, String separator, Class<T> klass) {
-        CommandArgFactory<T> factory = CommandArgFactory.get(klass);
+    public <T> CommandListArg<T> getList(char flag, String separator,
+            Class<CommandArg<T>> klass) {
+        CommandArgFactory<? extends CommandArg<T>> factory = CommandArgFactory.get(klass);
         return getList(flag, separator, factory);
     }
 

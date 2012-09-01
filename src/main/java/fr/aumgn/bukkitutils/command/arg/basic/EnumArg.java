@@ -7,27 +7,10 @@ import com.google.common.base.Function;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.glob.Glob;
 
 public class EnumArg<T extends Enum<T>> extends CommandArg<T> {
-
-    public static class Factory<T extends Enum<T>>
-            extends CommandArgFactory<T> {
-
-        private final Class<T> enumClass;
-
-        public Factory(Class<T> enumClass) {
-            this.enumClass = enumClass;
-        }
-
-        @Override
-        public CommandArg<T> createCommandArg(CommandsMessages messages,
-                String string) {
-            return new EnumArg<T>(messages, string, enumClass);
-        }
-    }
 
     public static class EnumArgNotFound extends CommandError {
 

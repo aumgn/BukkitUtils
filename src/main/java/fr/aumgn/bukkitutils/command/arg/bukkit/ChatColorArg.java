@@ -9,7 +9,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandError;
 
 public class ChatColorArg extends CommandArg<ChatColor> {
 
-    public static class Factory extends CommandArgFactory<ChatColor> {
+    public static class Factory extends CommandArgFactory<ChatColorArg> {
 
         @Override
         public ChatColorArg createCommandArg(

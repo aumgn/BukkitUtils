@@ -21,7 +21,7 @@ public class VectorArg extends CommandArg<Vector> {
     }
 
 
-    public static class Factory extends CommandArgFactory<Vector> {
+    public static class Factory extends CommandArgFactory<VectorArg> {
 
         @Override
         public VectorArg createCommandArg(CommandsMessages messages, String string) {

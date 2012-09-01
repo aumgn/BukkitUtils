@@ -12,7 +12,7 @@ import fr.aumgn.bukkitutils.geom.Vector2D;
 
 public class Vector2DArg extends CommandArg<Vector2D> {
 
-    public static class Factory extends CommandArgFactory<Vector2D> {
+    public static class Factory extends CommandArgFactory<Vector2DArg> {
 
         @Override
         public Vector2DArg createCommandArg(CommandsMessages messages, String string) {

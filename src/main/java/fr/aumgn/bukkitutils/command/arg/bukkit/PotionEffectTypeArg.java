@@ -9,7 +9,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandError;
 
 public class PotionEffectTypeArg extends CommandArg<PotionEffectType> {
 
-    public static class Factory extends CommandArgFactory<PotionEffectType> {
+    public static class Factory extends CommandArgFactory<PotionEffectTypeArg> {
 
         @Override
         public PotionEffectTypeArg createCommandArg(

@@ -36,7 +36,7 @@ public class CommandArgs extends CommandArgsBase {
         super(messages, parser);
     }
 
-    public CommandArg<Integer> getInteger(int index) {
+    public IntegerArg getInteger(int index) {
         return get(index, new IntegerArg.Factory());
     }
 

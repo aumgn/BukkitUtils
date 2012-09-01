@@ -9,7 +9,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandError;
 
 public class EnchantmentArg extends CommandArg<Enchantment> {
 
-    public static class Factory extends CommandArgFactory<Enchantment> {
+    public static class Factory extends CommandArgFactory<EnchantmentArg> {
 
         @Override
         public EnchantmentArg createCommandArg(

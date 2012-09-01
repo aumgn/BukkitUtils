@@ -11,10 +11,10 @@ import fr.aumgn.bukkitutils.playerid.PlayerId;
 
 public class PlayerIdArg extends CommandArg<PlayerId> {
 
-    public static class Factory extends CommandArgFactory<PlayerId> {
+    public static class Factory extends CommandArgFactory<PlayerIdArg> {
 
         static {
-            CommandArgFactory.register(PlayerId.class, new Factory());
+            CommandArgFactory.register(PlayerIdArg.class, new Factory());
         }
 
         @Override

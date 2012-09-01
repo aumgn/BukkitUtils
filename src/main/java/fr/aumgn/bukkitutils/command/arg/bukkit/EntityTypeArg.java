@@ -9,7 +9,7 @@ import fr.aumgn.bukkitutils.command.exception.CommandError;
 
 public class EntityTypeArg extends CommandArg<EntityType> {
 
-    public static class Factory extends CommandArgFactory<EntityType> {
+    public static class Factory extends CommandArgFactory<EntityTypeArg> {
 
         @Override
         public EntityTypeArg createCommandArg(
