@@ -1,16 +1,16 @@
-package fr.aumgn.bukkitutils.playerid.map;
+package fr.aumgn.bukkitutils.playerref.map;
 
 import java.util.Map.Entry;
 
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
 public class PlayerMapEntry<T> implements Entry<Player, T> {
 
-    private final Entry<PlayerId, T> entry;
+    private final Entry<PlayerRef, T> entry;
 
-    public PlayerMapEntry(Entry<PlayerId, T> entry) {
+    public PlayerMapEntry(Entry<PlayerRef, T> entry) {
         this.entry = entry;
     }
 

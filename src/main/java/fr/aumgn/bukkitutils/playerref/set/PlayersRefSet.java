@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid.set;
+package fr.aumgn.bukkitutils.playerref.set;
 
 import java.util.List;
 import java.util.Set;
@@ -6,9 +6,9 @@ import java.util.Set;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
-public interface PlayersIdSet extends Set<PlayerId> {
+public interface PlayersRefSet extends Set<PlayerRef> {
 
     boolean contains(OfflinePlayer player);
 

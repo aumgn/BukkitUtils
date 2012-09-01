@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid.map;
+package fr.aumgn.bukkitutils.playerref.map;
 
 import java.util.Map;
 import java.util.Set;
@@ -6,9 +6,9 @@ import java.util.Set;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
-public interface PlayersIdMap<T> extends Map<PlayerId, T> {
+public interface PlayersRefMap<T> extends Map<PlayerRef, T> {
 
     boolean containsKey(OfflinePlayer player);
 

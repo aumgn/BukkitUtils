@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid.set;
+package fr.aumgn.bukkitutils.playerref.set;
 
 import java.util.HashSet;
 import java.util.List;
@@ -9,43 +9,43 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.PlayersIterable;
-import fr.aumgn.bukkitutils.playerid.ToOfflinePlayer;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.PlayersIterable;
+import fr.aumgn.bukkitutils.playerref.ToOfflinePlayer;
 
-public class PlayersIdHashSet
-            extends HashSet<PlayerId> implements PlayersIdSet {
+public class PlayersRefHashSet
+            extends HashSet<PlayerRef> implements PlayersRefSet {
 
     private static final long serialVersionUID = -2701720565674845979L;
 
-    public PlayersIdHashSet() {
+    public PlayersRefHashSet() {
         super();
     }
 
     @Override
     public boolean contains(OfflinePlayer player) {
-        return contains(PlayerId.get(player));
+        return contains(PlayerRef.get(player));
     }
 
     @Override
     public boolean add(OfflinePlayer player) {
-        return add(PlayerId.get(player));
+        return add(PlayerRef.get(player));
     }
 
     @Override
     public boolean remove(OfflinePlayer player) {
-        return remove(PlayerId.get(player));
+        return remove(PlayerRef.get(player));
     }
 
     @Override
     public Iterable<OfflinePlayer> offlinePlayers() {
         return Iterables.transform(
-                PlayersIdHashSet.this, new ToOfflinePlayer());
+                PlayersRefHashSet.this, new ToOfflinePlayer());
     }
 
     @Override
     public Iterable<Player> players() {
-        return new PlayersIterable(PlayersIdHashSet.this);
+        return new PlayersIterable(PlayersRefHashSet.this);
     }
 
     @Override

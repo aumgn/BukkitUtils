@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid.list;
+package fr.aumgn.bukkitutils.playerref.list;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,36 +9,36 @@ import org.bukkit.entity.Player;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
-import fr.aumgn.bukkitutils.playerid.PlayersIterable;
-import fr.aumgn.bukkitutils.playerid.ToOfflinePlayer;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import fr.aumgn.bukkitutils.playerref.PlayersIterable;
+import fr.aumgn.bukkitutils.playerref.ToOfflinePlayer;
 
-public class PlayersIdArrayList
-            extends ArrayList<PlayerId> implements PlayersIdList {
+public class PlayersRefArrayList
+            extends ArrayList<PlayerRef> implements PlayersRefList {
 
     private static final long serialVersionUID = -921106024183437981L;
 
-    public PlayersIdArrayList() {
+    public PlayersRefArrayList() {
         super();
     }
 
-    public PlayersIdArrayList(int capacity) {
+    public PlayersRefArrayList(int capacity) {
         super(capacity);
     }
 
     @Override
     public void add(OfflinePlayer player) {
-        add(PlayerId.get(player));
+        add(PlayerRef.get(player));
     }
 
     @Override
     public void add(int index, OfflinePlayer player) {
-        add(index, PlayerId.get(player));
+        add(index, PlayerRef.get(player));
     }
 
     @Override
     public boolean contains(OfflinePlayer player) {
-        return contains(PlayerId.get(player));
+        return contains(PlayerRef.get(player));
     }
 
     @Override
@@ -54,12 +54,12 @@ public class PlayersIdArrayList
     @Override
     public Iterable<OfflinePlayer> offlinePlayers() {
         return Iterables.transform(
-                PlayersIdArrayList.this, new ToOfflinePlayer());
+                PlayersRefArrayList.this, new ToOfflinePlayer());
     }
 
     @Override
     public Iterable<Player> players() {
-        return new PlayersIterable(PlayersIdArrayList.this);
+        return new PlayersIterable(PlayersRefArrayList.this);
     }
 
     @Override

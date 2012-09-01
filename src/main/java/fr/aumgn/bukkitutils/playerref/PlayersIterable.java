@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid;
+package fr.aumgn.bukkitutils.playerref;
 
 import java.util.Iterator;
 
@@ -10,17 +10,17 @@ public class PlayersIterable implements Iterable<Player> {
 
     private static class PlayersIterator extends AbstractIterator<Player> {
 
-        private final Iterator<PlayerId> it;
+        private final Iterator<PlayerRef> it;
 
-        public PlayersIterator(Iterator<PlayerId> iterator) {
+        public PlayersIterator(Iterator<PlayerRef> iterator) {
             this.it = iterator;
         }
 
         protected Player computeNext() {
             while (it.hasNext()) {
-                PlayerId playerId = it.next();
-                if (playerId.isOnline()) {
-                    return playerId.getPlayer();
+                Player player = it.next().getPlayer();
+                if (player != null) {
+                    return player;
                 }
             }
 
@@ -30,7 +30,7 @@ public class PlayersIterable implements Iterable<Player> {
 
     private final PlayersIterator iterator;
 
-    public PlayersIterable(Iterable<PlayerId> iterable) {
+    public PlayersIterable(Iterable<PlayerRef> iterable) {
         this.iterator = new PlayersIterator(iterable.iterator());
     }
 

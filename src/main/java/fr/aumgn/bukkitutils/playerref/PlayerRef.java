@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid;
+package fr.aumgn.bukkitutils.playerref;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -8,27 +8,27 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-public final class PlayerId {
+public final class PlayerRef {
 
-    private static final Map<String, PlayerId> accounts = 
-                new HashMap<String, PlayerId>();
+    private static final Map<String, PlayerRef> playersRef = 
+                new HashMap<String, PlayerRef>();
 
-    public static PlayerId get(OfflinePlayer player) {
+    public static PlayerRef get(OfflinePlayer player) {
         return get(player.getName());
     }
 
-    public static PlayerId get(String name) {
+    public static PlayerRef get(String name) {
         String lname = name.toLowerCase(Locale.ENGLISH);
-        if (!accounts.containsKey(lname)) {
-            accounts.put(lname, new PlayerId(lname));
+        if (!playersRef.containsKey(lname)) {
+            playersRef.put(lname, new PlayerRef(lname));
         }
 
-        return accounts.get(lname);
+        return playersRef.get(lname);
     }
 
     private final String name;
 
-    private PlayerId(String name) {
+    private PlayerRef(String name) {
         this.name = name;
     }
 
@@ -63,11 +63,11 @@ public final class PlayerId {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof PlayerId)) {
+        if (!(other instanceof PlayerRef)) {
             return false;
         }
 
-        return name.equals(((PlayerId) other).name);
+        return name.equals(((PlayerRef) other).name);
     }
 
     @Override

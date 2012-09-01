@@ -1,4 +1,4 @@
-package fr.aumgn.bukkitutils.playerid.map;
+package fr.aumgn.bukkitutils.playerref.map;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -8,42 +8,42 @@ import java.util.Set;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
-public class PlayersIdHashMap<T>
-            extends HashMap<PlayerId, T> implements PlayersIdMap<T> {
+public class PlayersRefHashMap<T>
+            extends HashMap<PlayerRef, T> implements PlayersRefMap<T> {
 
     private static final long serialVersionUID = -2270069935511356836L;
 
-    public PlayersIdHashMap() {
+    public PlayersRefHashMap() {
         super();
     }
 
     @Override
     public boolean containsKey(OfflinePlayer player) {
-        return containsKey(PlayerId.get(player));
+        return containsKey(PlayerRef.get(player));
     }
 
     @Override
     public T get(OfflinePlayer player) {
-        return get(PlayerId.get(player));
+        return get(PlayerRef.get(player));
     }
 
     @Override
     public T put(OfflinePlayer player, T value) {
-        return put(PlayerId.get(player), value);
+        return put(PlayerRef.get(player), value);
     }
 
     @Override
     public T remove(OfflinePlayer player) {
-        return remove(PlayerId.get(player));
+        return remove(PlayerRef.get(player));
     }
 
     @Override
     public Set<OfflinePlayer> offlinePlayersSet() {
         HashSet<OfflinePlayer> set = new HashSet<OfflinePlayer>();
-        for (PlayerId account : keySet()) {
-            set.add(account.getOfflinePlayer());
+        for (PlayerRef ref : keySet()) {
+            set.add(ref.getOfflinePlayer());
         }
 
         return set;
@@ -51,8 +51,8 @@ public class PlayersIdHashMap<T>
 
     public Set<Player> playersSet() {
         HashSet<Player> set = new HashSet<Player>();
-        for (PlayerId account : keySet()) {
-            Player player = account.getPlayer();
+        for (PlayerRef ref : keySet()) {
+            Player player = ref.getPlayer();
             if (player != null) {
                 set.add(player);
             }
@@ -65,7 +65,7 @@ public class PlayersIdHashMap<T>
     public Set<Entry<OfflinePlayer, T>> offlinePlayersEntrySet() {
         HashSet<Entry<OfflinePlayer, T>> set =
                 new HashSet<Map.Entry<OfflinePlayer, T>>();
-        for (Map.Entry<PlayerId, T> entry : entrySet()) {
+        for (Map.Entry<PlayerRef, T> entry : entrySet()) {
             set.add(new OfflinePlayerMapEntry<T>(entry));
         }
         return set;
@@ -75,7 +75,7 @@ public class PlayersIdHashMap<T>
     public Set<Entry<Player, T>> playersEntrySet() {
         HashSet<Entry<Player, T>> set =
                 new HashSet<Entry<Player, T>>();
-        for (Entry<PlayerId, T> entry : entrySet()) {
+        for (Entry<PlayerRef, T> entry : entrySet()) {
             set.add(new PlayerMapEntry<T>(entry));
         }
         return set;

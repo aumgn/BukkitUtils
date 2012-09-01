@@ -1,13 +1,13 @@
-package fr.aumgn.bukkitutils.playerid.list;
+package fr.aumgn.bukkitutils.playerref.list;
 
 import java.util.List;
 
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerid.PlayerId;
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
-public interface PlayersIdList extends List<PlayerId> {
+public interface PlayersRefList extends List<PlayerRef> {
 
     void add(OfflinePlayer player);
 

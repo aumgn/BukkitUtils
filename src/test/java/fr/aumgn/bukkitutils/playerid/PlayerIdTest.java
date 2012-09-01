@@ -9,6 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.mockbukkit.MockBukkit;
 
 public class PlayerIdTest {
@@ -26,24 +27,24 @@ public class PlayerIdTest {
 
     @Test
     public void testPlayerIdCache() {
-        PlayerId playerId1 = PlayerId.get("Player");
-        PlayerId playerId2 = PlayerId.get("Player");
+        PlayerRef playerId1 = PlayerRef.get("Player");
+        PlayerRef playerId2 = PlayerRef.get("Player");
 
         assertSame(playerId1, playerId2);
     }
 
     @Test
     public void testPlayerIdCaseInsensitivity() {
-        PlayerId playerId1 = PlayerId.get("Player");
-        PlayerId playerId2 = PlayerId.get("player");
+        PlayerRef playerId1 = PlayerRef.get("Player");
+        PlayerRef playerId2 = PlayerRef.get("player");
 
         assertEquals(playerId1, playerId2);
     }
 
     @Test
     public void testIsOnline() {
-        PlayerId playerId1 = PlayerId.get("Player");
-        PlayerId playerId2 = PlayerId.get("OfflinePlayer");
+        PlayerRef playerId1 = PlayerRef.get("Player");
+        PlayerRef playerId2 = PlayerRef.get("OfflinePlayer");
 
         assertTrue(playerId1.isOnline());
         assertFalse(playerId1.isOffline());

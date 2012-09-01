@@ -16,6 +16,7 @@ import fr.aumgn.bukkitutils.command.arg.bukkit.ItemTypeArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.MaterialArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.OfflinePlayerArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerArg;
+import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerRefArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PotionEffectTypeArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.WorldArg;
 
@@ -34,6 +35,7 @@ public abstract class CommandArgFactory<T extends CommandArg<?>> {
         register(WorldArg.class, new WorldArg.Factory());
         register(PlayerArg.class, new PlayerArg.Factory());
         register(OfflinePlayerArg.class, new OfflinePlayerArg.Factory());
+        register(PlayerRefArg.class, new PlayerRefArg.Factory());
         register(MaterialArg.class, new MaterialArg.Factory());
         register(ItemTypeArg.class, new ItemTypeArg.Factory());
         register(PotionEffectTypeArg.class, new PotionEffectTypeArg.Factory());
