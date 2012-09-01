@@ -114,4 +114,8 @@ public class CommandsMessages extends PluginMessages {
     public String missingPermissionForOther(String permission) {
         return get("missing-permission-for-other");
     }
+
+    public String noSuchPlugin(String token) {
+        return get("no-such-plugin", token);
+    }
 }
