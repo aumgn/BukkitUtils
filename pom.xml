@@ -103,6 +103,39 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.8.1</version>
+				<configuration>
+					<links>
+						<link>http://jd.bukkit.org/apidocs/</link>
+						<link>http://google-gson.googlecode.com/svn/trunk/gson/docs/javadocs/</link>
+					</links>
+					<linksource>true</linksource>
+					<excludePackageNames>
+						fr.augmn.bukkitutils.command.executor:fr.aumgn.bukkitutils.glob.matchers:fr.aumgn.bukkitutils.glob.patterns:fr.aumgn.bukkitutils.geom.direction
+					</excludePackageNames>
+					<groups>
+						<group>
+							<title>Commands</title>
+							<packages>fr.aumgn.bukkitutils.command*</packages>
+						</group>
+						<group>
+							<title>Localization</title>
+							<packages>fr.aumgn.bukkitutils.localization*</packages>
+						</group>
+						<group>
+							<title>Gson</title>
+							<packages>fr.aumgn.bukkitutils.gson*</packages>
+						</group>
+						<group>
+							<title>PlayerRef</title>
+							<packages>fr.aumgn.bukkitutils.playerref*</packages>
+						</group>
+					</groups>
+				</configuration>
+			</plugin>
 		</plugins>
 
 	</build>
