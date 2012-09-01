@@ -52,6 +52,7 @@ public abstract class CommandArgFactory<T> {
         register(PotionEffectType.class, new PotionEffectTypeArg.Factory());
         register(Enchantment.class, new EnchantmentArg.Factory());
         register(EntityType.class, new EntityTypeArg.Factory());
+        register(Short.class, new ShortArg.Factory());
     }
 
     public static <T> void register(Class<T> klass,

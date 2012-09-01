@@ -48,6 +48,10 @@ public class CommandArgs extends CommandArgsBase {
         return get(index, new DoubleArg.Factory());
     }
 
+    public CommandArg<Short> getShort(int index) {
+        return get(index, new ShortArg.Factory());
+    }
+
     public CommandArg<ChatColor> getChatColor(int index) {
         return get(index, new ChatColorArg.Factory());
     }
