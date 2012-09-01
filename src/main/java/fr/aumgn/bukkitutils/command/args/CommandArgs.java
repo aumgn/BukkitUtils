@@ -7,6 +7,7 @@ import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
@@ -24,6 +25,7 @@ import fr.aumgn.bukkitutils.command.arg.bukkit.ItemTypeArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.MaterialArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.OfflinePlayerArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerArg;
+import fr.aumgn.bukkitutils.command.arg.bukkit.PluginArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PotionEffectTypeArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.WorldArg;
 import fr.aumgn.bukkitutils.geom.Vector;
@@ -96,6 +98,10 @@ public class CommandArgs extends CommandArgsBase {
         return get(index, new EntityTypeArg.Factory());
     }
 
+    public CommandArg<Plugin> getPlugin(int index) {
+        return get(index, new PluginArg.Factory());
+    }
+
     public CommandArg<Integer> getInteger(char flag) {
         return get(flag, new IntegerArg.Factory());
     }
@@ -154,5 +160,9 @@ public class CommandArgs extends CommandArgsBase {
 
     public CommandArg<EntityType> getEntityType(char flag) {
         return get(flag, new EntityTypeArg.Factory());
+    }
+
+    public CommandArg<Plugin> getPlugin(char flag) {
+        return get(flag, new PluginArg.Factory());
     }
 }
