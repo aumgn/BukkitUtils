@@ -9,6 +9,9 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
+/**
+ * A set of messages loaded with {@link Localization}
+ */
 public class PluginMessages {
 
     private Map<String, MessageFormat> map;

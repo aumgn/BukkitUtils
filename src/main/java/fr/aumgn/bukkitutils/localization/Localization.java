@@ -13,8 +13,10 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,7 +27,62 @@ import fr.aumgn.bukkitutils.localization.loaders.MessagesLoader;
 import fr.aumgn.bukkitutils.localization.loaders.PropertiesMessagesLoader;
 import fr.aumgn.bukkitutils.localization.loaders.YamlMessagesLoader;
 
-
+/**
+ * Class which handles loading of localization
+ * resources for the given plugin and locale.
+ *
+ * This class looks for resources in the plugin's jarfile
+ * (in the plugin's package) and in the plugin's data folder.
+ *
+ * Resources are defined by a name to which is appended
+ * a suffix corresponding to the locale.
+ *
+ * For example if you're looking for a resource with the
+ * name "messages" for the plugin MyPlugin whose main class
+ * is "fr.aumgn.myplugin.MyPlugin" and the locale "fr_FR",
+ * the class will go through all this steps :
+ * <ul>
+ *   <li>
+ *     Looks for the resource
+ *     fr/aumgn/myplugin/messages_en.{json,yml,properties}
+ *     in the jarfile
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     [server]/plugins/MyPlugin/messages_en.{json,yml,properties}
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     fr/aumgn/myplugin/messages_en_US.{json,yml,properties}
+ *     in the jarfile
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     [server]/plugins/MyPlugin/messages_en_US.{json,yml,properties}
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     fr/aumgn/myplugin/messages_fr.{json,yml,properties}
+ *     in the jarfile
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     [server]/plugins/MyPlugin/messages_fr.{json,yml,properties}
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     fr/aumgn/myplugin/messages_fr_FR.{json,yml,properties}
+ *     in the jarfile
+ *   </li>
+ *   <li>
+ *     Looks for the resource
+ *     [server]/plugins/MyPlugin/messages_fr_FR.{json,yml,properties}
+ *   </li>
+ * </ul>
+ *
+ * Each values find in a loaded resources has priority
+ * over values find in previous resources.
+ */
 public class Localization {
 
     public static final Locale DEFAULT_LOCALE = Locale.US;
@@ -33,11 +90,14 @@ public class Localization {
     private static final Deque<MessagesLoader> loaders =
             new ArrayDeque<MessagesLoader>();
 
+    /**
+     * Registers a MessagesLoader.
+     */
     public static void register(MessagesLoader loader) {
         loaders.push(loader);
     }
 
-    public static Iterable<MessagesLoader> loaders() {
+    protected static Iterable<MessagesLoader> loaders() {
         return new Iterable<MessagesLoader>() {
             @Override
             public Iterator<MessagesLoader> iterator() {
@@ -52,42 +112,69 @@ public class Localization {
         register(new JsonMessagesLoader());
     }
 
+    public static Locale[] localesLookupFor(Locale targetLocale,
+            Locale fallbackLocale) {
+        Set<Locale> localesSet = new LinkedHashSet<Locale>(4);
+        localesSet.add(targetLocale);
+        localesSet.add(new Locale(targetLocale.getLanguage()));
+        localesSet.add(fallbackLocale);
+        localesSet.add(new Locale(fallbackLocale.getLanguage()));
+        Locale[] locales = new Locale[localesSet.size()];
+        int i = locales.length - 1;
+        for (Locale locale : localesSet) {
+            locales[i] = locale;
+            i--;
+        }
+        return locales;
+    }
+
     protected final JavaPlugin plugin;
-    protected final File dir;
-    protected final Locale locale;
+    private final File dir;
+    protected final Locale[] locales;
 
     public Localization(JavaPlugin plugin) {
         this(plugin, DEFAULT_LOCALE);
     }
 
-    public Localization(JavaPlugin plugin, Locale locale) {
-        this(plugin, locale, plugin.getDataFolder());
+    public Localization(JavaPlugin plugin, Locale targetLocale) {
+        this(plugin, plugin.getDataFolder(), targetLocale);
     }
 
-    public Localization(JavaPlugin plugin, Locale locale, File dir) {
+    public Localization(JavaPlugin plugin, Locale targetLocale,
+            Locale fallbackLocale) {
+        this(plugin,  plugin.getDataFolder(), targetLocale, fallbackLocale);
+    }
+
+    public Localization(JavaPlugin plugin, File dir, Locale targetLocale) {
+        this(plugin, dir, targetLocale, DEFAULT_LOCALE);
+    }
+
+    public Localization(JavaPlugin plugin, File dir, Locale targetLocale,
+            Locale fallbackLocale) {
         this.plugin = plugin;
-        this.locale = locale;
         this.dir = dir;
+        this.locales = localesLookupFor(targetLocale, fallbackLocale);
     }
 
+    /**
+     * Loads the resources with the given name.
+     */
     public PluginMessages get(String name) {
-        Map<String, MessageFormat> map = new HashMap<String, MessageFormat>();
-        loadAll(name, map, DEFAULT_LOCALE);
-        loadAll(name, map, locale);
-        return new PluginMessages(map);
+        return new PluginMessages(loadMap(name));
     }
 
-    protected void loadAll(String name, Map<String, MessageFormat> map,
-            Locale locale) {
-        loadBundled(map, locale, name + "_" + locale.getLanguage());
-        if (!locale.getCountry().isEmpty()) {
-            loadBundled(map, locale, name + "_" + locale.toString());
+    protected Map<String, MessageFormat> loadMap(String name) {
+        Map<String, MessageFormat> map = new HashMap<String, MessageFormat>();
+        for (Locale locale : locales) {
+            load(map, locale, name + "_" + locale.toString());
         }
+        return map;
+    }
 
-        loadUser(map, locale, name + "_" + locale.getLanguage());
-        if (!locale.getCountry().isEmpty()) {
-            loadUser(map, locale, name + "_" + locale.toString());
-        }
+    protected void load(Map<String, MessageFormat> map, Locale locale,
+            String name) {
+        loadBundled(map, locale, name);
+        loadUser(map, locale, name);
     }
 
     protected void loadStream(Map<String, MessageFormat> map, Locale locale,
@@ -103,6 +190,10 @@ public class Localization {
 
     private void loadBundled(Map<String, MessageFormat> map,  Locale locale,
             String baseName) {
+        if (plugin == null) {
+            return;
+        }
+
         for (MessagesLoader loader : loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
@@ -128,6 +219,10 @@ public class Localization {
 
     private void loadUser(Map<String, MessageFormat> map, Locale locale,
             String baseName) {
+        if (dir == null) {
+            return;
+        }
+
         for (MessagesLoader loader : loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;

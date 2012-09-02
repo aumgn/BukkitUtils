@@ -5,6 +5,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Represents an item type.
+ */
 public class ItemType {
 
     private final Material material;

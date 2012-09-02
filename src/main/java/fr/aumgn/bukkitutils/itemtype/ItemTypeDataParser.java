@@ -4,6 +4,9 @@ import org.bukkit.Material;
 
 public abstract class ItemTypeDataParser {
 
+    /**
+     * Get a data parser for the given material.
+     */
     public static ItemTypeDataParser getFor(Material material) {
         if (material == Material.WOOL) {
             return new ColorDataParser(false);

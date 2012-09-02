@@ -1,7 +1,13 @@
 package fr.aumgn.bukkitutils.timer;
 
+/**
+ * Configuration of a {@link Timer} class.
+ */
 public class TimerConfig {
 
+    /**
+     * Default Config
+     */
     public static final TimerConfig DEFAULT = new TimerConfig(
             2 * 60, 20, "%02d:%02d", "Finished");
 

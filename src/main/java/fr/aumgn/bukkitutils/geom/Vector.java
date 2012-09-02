@@ -11,6 +11,10 @@ import org.bukkit.entity.Entity;
 import fr.aumgn.bukkitutils.geom.direction.VectorDirection;
 import fr.aumgn.bukkitutils.geom.vector.VectorIterator;
 
+/**
+ * Immutable Vector class.
+ * Inspired from WorldEdit.
+ */
 public class Vector implements Iterable<Vector> {
 
     private final double x, y, z;

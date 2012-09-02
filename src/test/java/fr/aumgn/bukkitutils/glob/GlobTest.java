@@ -150,7 +150,7 @@ public class GlobTest {
     @Test
     public void testStartGlob() {
         GlobPattern<String> glob =
-                new Glob("a").start().build();
+                new Glob("a").fromStart().build();
 
         assertTrue  (glob.match("a"));
         assertTrue  (glob.match("abc"));

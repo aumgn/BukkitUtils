@@ -42,6 +42,33 @@ public final class TimeUtil {
         }
     }
 
+    /**
+     * Parse a time string
+     * Accepted format are:
+     * <ul>
+     *   <li>0 to 24 numbers for hour</li>
+     *   <li>Numbers above 24 for ticks</li>
+     *   <li>hh:mm (24h format)</li>
+     *   <li>hh:mm{am,pm,a.m.,p.m.} (12h format)</li>
+     *   <li>
+     *     shortcuts :
+     *     <ul>
+     *       <li>dawn</li>
+     *       <li>sunrise</li>
+     *       <li>morning</li>
+     *       <li>day</li>
+     *       <li>midday</li>
+     *       <li>noon</li>
+     *       <li>afternoon</li>
+     *       <li>evening</li>
+     *       <li>sunset</li>
+     *       <li>dusk</li>
+     *       <li>night</li>
+     *       <li>midnight</li>
+     *     </ul>
+     *   </li>
+     * </ul>
+     */
     public static int parseTime(String timeStr)
             throws UnknownTimeFormatException, UnknownTimePeriodException {
         Matcher matcher;
@@ -55,7 +82,7 @@ public final class TimeUtil {
             }
 
             return time;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException _) {
             // Not an integer!
         }
 

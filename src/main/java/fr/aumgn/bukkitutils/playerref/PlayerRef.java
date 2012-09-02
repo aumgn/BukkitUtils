@@ -8,9 +8,12 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
+/**
+ * Hold a reference to a player.
+ */
 public final class PlayerRef {
 
-    private static final Map<String, PlayerRef> playersRef = 
+    private static final Map<String, PlayerRef> playersRef =
                 new HashMap<String, PlayerRef>();
 
     public static PlayerRef get(OfflinePlayer player) {

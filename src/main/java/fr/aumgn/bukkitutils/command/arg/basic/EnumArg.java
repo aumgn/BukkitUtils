@@ -71,7 +71,7 @@ public class EnumArg<T extends Enum<T>> extends AbstractCommandArg<T> {
 
     public List<T> match() {
         List<T> matched = new Glob(string.toLowerCase(Locale.ENGLISH))
-            .start().build(new Function<T, String>() {
+            .fromStart().build(new Function<T, String>() {
                 @Override
                 public String apply(T value) {
                     return value.name().toLowerCase(Locale.ENGLISH);

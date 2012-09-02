@@ -8,6 +8,11 @@ import org.bukkit.plugin.Plugin;
 
 import com.google.common.base.Stopwatch;
 
+/**
+ * A timer class which display time according
+ * to the delays specified in the {@link TimerConfig}
+ * using the abstract method {@link #sendTimeMessage(String)}.
+ */
 public abstract class Timer implements Runnable {
 
     private static final int TICKS_PER_SECONDS = 20;

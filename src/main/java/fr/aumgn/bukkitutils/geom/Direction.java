@@ -1,5 +1,8 @@
 package fr.aumgn.bukkitutils.geom;
 
+/**
+ * Represents a direction.
+ */
 public interface Direction {
 
     float getYaw();

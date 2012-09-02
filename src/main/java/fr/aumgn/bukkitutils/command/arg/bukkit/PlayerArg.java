@@ -66,7 +66,7 @@ public class PlayerArg extends AbstractSenderMatchingArg<Player> {
     @Override
     public List<Player> match() {
         List<Player> players = new Glob(string)
-                .start().caseInsensitive()
+                .fromStart().caseInsensitive()
                 .build(new PlayerToString())
                 .filter(Bukkit.getOnlinePlayers());
 

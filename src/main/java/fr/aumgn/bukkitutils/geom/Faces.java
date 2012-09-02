@@ -2,6 +2,9 @@ package fr.aumgn.bukkitutils.geom;
 
 import fr.aumgn.bukkitutils.geom.direction.Face;
 
+/**
+ * Enum like class which contains basics directions.
+ */
 public final class Faces {
 
     public static final Direction UP =

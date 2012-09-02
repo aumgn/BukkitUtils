@@ -7,6 +7,19 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+/**
+ * Store informations of a position.
+ *
+ * Informations are :
+ * <ul>
+ *  <li>World</li>
+ *  <li>Coordinates</li>
+ *  <li>Direction</li>
+ * </ul>
+ *
+ * Contrary to {@link Location}, this class stores a
+ * reference to the world rather than the world itself.
+ */
 public class Position {
 
     private UUID worldId;

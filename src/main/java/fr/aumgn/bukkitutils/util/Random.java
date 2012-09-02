@@ -1,5 +1,8 @@
 package fr.aumgn.bukkitutils.util;
 
+/**
+ * {@link java.util.Random} subclass which add convenient methods.
+ */
 public class Random extends java.util.Random {
     private static final long serialVersionUID = 7538154847422151091L;
 

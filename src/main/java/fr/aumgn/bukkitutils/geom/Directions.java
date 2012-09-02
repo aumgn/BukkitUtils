@@ -6,6 +6,10 @@ import org.bukkit.entity.Entity;
 import fr.aumgn.bukkitutils.geom.direction.HorizontalDirection;
 import fr.aumgn.bukkitutils.geom.direction.LocationDirection;
 
+/**
+ * Set of convenient methods to construct Direction
+ * from other direction representations.
+ */
 public final class Directions {
 
     public static Direction fromLocation(Location location) {

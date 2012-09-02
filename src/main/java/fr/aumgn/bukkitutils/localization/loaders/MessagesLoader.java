@@ -9,10 +9,21 @@ import java.util.Map.Entry;
 
 import fr.aumgn.bukkitutils.util.Util;
 
+/**
+ * Interfaces for classes which load messages
+ * for a specific format.
+ */
 public abstract class MessagesLoader {
 
+    /**
+     * File extensions (without the dot) accepted
+     * by this loader.
+     */
     public abstract String[] getExtensions();
 
+    /**
+     * Parse the reader as a Map of &lt;key, message&gt;.
+     */
     public abstract Map<?, ?> loadRaw(Reader reader);
 
     public Map<String, MessageFormat> load(

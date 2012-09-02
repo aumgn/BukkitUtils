@@ -16,6 +16,10 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
+/**
+ * Class which handle loading of .json resources
+ * for a given plugin using {@link Gson}.
+ */
 public class GsonLoader {
 
     private final Gson gson;
@@ -38,11 +42,17 @@ public class GsonLoader {
         return file;
     }
 
+    /**
+     * Loads if exists or creates the given resource.
+     */
     public <T> T loadOrCreate(String filename, Class<T> klass)
             throws GsonLoadException {
         return loadOrCreate(filename, klass, klass);
     }
 
+    /**
+     * Loads if exists or creates the given resource.
+     */
     @SuppressWarnings("unchecked")
     public <T> T loadOrCreate(String filename, TypeToken<T> typeToken)
             throws GsonLoadException {
@@ -74,6 +84,9 @@ public class GsonLoader {
         }
     }
 
+    /**
+     * Loads the given resource.
+     */
     public <T> T load(File file, Type klass) throws GsonLoadException {
         try {
             return unsafeLoad(file, klass);
@@ -82,6 +95,9 @@ public class GsonLoader {
         }
     }
 
+    /**
+     * Loads the given resource.
+     */
     public <T> T load(File file, TypeToken<T> typeToken)
             throws GsonLoadException {
         try {
@@ -103,6 +119,9 @@ public class GsonLoader {
         }
     }
 
+    /**
+     * Writes the given resource.
+     */
     public void write(String filename, Object instance)
             throws GsonLoadException {
         try {

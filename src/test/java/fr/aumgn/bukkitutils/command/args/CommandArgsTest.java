@@ -94,7 +94,7 @@ public class CommandArgsTest {
         CommandArgs args = CommandArgsUtil.parse("value1", "v*2", "v*");
 
         assertSame(TestArg.Value1, args.get(0, TestArg.class).value());
-        assertSame(TestArg.Value2, args.get(0, TestArg.class).value());
+        assertSame(TestArg.Value2, args.get(1, TestArg.class).value());
         assertEquals(2, args.get(2, TestArg.class).match().size());
     }
 

@@ -16,6 +16,10 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 
+/**
+ * Serialize with gson classes which implements
+ * Bukkit's {@link ConfigurationSerialization}.
+ */
 @SuppressWarnings("unchecked")
 public class BukkitConfigTypeAdapterFactory implements TypeAdapterFactory {
 
