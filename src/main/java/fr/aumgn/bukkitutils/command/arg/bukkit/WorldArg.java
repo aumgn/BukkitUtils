@@ -10,20 +10,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractSenderMatchingArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
-public class WorldArg extends CommandArg<World> {
-
-    public static class Factory extends CommandArgFactory<WorldArg> {
-
-        @Override
-        public WorldArg createCommandArg(CommandsMessages messages, String string) {
-            return new WorldArg(messages, string);
-        }
-    }
+public class WorldArg extends AbstractSenderMatchingArg<World> {
 
     public WorldArg(CommandsMessages messages, String string) {
         super(messages, string);

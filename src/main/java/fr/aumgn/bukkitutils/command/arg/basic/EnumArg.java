@@ -6,11 +6,11 @@ import java.util.Locale;
 import com.google.common.base.Function;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.glob.Glob;
 
-public class EnumArg<T extends Enum<T>> extends CommandArg<T> {
+public class EnumArg<T extends Enum<T>> extends AbstractCommandArg<T> {
 
     public static class EnumArgNotFound extends CommandError {
 
@@ -69,7 +69,6 @@ public class EnumArg<T extends Enum<T>> extends CommandArg<T> {
         return matched.get(0);
     }
 
-    @Override
     public List<T> match() {
         List<T> matched = new Glob(string.toLowerCase(Locale.ENGLISH))
             .start().build(new Function<T, String>() {

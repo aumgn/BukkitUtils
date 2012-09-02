@@ -4,21 +4,12 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
 
-public class Vector2DArg extends CommandArg<Vector2D> {
-
-    public static class Factory extends CommandArgFactory<Vector2DArg> {
-
-        @Override
-        public Vector2DArg createCommandArg(CommandsMessages messages, String string) {
-            return new Vector2DArg(messages, string);
-        }
-    }
+public class Vector2DArg extends AsbtractSenderArg<Vector2D> {
 
     public Vector2DArg(CommandsMessages messages, String string) {
         super(messages, string);

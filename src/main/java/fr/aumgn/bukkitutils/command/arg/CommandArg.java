@@ -1,25 +1,17 @@
 package fr.aumgn.bukkitutils.command.arg;
 
-import java.util.Collections;
-import java.util.List;
+public interface CommandArg<V> {
 
-import org.bukkit.command.CommandSender;
+    /**
+     * Returns the parsed value. This must not be called if
+     * the corresponding argument is optional or bad things
+     * may happen.
+     */
+    V value();
 
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-
-public abstract class CommandArg<V> extends AbstractCommandArg<V, V> {
-
-    public CommandArg(CommandsMessages messages, String string) {
-        super(messages, string);
-    }
-
-    @Override
-    public List<V> match() {
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    protected List<V> defaultMatchFor(CommandSender sender) {
-        return Collections.singletonList(defaultFor(sender));
-    }
+    /**
+     * Returns the parsed value or the given default if the
+     * argument is omitted.
+     */
+    V valueOr(V def);
 }

@@ -3,20 +3,10 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 import org.bukkit.ChatColor;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 
-public class ChatColorArg extends CommandArg<ChatColor> {
-
-    public static class Factory extends CommandArgFactory<ChatColorArg> {
-
-        @Override
-        public ChatColorArg createCommandArg(
-                CommandsMessages messages, String string) {
-            return new ChatColorArg(messages, string);
-        }
-    }
+public class ChatColorArg extends AbstractCommandArg<ChatColor> {
 
     public static class NoSuchColor extends CommandError {
 

@@ -1,20 +1,14 @@
 package fr.aumgn.bukkitutils.command.args;
 
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.World;
-import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.potion.PotionEffectType;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandListArg;
+import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.basic.ListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
 import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
 import fr.aumgn.bukkitutils.command.arg.basic.ShortArg;
+import fr.aumgn.bukkitutils.command.arg.basic.TimeArg;
 import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
 import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.ChatColorArg;
@@ -26,9 +20,6 @@ import fr.aumgn.bukkitutils.command.arg.bukkit.OfflinePlayerArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.PotionEffectTypeArg;
 import fr.aumgn.bukkitutils.command.arg.bukkit.WorldArg;
-import fr.aumgn.bukkitutils.geom.Vector;
-import fr.aumgn.bukkitutils.geom.Vector2D;
-import fr.aumgn.bukkitutils.itemtype.ItemType;
 
 public class CommandArgs extends CommandArgsBase {
 
@@ -37,122 +28,138 @@ public class CommandArgs extends CommandArgsBase {
     }
 
     public IntegerArg getInteger(int index) {
-        return get(index, new IntegerArg.Factory());
+        return new IntegerArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Short> getShort(int index) {
-        return get(index, new ShortArg.Factory());
+    public ShortArg getShort(int index) {
+        return new ShortArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Double> getDouble(int index) {
-        return get(index, new DoubleArg.Factory());
+    public DoubleArg getDouble(int index) {
+        return new DoubleArg(messages, getOrNull(index));
     }
 
-    public CommandArg<ChatColor> getChatColor(int index) {
-        return get(index, new ChatColorArg.Factory());
+    public TimeArg getTime(int index) {
+        return new TimeArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Vector> getVector(int index) {
-        return get(index, new VectorArg.Factory());
+    public ChatColorArg getChatColor(int index) {
+        return new ChatColorArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Vector2D> getVector2D(int index) {
-        return get(index, new Vector2DArg.Factory());
+    public VectorArg getVector(int index) {
+        return new VectorArg(messages, getOrNull(index));
     }
 
-    public CommandArg<World> getWorld(int index) {
-        return get(index, new WorldArg.Factory());
+    public Vector2DArg getVector2D(int index) {
+        return new Vector2DArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Player> getPlayer(int index) {
-        return get(index, new PlayerArg.Factory());
+    public WorldArg getWorld(int index) {
+        return new WorldArg(messages, getOrNull(index));
     }
 
-    public CommandListArg<Player> getPlayers(int index) {
-        return getList(index, new PlayerArg.Factory());
+    public PlayerArg getPlayer(int index) {
+        return new PlayerArg(messages, getOrNull(index));
     }
 
-    public CommandArg<OfflinePlayer> getOfflinePlayer(int index) {
-        return get(index, new OfflinePlayerArg.Factory());
+    public ListArg<Player, PlayerArg> getPlayers(int index) {
+        return getList(index, new CommandArgFactory<PlayerArg>() {
+            public PlayerArg createCommandArg(String string) {
+                return new PlayerArg(messages, string);
+            }
+        });
     }
 
-    public CommandArg<Material> getMaterial(int index) {
-        return get(index, new MaterialArg.Factory());
+    public OfflinePlayerArg getOfflinePlayer(int index) {
+        return new OfflinePlayerArg(messages, getOrNull(index));
     }
 
-    public CommandArg<ItemType> getItemType(int index) {
-        return get(index, new ItemTypeArg.Factory());
+    public MaterialArg getMaterial(int index) {
+        return new MaterialArg(messages, getOrNull(index));
     }
 
-    public CommandArg<PotionEffectType> getPotionEffectType(int index) {
-        return get(index, new PotionEffectTypeArg.Factory());
+    public ItemTypeArg getItemType(int index) {
+        return new ItemTypeArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Enchantment> getEnchantment(int index) {
-        return get(index, new EnchantmentArg.Factory());
+    public PotionEffectTypeArg getPotionEffectType(int index) {
+        return new PotionEffectTypeArg(messages, getOrNull(index));
     }
 
-    public CommandArg<EntityType> getEntityType(int index) {
-        return get(index, new EntityTypeArg.Factory());
+    public EnchantmentArg getEnchantment(int index) {
+        return new EnchantmentArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Integer> getInteger(char flag) {
-        return get(flag, new IntegerArg.Factory());
+    public EntityTypeArg getEntityType(int index) {
+        return new EntityTypeArg(messages, getOrNull(index));
     }
 
-    public CommandArg<Short> getShort(char flag) {
-        return get(flag, new ShortArg.Factory());
+    public IntegerArg getInteger(char flag) {
+        return new IntegerArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<Double> getDouble(char flag) {
-        return get(flag, new DoubleArg.Factory());
+    public ShortArg getShort(char flag) {
+        return new ShortArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<ChatColor> getChatColor(char flag) {
-        return get(flag, new ChatColorArg.Factory());
+    public DoubleArg getDouble(char flag) {
+        return new DoubleArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<Vector> getVector(char flag) {
-        return get(flag, new VectorArg.Factory());
+    public TimeArg getTime(char flag) {
+        return new TimeArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<Vector2D> getVector2D(char flag) {
-        return get(flag, new Vector2DArg.Factory());
+    public ChatColorArg getChatColor(char flag) {
+        return new ChatColorArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<World> getWorld(char flag) {
-        return get(flag, new WorldArg.Factory());
+    public VectorArg getVector(char flag) {
+        return new VectorArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<Player> getPlayer(char flag) {
-        return get(flag, new PlayerArg.Factory());
+    public Vector2DArg getVector2D(char flag) {
+        return new Vector2DArg(messages, getOrNull(flag));
     }
 
-    public CommandListArg<Player> getPlayers(char flag) {
-        return getList(flag, new PlayerArg.Factory());
+    public WorldArg getWorld(char flag) {
+        return new WorldArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<OfflinePlayer> getOfflinePlayer(char flag) {
-        return get(flag, new OfflinePlayerArg.Factory());
+    public PlayerArg getPlayer(char flag) {
+        return new PlayerArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<Material> getMaterial(char flag) {
-        return get(flag, new MaterialArg.Factory());
+    public ListArg<Player, PlayerArg> getPlayers(char flag) {
+        return getList(flag, new CommandArgFactory<PlayerArg>() {
+            public PlayerArg createCommandArg(String string) {
+                return new PlayerArg(messages, string);
+            }
+        });
     }
 
-    public CommandArg<ItemType> getItemType(char flag) {
-        return get(flag, new ItemTypeArg.Factory());
+    public OfflinePlayerArg getOfflinePlayer(char flag) {
+        return new OfflinePlayerArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<PotionEffectType> getPotionEffectType(char flag) {
-        return get(flag, new PotionEffectTypeArg.Factory());
+    public MaterialArg getMaterial(char flag) {
+        return new MaterialArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<Enchantment> getEnchantment(char flag) {
-        return get(flag, new EnchantmentArg.Factory());
+    public ItemTypeArg getItemType(char flag) {
+        return new ItemTypeArg(messages, getOrNull(flag));
     }
 
-    public CommandArg<EntityType> getEntityType(char flag) {
-        return get(flag, new EntityTypeArg.Factory());
+    public PotionEffectTypeArg getPotionEffectType(char flag) {
+        return new PotionEffectTypeArg(messages, getOrNull(flag));
+    }
+
+    public EnchantmentArg getEnchantment(char flag) {
+        return new EnchantmentArg(messages, getOrNull(flag));
+    }
+
+    public EntityTypeArg getEntityType(char flag) {
+        return new EntityTypeArg(messages, getOrNull(flag));
     }
 }

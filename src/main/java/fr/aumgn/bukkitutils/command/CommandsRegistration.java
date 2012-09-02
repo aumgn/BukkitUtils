@@ -12,8 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 import fr.aumgn.bukkitutils.command.args.CommandArgs;
 import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
 import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
-import fr.aumgn.bukkitutils.localization.Localizable;
 
+/**
+ * Class which handles all the mess of registering commands and nested commands
+ * using the Bukkit API.
+ */
 public class CommandsRegistration {
 
     private final JavaPlugin plugin;
@@ -26,10 +29,9 @@ public class CommandsRegistration {
         this.messages = localisation.get("commands");
     }
 
-    public <T extends JavaPlugin & Localizable> CommandsRegistration(T plugin) {
-        this(plugin, plugin.getLocale());
-    }
-
+    /**
+     * Registers all defined command in the given {@link Commands} object.
+     */
     public void register(Commands commands) {
         NestedCommands subCmdsAnnotation =
                 commands.getClass().getAnnotation(NestedCommands.class);
@@ -98,7 +100,7 @@ public class CommandsRegistration {
     }
 
     private void setCommandMessages(PluginCommand command) {
-        command.setUsage(messages.usagePrefix() + command.getUsage());
+        command.setUsage(messages.usageMessage(command.getUsage()));
         command.setPermissionMessage(messages.permissionMessage());
     }
 

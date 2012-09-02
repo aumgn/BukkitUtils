@@ -93,23 +93,23 @@ public class CommandArgsTest {
     public void testEnum() {
         CommandArgs args = CommandArgsUtil.parse("value1", "v*2", "v*");
 
-        assertSame(TestArg.Value1, args.getEnum(0, TestArg.class).value());
-        assertSame(TestArg.Value2, args.getEnum(1, TestArg.class).value());
-        assertEquals(2, args.getEnum(2, TestArg.class).match().size());
+        assertSame(TestArg.Value1, args.get(0, TestArg.class).value());
+        assertSame(TestArg.Value2, args.get(0, TestArg.class).value());
+        assertEquals(2, args.get(2, TestArg.class).match().size());
     }
 
     @Test(expected = EnumArg.EnumArgNotFound.class)
     public void testNotFound() {
         CommandArgs args = CommandArgsUtil.parse("a");
 
-        args.getEnum(0, TestArg.class).value();
+        args.get(0, TestArg.class).value();
     }
 
     @Test(expected = EnumArg.MoreThanOneValidValueFound.class)
     public void testMoreThanOneValidValueFound() {
         CommandArgs args = CommandArgsUtil.parse("v");
 
-        args.getEnum(0, TestArg.class).value();
+        args.get(0, TestArg.class).value();
     }
 
     @Test

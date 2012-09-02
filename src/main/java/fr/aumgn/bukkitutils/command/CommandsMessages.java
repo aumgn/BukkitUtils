@@ -11,8 +11,8 @@ public class CommandsMessages extends PluginMessages {
         super(map);
     }
 
-    public String usagePrefix() {
-        return get("usage-prefix");
+    public String usageMessage(String usage) {
+        return get("usage-message", usage);
     }
 
     public String permissionMessage() {

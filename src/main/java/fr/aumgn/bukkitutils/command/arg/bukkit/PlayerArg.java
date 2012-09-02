@@ -9,21 +9,12 @@ import org.bukkit.entity.Player;
 import com.google.common.base.Function;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractSenderMatchingArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.glob.Glob;
 
-public class PlayerArg extends CommandArg<Player> {
-
-    public static class Factory extends CommandArgFactory<PlayerArg> {
-
-        @Override
-        public PlayerArg createCommandArg(CommandsMessages messages, String string) {
-            return new PlayerArg(messages, string);
-        }
-    }
+public class PlayerArg extends AbstractSenderMatchingArg<Player> {
 
     public static class NoSuchPlayer extends CommandError {
         private static final long serialVersionUID = -4832133406864970323L;

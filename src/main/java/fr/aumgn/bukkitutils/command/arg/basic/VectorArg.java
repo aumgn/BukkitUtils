@@ -4,12 +4,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.geom.Vector;
 
-public class VectorArg extends CommandArg<Vector> {
+public class VectorArg extends AsbtractSenderArg<Vector> {
 
     static double parseVectorComponent(CommandsMessages messages, String component) {
         try {
@@ -17,15 +16,6 @@ public class VectorArg extends CommandArg<Vector> {
         } catch (NumberFormatException exc) {
             throw new CommandUsageError(
                     messages.notAValidVectorComponent(component));
-        }
-    }
-
-
-    public static class Factory extends CommandArgFactory<VectorArg> {
-
-        @Override
-        public VectorArg createCommandArg(CommandsMessages messages, String string) {
-            return new VectorArg(messages, string);
         }
     }
 

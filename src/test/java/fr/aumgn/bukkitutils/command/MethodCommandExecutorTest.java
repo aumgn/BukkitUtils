@@ -43,9 +43,10 @@ public class MethodCommandExecutorTest {
         }
 
         Command command = method.getAnnotation(Command.class);
-        return new MethodCommandExecutor(
-                new CommandsLocalization(Locale.US).get("commands"),
-                commands, preExecute, method, command);
+        CommandsMessages messages =
+                new CommandsLocalization(Locale.US).get("commands");
+        return new MethodCommandExecutor(messages, commands, preExecute,
+                method, command);
     }
 
     @Test

@@ -6,20 +6,10 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
-public class OfflinePlayerArg extends CommandArg<OfflinePlayer> {
-
-    public static class Factory extends CommandArgFactory<OfflinePlayerArg> {
-
-        @Override
-        public OfflinePlayerArg createCommandArg(
-                CommandsMessages messages, String string) {
-            return new OfflinePlayerArg(messages, string);
-        }
-    }
+public class OfflinePlayerArg extends AsbtractSenderArg<OfflinePlayer> {
 
     public OfflinePlayerArg(CommandsMessages messages, String string) {
         super(messages, string);

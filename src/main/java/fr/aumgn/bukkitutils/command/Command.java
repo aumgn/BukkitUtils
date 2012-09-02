@@ -9,13 +9,29 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Command {
 
+    /**
+     * Name of the command (ie. preferably the real name and not an alias)
+     */
     String name();
 
+    /**
+     * Minimum required number of arguments.
+     */
     int min() default 0;
 
+    /**
+     * Maximum number of arguments.
+     * Use -1 to set the number unlimited.
+     */
     int max() default 0;
 
+    /**
+     * Accepted flags.
+     */
     String flags() default "";
 
+    /**
+     * Accepted args flags.
+     */
     String argsFlags() default "";
 }

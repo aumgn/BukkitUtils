@@ -3,20 +3,10 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 import org.bukkit.enchantments.Enchantment;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 
-public class EnchantmentArg extends CommandArg<Enchantment> {
-
-    public static class Factory extends CommandArgFactory<EnchantmentArg> {
-
-        @Override
-        public EnchantmentArg createCommandArg(
-                CommandsMessages messages, String string) {
-            return new EnchantmentArg(messages, string);
-        }
-    }
+public class EnchantmentArg extends AbstractCommandArg<Enchantment> {
 
     public static class NoSuchEnchantment extends CommandError {
 

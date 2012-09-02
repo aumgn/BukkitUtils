@@ -1,19 +1,10 @@
 package fr.aumgn.bukkitutils.command.arg.basic;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
-public class DoubleArg extends CommandArg<Double> {
-
-    public static class Factory extends CommandArgFactory<DoubleArg> {
-
-        @Override
-        public DoubleArg createCommandArg(CommandsMessages messages, String string) {
-            return new DoubleArg(messages, string);
-        }
-    }
+public class DoubleArg extends AbstractCommandArg<Double> {
 
     public DoubleArg(CommandsMessages messages, String string) {
         super(messages, string);

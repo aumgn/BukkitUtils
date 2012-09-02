@@ -1,24 +1,17 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.itemtype.ItemType;
 
 import fr.aumgn.bukkitutils.util.Util;
 
-public class ItemTypeArg extends CommandArg<ItemType> {
-
-    public static class Factory extends CommandArgFactory<ItemTypeArg> {
-
-        @Override
-        public ItemTypeArg createCommandArg(CommandsMessages messages, String string) {
-            return new ItemTypeArg(messages, string);
-        }
-    }
+public class ItemTypeArg extends AsbtractSenderArg<ItemType> {
 
     public static class InvalidItemTypeFormat extends CommandError {
         private static final long serialVersionUID = 1L;
@@ -49,5 +42,14 @@ public class ItemTypeArg extends CommandArg<ItemType> {
         }
 
         return new ItemType(material, data);
+    }
+
+    @Override
+    protected ItemType defaultFor(CommandSender sender) {
+        if (!(sender instanceof Player)) {
+            throw new RuntimeException();
+        }
+
+        return new ItemType(((Player) sender).getItemInHand());
     }
 }

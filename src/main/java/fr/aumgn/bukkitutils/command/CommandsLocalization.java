@@ -5,7 +5,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.MessageFormat;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -16,8 +15,11 @@ import fr.aumgn.bukkitutils.localization.loaders.MessagesLoader;
 
 public class CommandsLocalization extends Localization {
 
+    /**
+     * Do not use, only needed for testing purposes !
+     */
     public CommandsLocalization(Locale locale) {
-        super(null, locale, null);
+        super(null, null, locale, locale);
     }
 
     public CommandsLocalization(JavaPlugin plugin, Locale locale) {
@@ -26,21 +28,14 @@ public class CommandsLocalization extends Localization {
 
     @Override
     public CommandsMessages get(String name) {
-        Map<String, MessageFormat> map = new HashMap<String, MessageFormat>();
-        loadAll(name, map, DEFAULT_LOCALE);
-        loadAll(name, map, locale);
-        return new CommandsMessages(map);
+        return new CommandsMessages(loadMap(name));
     }
 
     @Override
-    protected void loadAll(String name, Map<String, MessageFormat> map, Locale locale) {
-        loadInJar(map, locale, name + "_" + locale.getLanguage());
-        if (!locale.getCountry().isEmpty()) {
-            loadInJar(map, locale, name + "_" + locale.toString());
-        }
-        if (plugin != null) {
-            super.loadAll(name, map, locale);
-        }
+    protected void load(Map<String, MessageFormat> map, Locale locale,
+            String name) {
+        loadInJar(map, locale, name);
+        super.load(map, locale, name);
     }
 
     private void loadInJar(Map<String, MessageFormat> map, Locale locale,

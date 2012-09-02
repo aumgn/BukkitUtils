@@ -3,20 +3,10 @@ package fr.aumgn.bukkitutils.command.arg.bukkit;
 import org.bukkit.entity.EntityType;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 
-public class EntityTypeArg extends CommandArg<EntityType> {
-
-    public static class Factory extends CommandArgFactory<EntityTypeArg> {
-
-        @Override
-        public EntityTypeArg createCommandArg(
-                CommandsMessages messages, String string) {
-            return new EntityTypeArg(messages, string);
-        }
-    }
+public class EntityTypeArg extends AbstractCommandArg<EntityType> {
 
     public static class NoSuchEntityType extends CommandError {
         private static final long serialVersionUID = 6849291638184124428L;
