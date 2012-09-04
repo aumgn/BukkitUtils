@@ -43,129 +43,136 @@
 <span class="sourceLineNo">035</span>    private final boolean isPlayerCommand;<a name="line.35"></a>
 <span class="sourceLineNo">036</span><a name="line.36"></a>
 <span class="sourceLineNo">037</span>    public MethodCommandExecutor(CommandsMessages messages, Commands instance,<a name="line.37"></a>
-<span class="sourceLineNo">038</span>            Method preExecute, Method method, Command command) {<a name="line.38"></a>
-<span class="sourceLineNo">039</span>        this.messages = messages;<a name="line.39"></a>
-<span class="sourceLineNo">040</span>        this.instance = instance;<a name="line.40"></a>
-<span class="sourceLineNo">041</span>        this.preExecute = preExecute;<a name="line.41"></a>
-<span class="sourceLineNo">042</span>        this.method = method;<a name="line.42"></a>
-<span class="sourceLineNo">043</span><a name="line.43"></a>
-<span class="sourceLineNo">044</span>        if (method.getParameterTypes().length &gt; 1) {<a name="line.44"></a>
-<span class="sourceLineNo">045</span>            this.min = command.min();<a name="line.45"></a>
-<span class="sourceLineNo">046</span>            this.max = command.max();<a name="line.46"></a>
-<span class="sourceLineNo">047</span>        } else {<a name="line.47"></a>
-<span class="sourceLineNo">048</span>            this.min = -1;<a name="line.48"></a>
-<span class="sourceLineNo">049</span>            this.max = 0;<a name="line.49"></a>
-<span class="sourceLineNo">050</span>        }<a name="line.50"></a>
-<span class="sourceLineNo">051</span>        this.flags = new HashSet&lt;Character&gt;();<a name="line.51"></a>
-<span class="sourceLineNo">052</span>        for (char flag : command.flags().toCharArray()) {<a name="line.52"></a>
-<span class="sourceLineNo">053</span>            this.flags.add(flag);<a name="line.53"></a>
-<span class="sourceLineNo">054</span>        }<a name="line.54"></a>
-<span class="sourceLineNo">055</span>        this.argsFlags = new HashSet&lt;Character&gt;();<a name="line.55"></a>
-<span class="sourceLineNo">056</span>        for (char flag : command.argsFlags().toCharArray()) {<a name="line.56"></a>
-<span class="sourceLineNo">057</span>            this.argsFlags.add(flag);<a name="line.57"></a>
-<span class="sourceLineNo">058</span>        }<a name="line.58"></a>
-<span class="sourceLineNo">059</span>        this.isPlayerCommand = Player.class.isAssignableFrom(<a name="line.59"></a>
-<span class="sourceLineNo">060</span>                method.getParameterTypes()[0]);<a name="line.60"></a>
-<span class="sourceLineNo">061</span>    }<a name="line.61"></a>
-<span class="sourceLineNo">062</span><a name="line.62"></a>
-<span class="sourceLineNo">063</span>    @Override<a name="line.63"></a>
-<span class="sourceLineNo">064</span>    public boolean onCommand(CommandSender sender,<a name="line.64"></a>
-<span class="sourceLineNo">065</span>            org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {<a name="line.65"></a>
-<span class="sourceLineNo">066</span>        if (isPlayerCommand &amp;&amp; !(sender instanceof Player)) {<a name="line.66"></a>
-<span class="sourceLineNo">067</span>            sender.sendMessage(ChatColor.RED + messages.playerOnly());<a name="line.67"></a>
-<span class="sourceLineNo">068</span>            return true;<a name="line.68"></a>
-<span class="sourceLineNo">069</span>        }<a name="line.69"></a>
-<span class="sourceLineNo">070</span>        try {<a name="line.70"></a>
-<span class="sourceLineNo">071</span>            CommandArgs args;<a name="line.71"></a>
-<span class="sourceLineNo">072</span>            if (min &gt;= 0) {<a name="line.72"></a>
-<span class="sourceLineNo">073</span>                args = getArgs(rawArgs);<a name="line.73"></a>
-<span class="sourceLineNo">074</span>            } else {<a name="line.74"></a>
-<span class="sourceLineNo">075</span>                if (rawArgs.length &gt; 0) {<a name="line.75"></a>
-<span class="sourceLineNo">076</span>                    throw new CommandUsageError(<a name="line.76"></a>
-<span class="sourceLineNo">077</span>                            messages.tooManyArguments(rawArgs.length, 0));<a name="line.77"></a>
-<span class="sourceLineNo">078</span>                }<a name="line.78"></a>
-<span class="sourceLineNo">079</span>                args = null;<a name="line.79"></a>
-<span class="sourceLineNo">080</span>            }<a name="line.80"></a>
-<span class="sourceLineNo">081</span>            callCommand(lbl, sender, args);<a name="line.81"></a>
-<span class="sourceLineNo">082</span>        } catch (GlobException exc) {<a name="line.82"></a>
-<span class="sourceLineNo">083</span>            handleGlobException(exc);<a name="line.83"></a>
-<span class="sourceLineNo">084</span>        } catch (CommandUsageError error) {<a name="line.84"></a>
-<span class="sourceLineNo">085</span>            sender.sendMessage(ChatColor.RED + error.getMessage());<a name="line.85"></a>
-<span class="sourceLineNo">086</span>            return false;<a name="line.86"></a>
-<span class="sourceLineNo">087</span>        } catch (Throwable thr) {<a name="line.87"></a>
-<span class="sourceLineNo">088</span>            sender.sendMessage(ChatColor.RED + thr.getMessage());<a name="line.88"></a>
-<span class="sourceLineNo">089</span>        }<a name="line.89"></a>
-<span class="sourceLineNo">090</span>        return true;<a name="line.90"></a>
-<span class="sourceLineNo">091</span>    }<a name="line.91"></a>
-<span class="sourceLineNo">092</span><a name="line.92"></a>
-<span class="sourceLineNo">093</span>    private CommandArgs getArgs(String[] rawArgs){<a name="line.93"></a>
-<span class="sourceLineNo">094</span>        CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);<a name="line.94"></a>
-<span class="sourceLineNo">095</span>        parser.validate(flags, argsFlags, min, max);<a name="line.95"></a>
-<span class="sourceLineNo">096</span>        return new CommandArgs(messages, parser);<a name="line.96"></a>
-<span class="sourceLineNo">097</span>    }<a name="line.97"></a>
-<span class="sourceLineNo">098</span><a name="line.98"></a>
-<span class="sourceLineNo">099</span>    private void callCommand(String name, CommandSender sender,<a name="line.99"></a>
-<span class="sourceLineNo">100</span>            CommandArgs args) throws Throwable {<a name="line.100"></a>
-<span class="sourceLineNo">101</span>        try {<a name="line.101"></a>
-<span class="sourceLineNo">102</span>            if (preExecute != null) {<a name="line.102"></a>
-<span class="sourceLineNo">103</span>                preExecute.invoke(instance, sender, args);<a name="line.103"></a>
-<span class="sourceLineNo">104</span>            }<a name="line.104"></a>
-<span class="sourceLineNo">105</span>            if (args != null) {<a name="line.105"></a>
-<span class="sourceLineNo">106</span>                method.invoke(instance, sender, args);<a name="line.106"></a>
-<span class="sourceLineNo">107</span>            } else {<a name="line.107"></a>
-<span class="sourceLineNo">108</span>                method.invoke(instance, sender);<a name="line.108"></a>
-<span class="sourceLineNo">109</span>            }<a name="line.109"></a>
-<span class="sourceLineNo">110</span>        } catch (InvocationTargetException exc) {<a name="line.110"></a>
-<span class="sourceLineNo">111</span>            Throwable cause = exc.getCause();<a name="line.111"></a>
-<span class="sourceLineNo">112</span>            if (cause instanceof CommandException) {<a name="line.112"></a>
-<span class="sourceLineNo">113</span>                throw cause;<a name="line.113"></a>
-<span class="sourceLineNo">114</span>            }<a name="line.114"></a>
-<span class="sourceLineNo">115</span>            unhandledError(name, args, cause);<a name="line.115"></a>
-<span class="sourceLineNo">116</span>        } catch (IllegalArgumentException exc) {<a name="line.116"></a>
-<span class="sourceLineNo">117</span>            unhandledError(name, args, exc);<a name="line.117"></a>
-<span class="sourceLineNo">118</span>        } catch (IllegalAccessException exc) {<a name="line.118"></a>
-<span class="sourceLineNo">119</span>            unhandledError(name, args, exc);<a name="line.119"></a>
-<span class="sourceLineNo">120</span>        }<a name="line.120"></a>
-<span class="sourceLineNo">121</span>    }<a name="line.121"></a>
-<span class="sourceLineNo">122</span><a name="line.122"></a>
-<span class="sourceLineNo">123</span>    private void handleGlobException(GlobException exc) {<a name="line.123"></a>
-<span class="sourceLineNo">124</span>        if (exc instanceof UnbalancedSquareBracketException) {<a name="line.124"></a>
-<span class="sourceLineNo">125</span>            UnbalancedSquareBracketException usbExc;<a name="line.125"></a>
-<span class="sourceLineNo">126</span>            usbExc = ((UnbalancedSquareBracketException) exc);<a name="line.126"></a>
-<span class="sourceLineNo">127</span>            throw new CommandUsageError(<a name="line.127"></a>
-<span class="sourceLineNo">128</span>                    messages.globUnbalancedSquareBracket(usbExc.getGlob()));<a name="line.128"></a>
-<span class="sourceLineNo">129</span>        }<a name="line.129"></a>
-<span class="sourceLineNo">130</span><a name="line.130"></a>
-<span class="sourceLineNo">131</span>        throw new RuntimeException(exc);<a name="line.131"></a>
-<span class="sourceLineNo">132</span>    }<a name="line.132"></a>
-<span class="sourceLineNo">133</span><a name="line.133"></a>
-<span class="sourceLineNo">134</span>    private void unhandledError(String name, CommandArgs args, Throwable exc) {<a name="line.134"></a>
-<span class="sourceLineNo">135</span>        if (!(exc instanceof org.bukkit.command.CommandException)) {<a name="line.135"></a>
-<span class="sourceLineNo">136</span>            Bukkit.getLogger().severe(<a name="line.136"></a>
-<span class="sourceLineNo">137</span>                    "Exception occured while executing \""+ name + "\"");<a name="line.137"></a>
-<span class="sourceLineNo">138</span>            if (args != null) {<a name="line.138"></a>
-<span class="sourceLineNo">139</span>                if (args.hasFlags()) {<a name="line.139"></a>
-<span class="sourceLineNo">140</span>                    StringBuilder flagsString = new StringBuilder();<a name="line.140"></a>
-<span class="sourceLineNo">141</span>                    for (char flag : args.flags()) {<a name="line.141"></a>
-<span class="sourceLineNo">142</span>                        flagsString.append(flag);<a name="line.142"></a>
-<span class="sourceLineNo">143</span>                    }<a name="line.143"></a>
-<span class="sourceLineNo">144</span>                    Bukkit.getLogger().severe(<a name="line.144"></a>
-<span class="sourceLineNo">145</span>                            "Flags : " + flagsString.toString());<a name="line.145"></a>
-<span class="sourceLineNo">146</span>                }<a name="line.146"></a>
-<span class="sourceLineNo">147</span>                if (args.length() &gt; 0) {<a name="line.147"></a>
-<span class="sourceLineNo">148</span>                    StringBuilder arguments = new StringBuilder();<a name="line.148"></a>
-<span class="sourceLineNo">149</span>                    for (String arg : args.asList()) {<a name="line.149"></a>
-<span class="sourceLineNo">150</span>                        arguments.append(arg);<a name="line.150"></a>
-<span class="sourceLineNo">151</span>                        arguments.append(" ");<a name="line.151"></a>
-<span class="sourceLineNo">152</span>                    }<a name="line.152"></a>
-<span class="sourceLineNo">153</span>                    Bukkit.getLogger().severe(<a name="line.153"></a>
-<span class="sourceLineNo">154</span>                            "Arguments : " + arguments.toString());<a name="line.154"></a>
-<span class="sourceLineNo">155</span>                }<a name="line.155"></a>
-<span class="sourceLineNo">156</span>            }<a name="line.156"></a>
-<span class="sourceLineNo">157</span>        }<a name="line.157"></a>
-<span class="sourceLineNo">158</span>        Bukkit.getLogger().log(Level.SEVERE, "Exception : ", exc);<a name="line.158"></a>
-<span class="sourceLineNo">159</span>    }<a name="line.159"></a>
-<span class="sourceLineNo">160</span>}<a name="line.160"></a>
+<span class="sourceLineNo">038</span>            Method preExecute, Method method, int min, int max, String flags,<a name="line.38"></a>
+<span class="sourceLineNo">039</span>            String argsFlags) {<a name="line.39"></a>
+<span class="sourceLineNo">040</span>        this.messages = messages;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>        this.instance = instance;<a name="line.41"></a>
+<span class="sourceLineNo">042</span>        this.preExecute = preExecute;<a name="line.42"></a>
+<span class="sourceLineNo">043</span>        this.method = method;<a name="line.43"></a>
+<span class="sourceLineNo">044</span><a name="line.44"></a>
+<span class="sourceLineNo">045</span>        if (method.getParameterTypes().length &gt; 1) {<a name="line.45"></a>
+<span class="sourceLineNo">046</span>            this.min = min;<a name="line.46"></a>
+<span class="sourceLineNo">047</span>            this.max = max;<a name="line.47"></a>
+<span class="sourceLineNo">048</span>        } else {<a name="line.48"></a>
+<span class="sourceLineNo">049</span>            this.min = -1;<a name="line.49"></a>
+<span class="sourceLineNo">050</span>            this.max = 0;<a name="line.50"></a>
+<span class="sourceLineNo">051</span>        }<a name="line.51"></a>
+<span class="sourceLineNo">052</span>        this.flags = new HashSet&lt;Character&gt;();<a name="line.52"></a>
+<span class="sourceLineNo">053</span>        for (char flag : flags.toCharArray()) {<a name="line.53"></a>
+<span class="sourceLineNo">054</span>            this.flags.add(flag);<a name="line.54"></a>
+<span class="sourceLineNo">055</span>        }<a name="line.55"></a>
+<span class="sourceLineNo">056</span>        this.argsFlags = new HashSet&lt;Character&gt;();<a name="line.56"></a>
+<span class="sourceLineNo">057</span>        for (char flag : argsFlags.toCharArray()) {<a name="line.57"></a>
+<span class="sourceLineNo">058</span>            this.argsFlags.add(flag);<a name="line.58"></a>
+<span class="sourceLineNo">059</span>        }<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        this.isPlayerCommand = Player.class.isAssignableFrom(<a name="line.60"></a>
+<span class="sourceLineNo">061</span>                method.getParameterTypes()[0]);<a name="line.61"></a>
+<span class="sourceLineNo">062</span>    }<a name="line.62"></a>
+<span class="sourceLineNo">063</span><a name="line.63"></a>
+<span class="sourceLineNo">064</span>    public MethodCommandExecutor(CommandsMessages messages, Commands instance,<a name="line.64"></a>
+<span class="sourceLineNo">065</span>            Method preExecute, Method method, Command command) {<a name="line.65"></a>
+<span class="sourceLineNo">066</span>        this(messages, instance, preExecute, method, command.min(),<a name="line.66"></a>
+<span class="sourceLineNo">067</span>                command.max(), command.flags(), command.argsFlags());<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    }<a name="line.68"></a>
+<span class="sourceLineNo">069</span><a name="line.69"></a>
+<span class="sourceLineNo">070</span>    @Override<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    public boolean onCommand(CommandSender sender,<a name="line.71"></a>
+<span class="sourceLineNo">072</span>            org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {<a name="line.72"></a>
+<span class="sourceLineNo">073</span>        if (isPlayerCommand &amp;&amp; !(sender instanceof Player)) {<a name="line.73"></a>
+<span class="sourceLineNo">074</span>            sender.sendMessage(ChatColor.RED + messages.playerOnly());<a name="line.74"></a>
+<span class="sourceLineNo">075</span>            return true;<a name="line.75"></a>
+<span class="sourceLineNo">076</span>        }<a name="line.76"></a>
+<span class="sourceLineNo">077</span>        try {<a name="line.77"></a>
+<span class="sourceLineNo">078</span>            CommandArgs args;<a name="line.78"></a>
+<span class="sourceLineNo">079</span>            if (min &gt;= 0) {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>                args = getArgs(rawArgs);<a name="line.80"></a>
+<span class="sourceLineNo">081</span>            } else {<a name="line.81"></a>
+<span class="sourceLineNo">082</span>                if (rawArgs.length &gt; 0) {<a name="line.82"></a>
+<span class="sourceLineNo">083</span>                    throw new CommandUsageError(<a name="line.83"></a>
+<span class="sourceLineNo">084</span>                            messages.tooManyArguments(rawArgs.length, 0));<a name="line.84"></a>
+<span class="sourceLineNo">085</span>                }<a name="line.85"></a>
+<span class="sourceLineNo">086</span>                args = null;<a name="line.86"></a>
+<span class="sourceLineNo">087</span>            }<a name="line.87"></a>
+<span class="sourceLineNo">088</span>            callCommand(lbl, sender, args);<a name="line.88"></a>
+<span class="sourceLineNo">089</span>        } catch (GlobException exc) {<a name="line.89"></a>
+<span class="sourceLineNo">090</span>            handleGlobException(exc);<a name="line.90"></a>
+<span class="sourceLineNo">091</span>        } catch (CommandUsageError error) {<a name="line.91"></a>
+<span class="sourceLineNo">092</span>            sender.sendMessage(ChatColor.RED + error.getMessage());<a name="line.92"></a>
+<span class="sourceLineNo">093</span>            return false;<a name="line.93"></a>
+<span class="sourceLineNo">094</span>        } catch (Throwable thr) {<a name="line.94"></a>
+<span class="sourceLineNo">095</span>            sender.sendMessage(ChatColor.RED + thr.getMessage());<a name="line.95"></a>
+<span class="sourceLineNo">096</span>        }<a name="line.96"></a>
+<span class="sourceLineNo">097</span>        return true;<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    }<a name="line.98"></a>
+<span class="sourceLineNo">099</span><a name="line.99"></a>
+<span class="sourceLineNo">100</span>    private CommandArgs getArgs(String[] rawArgs){<a name="line.100"></a>
+<span class="sourceLineNo">101</span>        CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);<a name="line.101"></a>
+<span class="sourceLineNo">102</span>        parser.validate(flags, argsFlags, min, max);<a name="line.102"></a>
+<span class="sourceLineNo">103</span>        return new CommandArgs(messages, parser);<a name="line.103"></a>
+<span class="sourceLineNo">104</span>    }<a name="line.104"></a>
+<span class="sourceLineNo">105</span><a name="line.105"></a>
+<span class="sourceLineNo">106</span>    private void callCommand(String name, CommandSender sender,<a name="line.106"></a>
+<span class="sourceLineNo">107</span>            CommandArgs args) throws Throwable {<a name="line.107"></a>
+<span class="sourceLineNo">108</span>        try {<a name="line.108"></a>
+<span class="sourceLineNo">109</span>            if (preExecute != null) {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>                preExecute.invoke(instance, sender, args);<a name="line.110"></a>
+<span class="sourceLineNo">111</span>            }<a name="line.111"></a>
+<span class="sourceLineNo">112</span>            if (args != null) {<a name="line.112"></a>
+<span class="sourceLineNo">113</span>                method.invoke(instance, sender, args);<a name="line.113"></a>
+<span class="sourceLineNo">114</span>            } else {<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                method.invoke(instance, sender);<a name="line.115"></a>
+<span class="sourceLineNo">116</span>            }<a name="line.116"></a>
+<span class="sourceLineNo">117</span>        } catch (InvocationTargetException exc) {<a name="line.117"></a>
+<span class="sourceLineNo">118</span>            Throwable cause = exc.getCause();<a name="line.118"></a>
+<span class="sourceLineNo">119</span>            if (cause instanceof CommandException) {<a name="line.119"></a>
+<span class="sourceLineNo">120</span>                throw cause;<a name="line.120"></a>
+<span class="sourceLineNo">121</span>            }<a name="line.121"></a>
+<span class="sourceLineNo">122</span>            unhandledError(name, args, cause);<a name="line.122"></a>
+<span class="sourceLineNo">123</span>        } catch (IllegalArgumentException exc) {<a name="line.123"></a>
+<span class="sourceLineNo">124</span>            unhandledError(name, args, exc);<a name="line.124"></a>
+<span class="sourceLineNo">125</span>        } catch (IllegalAccessException exc) {<a name="line.125"></a>
+<span class="sourceLineNo">126</span>            unhandledError(name, args, exc);<a name="line.126"></a>
+<span class="sourceLineNo">127</span>        }<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    }<a name="line.128"></a>
+<span class="sourceLineNo">129</span><a name="line.129"></a>
+<span class="sourceLineNo">130</span>    private void handleGlobException(GlobException exc) {<a name="line.130"></a>
+<span class="sourceLineNo">131</span>        if (exc instanceof UnbalancedSquareBracketException) {<a name="line.131"></a>
+<span class="sourceLineNo">132</span>            UnbalancedSquareBracketException usbExc;<a name="line.132"></a>
+<span class="sourceLineNo">133</span>            usbExc = ((UnbalancedSquareBracketException) exc);<a name="line.133"></a>
+<span class="sourceLineNo">134</span>            throw new CommandUsageError(<a name="line.134"></a>
+<span class="sourceLineNo">135</span>                    messages.globUnbalancedSquareBracket(usbExc.getGlob()));<a name="line.135"></a>
+<span class="sourceLineNo">136</span>        }<a name="line.136"></a>
+<span class="sourceLineNo">137</span><a name="line.137"></a>
+<span class="sourceLineNo">138</span>        throw new RuntimeException(exc);<a name="line.138"></a>
+<span class="sourceLineNo">139</span>    }<a name="line.139"></a>
+<span class="sourceLineNo">140</span><a name="line.140"></a>
+<span class="sourceLineNo">141</span>    private void unhandledError(String name, CommandArgs args, Throwable exc) {<a name="line.141"></a>
+<span class="sourceLineNo">142</span>        if (!(exc instanceof org.bukkit.command.CommandException)) {<a name="line.142"></a>
+<span class="sourceLineNo">143</span>            Bukkit.getLogger().severe(<a name="line.143"></a>
+<span class="sourceLineNo">144</span>                    "Exception occured while executing \""+ name + "\"");<a name="line.144"></a>
+<span class="sourceLineNo">145</span>            if (args != null) {<a name="line.145"></a>
+<span class="sourceLineNo">146</span>                if (args.hasFlags()) {<a name="line.146"></a>
+<span class="sourceLineNo">147</span>                    StringBuilder flagsString = new StringBuilder();<a name="line.147"></a>
+<span class="sourceLineNo">148</span>                    for (char flag : args.flags()) {<a name="line.148"></a>
+<span class="sourceLineNo">149</span>                        flagsString.append(flag);<a name="line.149"></a>
+<span class="sourceLineNo">150</span>                    }<a name="line.150"></a>
+<span class="sourceLineNo">151</span>                    Bukkit.getLogger().severe(<a name="line.151"></a>
+<span class="sourceLineNo">152</span>                            "Flags : " + flagsString.toString());<a name="line.152"></a>
+<span class="sourceLineNo">153</span>                }<a name="line.153"></a>
+<span class="sourceLineNo">154</span>                if (args.length() &gt; 0) {<a name="line.154"></a>
+<span class="sourceLineNo">155</span>                    StringBuilder arguments = new StringBuilder();<a name="line.155"></a>
+<span class="sourceLineNo">156</span>                    for (String arg : args.asList()) {<a name="line.156"></a>
+<span class="sourceLineNo">157</span>                        arguments.append(arg);<a name="line.157"></a>
+<span class="sourceLineNo">158</span>                        arguments.append(" ");<a name="line.158"></a>
+<span class="sourceLineNo">159</span>                    }<a name="line.159"></a>
+<span class="sourceLineNo">160</span>                    Bukkit.getLogger().severe(<a name="line.160"></a>
+<span class="sourceLineNo">161</span>                            "Arguments : " + arguments.toString());<a name="line.161"></a>
+<span class="sourceLineNo">162</span>                }<a name="line.162"></a>
+<span class="sourceLineNo">163</span>            }<a name="line.163"></a>
+<span class="sourceLineNo">164</span>        }<a name="line.164"></a>
+<span class="sourceLineNo">165</span>        Bukkit.getLogger().log(Level.SEVERE, "Exception : ", exc);<a name="line.165"></a>
+<span class="sourceLineNo">166</span>    }<a name="line.166"></a>
+<span class="sourceLineNo">167</span>}<a name="line.167"></a>
 
 
 
