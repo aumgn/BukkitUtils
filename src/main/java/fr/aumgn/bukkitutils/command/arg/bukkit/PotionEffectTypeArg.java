@@ -16,8 +16,11 @@ public class PotionEffectTypeArg extends AbstractCommandArg<PotionEffectType> {
         }
     }
 
+    private final CommandsMessages messages;
+
     public PotionEffectTypeArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

@@ -16,16 +16,19 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class WorldArg extends AbstractSenderMatchingArg<World> {
 
-    public WorldArg(CommandsMessages messages, String string) {
-        super(messages, string);
-    }
-
     public static class NoSuchWorld extends CommandError {
         private static final long serialVersionUID = -4832133406864970323L;
 
         public NoSuchWorld(CommandsMessages messages, String name) {
             super(messages.noSuchWorld(name));
         }
+    }
+
+    private final CommandsMessages messages;
+
+    public WorldArg(CommandsMessages messages, String string) {
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -45,6 +48,11 @@ public class WorldArg extends AbstractSenderMatchingArg<World> {
         }
 
         return ((Player) sender).getWorld();
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 
     @Override

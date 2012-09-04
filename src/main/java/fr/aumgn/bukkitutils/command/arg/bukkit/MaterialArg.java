@@ -26,8 +26,11 @@ public class MaterialArg extends AbstractCommandArg<Material> {
         return material;
     }
 
+    private final CommandsMessages messages;
+
     public MaterialArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

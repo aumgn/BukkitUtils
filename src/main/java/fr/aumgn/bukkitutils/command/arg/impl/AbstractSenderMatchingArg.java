@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.bukkit.command.CommandSender;
 
-import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.MatchingArg;
 import fr.aumgn.bukkitutils.command.arg.SenderArg;
 import fr.aumgn.bukkitutils.command.arg.SenderMatchingArg;
@@ -15,9 +14,8 @@ public abstract class AbstractSenderMatchingArg<V>
         extends AsbtractSenderArg<V>
         implements MatchingArg<V>, SenderArg<V>, SenderMatchingArg<V> {
 
-    public AbstractSenderMatchingArg(CommandsMessages messages,
-            String string) {
-        super(messages, string);
+    public AbstractSenderMatchingArg(String string) {
+        super(string);
     }
 
     @Override
@@ -51,8 +49,7 @@ public abstract class AbstractSenderMatchingArg<V>
     public List<V> matchWithPermOr(String permission, CommandSender sender) {
         if (string != null) {
             if (!sender.hasPermission(permission)) {
-                throw new CommandError(
-                        messages.missingPermissionForOther(permission));
+                throw new CommandError(missingPermOtherMessage(permission));
             }
 
             return match();

@@ -19,8 +19,11 @@ public class VectorArg extends AsbtractSenderArg<Vector> {
         }
     }
 
+    private final CommandsMessages messages;
+
     public VectorArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -51,5 +54,10 @@ public class VectorArg extends AsbtractSenderArg<Vector> {
         }
 
         return new Vector((Player) sender);
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 }

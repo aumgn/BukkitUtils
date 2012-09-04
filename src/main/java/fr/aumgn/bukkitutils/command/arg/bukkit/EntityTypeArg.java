@@ -16,8 +16,11 @@ public class EntityTypeArg extends AbstractCommandArg<EntityType> {
         }
     }
 
+    private final CommandsMessages messages;
+
     public EntityTypeArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

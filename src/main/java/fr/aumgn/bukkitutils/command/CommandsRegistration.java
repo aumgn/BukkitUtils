@@ -20,6 +20,7 @@ import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
 public class CommandsRegistration {
 
     private static final String PREEXECUTE_METHOD_NAME = "preExecute";
+
     private final JavaPlugin plugin;
     private final CommandsMessages messages;
 
@@ -98,7 +99,7 @@ public class CommandsRegistration {
             if (executor instanceof NestedCommandExecutor) {
                 nestedExecutor = (NestedCommandExecutor) executor;
             } else {
-                nestedExecutor = new NestedCommandExecutor(plugin,
+                nestedExecutor = new NestedCommandExecutor(plugin, messages,
                         annotation.defaultTo());
                 setCommand(command, nestedExecutor);
             }

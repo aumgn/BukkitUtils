@@ -46,11 +46,13 @@ public class EnumArg<T extends Enum<T>> extends AbstractCommandArg<T> {
         }
     }
 
+    private final CommandsMessages messages;
     private final Class<T> enumClass;
 
     public EnumArg(CommandsMessages messages, String string,
             Class<T> enumClass) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
         this.enumClass = enumClass;
     }
 

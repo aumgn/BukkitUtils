@@ -17,8 +17,11 @@ public class ChatColorArg extends AbstractCommandArg<ChatColor> {
         }
     }
 
+    private final CommandsMessages messages;
+
     public ChatColorArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

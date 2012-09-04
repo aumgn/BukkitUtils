@@ -39,8 +39,11 @@ public class PlayerArg extends AbstractSenderMatchingArg<Player> {
         }
     }
 
+    private final CommandsMessages messages;
+
     public PlayerArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -61,6 +64,11 @@ public class PlayerArg extends AbstractSenderMatchingArg<Player> {
         }
 
         return (Player) sender;
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 
     @Override

@@ -9,8 +9,11 @@ import fr.aumgn.bukkitutils.util.TimeUtil.UnknownTimePeriodException;
 
 public class TimeArg extends AbstractCommandArg<Integer> {
 
+    private final CommandsMessages messages;
+
     public TimeArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

@@ -21,8 +21,11 @@ public class ItemTypeArg extends AsbtractSenderArg<ItemType> {
         }
     }
 
+    private final CommandsMessages messages;
+
     public ItemTypeArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -51,5 +54,10 @@ public class ItemTypeArg extends AsbtractSenderArg<ItemType> {
         }
 
         return new ItemType(((Player) sender).getItemInHand());
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 }

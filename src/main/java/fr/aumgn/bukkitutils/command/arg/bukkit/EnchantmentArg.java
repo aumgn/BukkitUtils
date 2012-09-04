@@ -17,9 +17,11 @@ public class EnchantmentArg extends AbstractCommandArg<Enchantment> {
         }
     }
 
+    private final CommandsMessages messages;
 
     public EnchantmentArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

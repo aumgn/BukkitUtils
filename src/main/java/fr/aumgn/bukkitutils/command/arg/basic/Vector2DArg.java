@@ -11,8 +11,11 @@ import fr.aumgn.bukkitutils.geom.Vector2D;
 
 public class Vector2DArg extends AsbtractSenderArg<Vector2D> {
 
+    private final CommandsMessages messages;
+
     public Vector2DArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -46,5 +49,10 @@ public class Vector2DArg extends AsbtractSenderArg<Vector2D> {
         }
 
         return new Vector((Player) sender).to2D();
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 }

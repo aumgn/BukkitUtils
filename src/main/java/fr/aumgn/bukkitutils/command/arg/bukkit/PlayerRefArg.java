@@ -10,8 +10,11 @@ import fr.aumgn.bukkitutils.playerref.PlayerRef;
 
 public class PlayerRefArg extends AsbtractSenderArg<PlayerRef> {
 
+    private final CommandsMessages messages;
+
     public PlayerRefArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -26,5 +29,10 @@ public class PlayerRefArg extends AsbtractSenderArg<PlayerRef> {
         }
 
         return PlayerRef.get((Player)sender);
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 }

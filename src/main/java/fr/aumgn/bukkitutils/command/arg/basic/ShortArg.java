@@ -6,8 +6,11 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class ShortArg extends AbstractCommandArg<Short> {
 
+    private final CommandsMessages messages;
+
     public ShortArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override

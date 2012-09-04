@@ -16,9 +16,10 @@ public class NestedCommandExecutor implements CommandExecutor {
     private final CommandsMessages messages;
     private final String defaultTo;
 
-    public NestedCommandExecutor(JavaPlugin plugin, String defaultTo) {
+    public NestedCommandExecutor(JavaPlugin plugin, CommandsMessages messages,
+            String defaultTo) {
         this.plugin = plugin;
-        this.messages = null;
+        this.messages = messages;
         this.defaultTo = defaultTo;
     }
 
@@ -55,7 +56,6 @@ public class NestedCommandExecutor implements CommandExecutor {
             }
         }
 
-        System.out.println(subCmdArgs);
         subCmd.execute(sender, label + " " + args[0], subCmdArgs);
         return true;
     }

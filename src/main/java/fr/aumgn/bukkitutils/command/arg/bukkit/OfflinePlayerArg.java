@@ -11,8 +11,11 @@ import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class OfflinePlayerArg extends AsbtractSenderArg<OfflinePlayer> {
 
+    private final CommandsMessages messages;
+
     public OfflinePlayerArg(CommandsMessages messages, String string) {
-        super(messages, string);
+        super(string);
+        this.messages = messages;
     }
 
     @Override
@@ -27,5 +30,10 @@ public class OfflinePlayerArg extends AsbtractSenderArg<OfflinePlayer> {
         }
 
         return (Player) sender;
+    }
+
+    @Override
+    protected String missingPermOtherMessage(String permission) {
+        return messages.missingPermissionForOther(permission);
     }
 }
