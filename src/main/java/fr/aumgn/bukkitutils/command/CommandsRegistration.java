@@ -19,6 +19,7 @@ import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
  */
 public class CommandsRegistration {
 
+    private static final String PREEXECUTE_METHOD_NAME = "preExecute";
     private final JavaPlugin plugin;
     private final CommandsMessages messages;
 
@@ -33,106 +34,107 @@ public class CommandsRegistration {
      * Registers all defined command in the given {@link Commands} object.
      */
     public void register(Commands commands) {
-        NestedCommands subCmdsAnnotation =
-                commands.getClass().getAnnotation(NestedCommands.class);
-        boolean subCommands = false;
-        if (subCmdsAnnotation != null) {
-            subCommands = true;
+        Method preExecute = getPreExecuteMethod(commands);
+
+        String cmdPrefix = "";
+        if (commands.getClass().isAnnotationPresent(NestedCommands.class)) {
+            cmdPrefix = registerNestedCommand(commands, preExecute);
         }
 
-        Method preExecute = null;
-        try {
-            preExecute = commands.getClass().getMethod("preExecute",
-                    CommandSender.class, CommandArgs.class);
-            Class<?>[] params = preExecute.getParameterTypes();
-            Validate.isTrue(params.length == 2,
-                    "preExecute method must define two arguments.");
-            Validate.isTrue(CommandSender.class.isAssignableFrom(params[0]),
-                    "First argument must be of type CommandSender.");
-            Validate.isTrue(CommandSender.class.isAssignableFrom(params[1]),
-                    "Second argument must be of type CommandArgs.");
-        } catch (NoSuchMethodException exc) {
-        }
 
-        for (Method method : commands.getClass().getMethods()) {
-            Command cmdAnnotation = method.getAnnotation(Command.class);
-            if (cmdAnnotation == null) {
+        for (Method method : commands.getClass().getDeclaredMethods()) {
+            if (!method.isAnnotationPresent(Command.class)) {
                 continue;
             }
-            validateCommand(method);
+
+            Command cmdAnnotation = method.getAnnotation(Command.class);
+            validateCommand(method, false);
             Validate.notEmpty(cmdAnnotation.name());
 
-            String cmdName;
-            if (subCommands) {
-                String[] nestedCmds = subCmdsAnnotation.value();
-                Validate.notEmpty(nestedCmds);
-                Validate.notEmpty(nestedCmds[0]);
-
-                StringBuilder cmd = new StringBuilder();
-                cmd.append(nestedCmds[0]);
-                for (int i = 1; i < nestedCmds.length; i++) {
-                    registerSubCommand(cmd.toString(), nestedCmds[i]);
-                    cmd.append(" ");
-                    cmd.append(nestedCmds[i]);
-                }
-                registerSubCommand(cmd.toString(), cmdAnnotation.name());
-                cmdName = cmd + " " + cmdAnnotation.name();
-            } else {
-                cmdName = cmdAnnotation.name();
-            }
+            String cmdName = cmdPrefix + cmdAnnotation.name();
             PluginCommand command = plugin.getCommand(cmdName);
             Validate.notNull(command,
                     String.format("Command '%s' does not exist", cmdName));
 
             if (command != null) {
-                CommandExecutor oldExecutor = command.getExecutor();
                 CommandExecutor executor = new MethodCommandExecutor(
                         messages, commands, preExecute, method, cmdAnnotation);
-                if (oldExecutor instanceof NestedCommandExecutor) {
-                    ((NestedCommandExecutor) oldExecutor)
-                            .setDefaultExecutor(executor);
-                } else {
-                    setCommandMessages(command);
-                    command.setExecutor(executor);
-                }
+                setCommand(command, executor);
             }
         }
     }
 
-    private void setCommandMessages(PluginCommand command) {
+    private Method getPreExecuteMethod(Commands commands) {
+        try {
+            Method preExecute = commands.getClass().getMethod(
+                    PREEXECUTE_METHOD_NAME, CommandSender.class,
+                    CommandArgs.class);
+            validateCommand(preExecute, true);
+            return preExecute;
+        } catch (NoSuchMethodException exc) {
+            return null;
+        }
+    }
+
+    private String registerNestedCommand(Commands commands,
+            Method preExecute) {
+        NestedCommands annotation =
+                commands.getClass().getAnnotation(NestedCommands.class);
+        String[] nestedCmds = annotation.value();
+        Validate.notEmpty(nestedCmds);
+        Validate.notEmpty(nestedCmds[0]);
+
+        StringBuilder fullName = new StringBuilder();
+
+        NestedCommandExecutor nestedExecutor = null;
+        for (String name : nestedCmds) {
+            Validate.notEmpty(name);
+            fullName.append(name);
+
+            PluginCommand command = plugin.getCommand(fullName.toString());
+            Validate.notNull(command, String.format(
+                    "Command '%s' does not exist", name));
+            CommandExecutor executor = command.getExecutor();
+            if (executor instanceof NestedCommandExecutor) {
+                nestedExecutor = (NestedCommandExecutor) executor;
+            } else {
+                nestedExecutor = new NestedCommandExecutor(plugin,
+                        annotation.defaultTo());
+                setCommand(command, nestedExecutor);
+            }
+            fullName.append(" ");
+        }
+
+        return fullName.toString();
+    }
+
+    private void setCommand(PluginCommand command, CommandExecutor executor) {
+        CommandExecutor oldExecutor = command.getExecutor();
+        command.setExecutor(executor);
+        if (oldExecutor instanceof MethodCommandExecutor
+                || oldExecutor instanceof MethodCommandExecutor) {
+            return;
+        }
+
         command.setUsage(messages.usageMessage(command.getUsage()));
         command.setPermissionMessage(messages.permissionMessage());
     }
 
-    private void validateCommand(Method method) {
+    private void validateCommand(Method method, boolean strictLength) {
         Class<?>[] params = method.getParameterTypes();
-        Validate.isTrue(params.length == 1 || params.length == 2,
-                "Command method must define one or two parameter(s).");
+        if (strictLength) {
+            Validate.isTrue(params.length == 2,
+                    "Command method must define two parameters.");
+        } else {
+            Validate.isTrue(params.length == 1 || params.length == 2,
+                    "Command method must define one or two parameter(s).");
+        }
         Validate.isTrue(CommandSender.class.isAssignableFrom(params[0]),
                 "First parameter of command method must "
                 + "be of type CommandSender");
         Validate.isTrue(params.length == 1
-                || CommandArgs.class.isAssignableFrom(params[1]),
-                "Second parameter of command method must "
-                + "be of type CommandArgs");
-    }
-
-    private void registerSubCommand(String name, String subCmdName) {
-        PluginCommand command = plugin.getCommand(name);
-        Validate.notNull(command, String.format("Command '%s' does not exist",
-                name));
-        CommandExecutor executor = command.getExecutor();
-        if (executor instanceof NestedCommandExecutor) {
-            ((NestedCommandExecutor) executor).addSubCommand(subCmdName);
-        } else {
-            NestedCommandExecutor nestedExecutor =
-                    new NestedCommandExecutor(plugin, name);
-            nestedExecutor.setDefaultExecutor(executor);
-            nestedExecutor.addSubCommand(subCmdName);
-            if (!(executor instanceof MethodCommandExecutor)) {
-                setCommandMessages(command);
-            }
-            command.setExecutor(nestedExecutor);
-        }
+                    || CommandArgs.class.isAssignableFrom(params[1]),
+                    "Second parameter of command method must "
+                            + "be of type CommandArgs");
     }
 }

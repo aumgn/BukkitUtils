@@ -1,56 +1,62 @@
 package fr.aumgn.bukkitutils.command.executor;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import org.apache.commons.lang.Validate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import fr.aumgn.bukkitutils.command.CommandsMessages;
+import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
+
 public class NestedCommandExecutor implements CommandExecutor {
 
-    private JavaPlugin plugin;
-    private String name;
-    private Set<String> subCommands;
-    private CommandExecutor defaultExecutor;
+    private final JavaPlugin plugin;
+    private final CommandsMessages messages;
+    private final String defaultTo;
 
-    public NestedCommandExecutor(JavaPlugin plugin, String name) {
+    public NestedCommandExecutor(JavaPlugin plugin, String defaultTo) {
         this.plugin = plugin;
-        this.name = name;
-        this.subCommands = new HashSet<String>();
-        this.defaultExecutor = null;
+        this.messages = null;
+        this.defaultTo = defaultTo;
     }
 
     @Override
     public boolean onCommand(CommandSender sender,
-            Command cmd, String label, String[] args) {
+            Command cmd, String label, String[] rawArgs) {
+
+        CommandArgsParser parser =  new CommandArgsParser(messages, rawArgs);
+        String[] args = parser.linearize();
+
+        PluginCommand subCmd;
+        String[] subCmdArgs;
         if (args.length == 0) {
-            if (defaultExecutor == null) {
+            if (defaultTo.isEmpty()) {
                 return false;
             }
 
-            return defaultExecutor.onCommand(sender, cmd, label, args);
+            subCmd = plugin.getCommand(cmd.getName() + " " + defaultTo);
+            Validate.notNull(subCmd);
+            subCmdArgs = args;
+        } else {
+            subCmd = plugin.getCommand(cmd.getName() + " " + args[0]);
+            if (subCmd == null) {
+                if (defaultTo.isEmpty()) {
+                    return false;
+                }
+
+                subCmd = plugin.getCommand(cmd.getName() + " " + defaultTo);
+                Validate.notNull(subCmd);
+                subCmdArgs = args;
+            } else {
+                subCmdArgs = new String[args.length - 1];
+                System.arraycopy(args, 1, subCmdArgs, 0, args.length - 1);
+            }
         }
 
-        PluginCommand subCommand = plugin.getCommand(name + " " + args[0]);
-        if (subCommand == null
-                || !subCommands.contains(subCommand.getName())) {
-            return false;
-        }
-
-        String[] subCommandArgs = new String[args.length - 1];
-        System.arraycopy(args, 1, subCommandArgs, 0, args.length - 1);
-        subCommand.execute(sender, label + " " + args[0], subCommandArgs);
+        System.out.println(subCmdArgs);
+        subCmd.execute(sender, label + " " + args[0], subCmdArgs);
         return true;
-    }
-
-    public void setDefaultExecutor(CommandExecutor executor) {
-        defaultExecutor = executor;
-    }
-
-    public void addSubCommand(String subCmdName) {
-        subCommands.add(name + " " + subCmdName);
     }
 }

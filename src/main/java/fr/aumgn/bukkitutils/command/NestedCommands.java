@@ -17,4 +17,6 @@ import java.lang.annotation.Target;
 public @interface NestedCommands {
 
     String[] value();
+
+    String defaultTo() default "";
 }

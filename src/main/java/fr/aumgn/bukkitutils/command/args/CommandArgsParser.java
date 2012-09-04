@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
 import fr.aumgn.bukkitutils.command.CommandsMessages;
@@ -133,5 +134,22 @@ public class CommandArgsParser {
 
     public String[] getArgs() {
         return args;
+    }
+
+    public String[] linearize() {
+        int length = args.length + flags.size() + argsFlags.size();
+        String[] linearized = new String[length];
+        System.arraycopy(args, 0, linearized, 0, args.length);
+        int i = args.length;
+        for (char flag : flags) {
+            linearized[i] = "-" + flag;
+            i++;
+        }
+        for (Entry<Character, String> argFlag : argsFlags.entrySet()) {
+            linearized[i] = "-" + argFlag.getKey() + "=" + argFlag.getValue();
+            i++;
+        }
+
+        return linearized;
     }
 }

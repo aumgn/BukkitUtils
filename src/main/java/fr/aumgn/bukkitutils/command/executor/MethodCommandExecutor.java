@@ -35,29 +35,36 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final boolean isPlayerCommand;
 
     public MethodCommandExecutor(CommandsMessages messages, Commands instance,
-            Method preExecute, Method method, Command command) {
+            Method preExecute, Method method, int min, int max, String flags,
+            String argsFlags) {
         this.messages = messages;
         this.instance = instance;
         this.preExecute = preExecute;
         this.method = method;
 
         if (method.getParameterTypes().length > 1) {
-            this.min = command.min();
-            this.max = command.max();
+            this.min = min;
+            this.max = max;
         } else {
             this.min = -1;
             this.max = 0;
         }
         this.flags = new HashSet<Character>();
-        for (char flag : command.flags().toCharArray()) {
+        for (char flag : flags.toCharArray()) {
             this.flags.add(flag);
         }
         this.argsFlags = new HashSet<Character>();
-        for (char flag : command.argsFlags().toCharArray()) {
+        for (char flag : argsFlags.toCharArray()) {
             this.argsFlags.add(flag);
         }
         this.isPlayerCommand = Player.class.isAssignableFrom(
                 method.getParameterTypes()[0]);
+    }
+
+    public MethodCommandExecutor(CommandsMessages messages, Commands instance,
+            Method preExecute, Method method, Command command) {
+        this(messages, instance, preExecute, method, command.min(),
+                command.max(), command.flags(), command.argsFlags());
     }
 
     @Override
