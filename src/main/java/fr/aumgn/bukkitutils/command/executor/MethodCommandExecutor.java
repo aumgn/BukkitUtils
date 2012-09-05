@@ -30,13 +30,14 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final Method method;
     private final int min;
     private final int max;
+    private final boolean strictFlags;
     private final Set<Character> flags;
     private final Set<Character> argsFlags;
     private final boolean isPlayerCommand;
 
     public MethodCommandExecutor(CommandsMessages messages, Commands instance,
-            Method preExecute, Method method, int min, int max, String flags,
-            String argsFlags) {
+            Method preExecute, Method method, int min, int max,
+            boolean strictFlags, String flags, String argsFlags) {
         this.messages = messages;
         this.instance = instance;
         this.preExecute = preExecute;
@@ -49,6 +50,7 @@ public class MethodCommandExecutor implements CommandExecutor {
             this.min = -1;
             this.max = 0;
         }
+        this.strictFlags = strictFlags;
         this.flags = new HashSet<Character>();
         for (char flag : flags.toCharArray()) {
             this.flags.add(flag);
@@ -64,7 +66,8 @@ public class MethodCommandExecutor implements CommandExecutor {
     public MethodCommandExecutor(CommandsMessages messages, Commands instance,
             Method preExecute, Method method, Command command) {
         this(messages, instance, preExecute, method, command.min(),
-                command.max(), command.flags(), command.argsFlags());
+                command.max(), command.strictFlags(), command.flags(),
+                command.argsFlags());
     }
 
     @Override
@@ -99,7 +102,7 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     private CommandArgs getArgs(String[] rawArgs){
         CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
-        parser.validate(flags, argsFlags, min, max);
+        parser.validate(strictFlags, flags, argsFlags, min, max);
         return new CommandArgs(messages, parser);
     }
 

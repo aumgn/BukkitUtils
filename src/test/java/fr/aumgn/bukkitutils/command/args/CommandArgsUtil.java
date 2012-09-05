@@ -56,7 +56,7 @@ public class CommandArgsUtil {
     public static CommandArgs parse(Set<Character> flags,
             Set<Character> argsFlags, int min, int max, String... tokens) {
         CommandArgsParser parser = new CommandArgsParser(MESSAGES, tokens);
-        parser.validate(flags, argsFlags, min, max);
+        parser.validate(true, flags, argsFlags, min, max);
         return new CommandArgs(MESSAGES, parser);
     }
 }

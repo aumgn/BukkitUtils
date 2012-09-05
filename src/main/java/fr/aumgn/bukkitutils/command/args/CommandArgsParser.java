@@ -94,24 +94,26 @@ public class CommandArgsParser {
         }
     }
 
-    public void validate(Set<Character> allowedFlags,
+    public void validate(boolean strictFlags, Set<Character> allowedFlags,
             Set<Character> allowedArgsFlags, int min, int max) {
-        StringBuilder invalidFlags = new StringBuilder();
-        for (char flag : flags) {
-            if (!allowedFlags.contains(flag)) {
-                invalidFlags.append(flag);
+        if (strictFlags) {
+            StringBuilder invalidFlags = new StringBuilder();
+            for (char flag : flags) {
+                if (!allowedFlags.contains(flag)) {
+                    invalidFlags.append(flag);
+                }
             }
-        }
 
-        for (char flag : argsFlags.keySet()) {
-            if (!allowedArgsFlags.contains(flag)) {
-                invalidFlags.append(flag);
+            for (char flag : argsFlags.keySet()) {
+                if (!allowedArgsFlags.contains(flag)) {
+                    invalidFlags.append(flag);
+                }
             }
-        }
 
-        if (invalidFlags.length() > 0) {
-            throw new CommandUsageError(
-                    messages.invalidFlag(invalidFlags.toString()));
+            if (invalidFlags.length() > 0) {
+                throw new CommandUsageError(
+                        messages.invalidFlag(invalidFlags.toString()));
+            }
         }
 
         if (args.length < min) {

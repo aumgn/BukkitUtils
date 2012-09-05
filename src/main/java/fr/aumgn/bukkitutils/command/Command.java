@@ -26,6 +26,11 @@ public @interface Command {
     int max() default 0;
 
     /**
+     * Does the command accepts unexpected flags.
+     */
+    boolean strictFlags() default true;
+
+    /**
      * Accepted flags.
      */
     String flags() default "";
