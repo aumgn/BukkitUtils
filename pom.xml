@@ -4,7 +4,7 @@
 
 	<groupId>fr.aumgn</groupId>
 	<artifactId>bukkitutils</artifactId>
-	<version>1.0.3-SNAPSHOT</version>
+	<version>1.0.3</version>
 
 	<name>BukkitUtils</name>
 	<description>Set of bukkit utilities</description>
