@@ -31,6 +31,7 @@ public class NestedCommandExecutor implements CommandExecutor {
         String[] args = parser.linearize();
 
         PluginCommand subCmd;
+        String subLabel;
         String[] subCmdArgs;
         if (args.length == 0) {
             if (defaultTo.isEmpty()) {
@@ -39,6 +40,7 @@ public class NestedCommandExecutor implements CommandExecutor {
 
             subCmd = plugin.getCommand(cmd.getName() + " " + defaultTo);
             Validate.notNull(subCmd);
+            subLabel = label;
             subCmdArgs = args;
         } else {
             subCmd = plugin.getCommand(cmd.getName() + " " + args[0]);
@@ -48,15 +50,17 @@ public class NestedCommandExecutor implements CommandExecutor {
                 }
 
                 subCmd = plugin.getCommand(cmd.getName() + " " + defaultTo);
+                subLabel = label;
                 Validate.notNull(subCmd);
                 subCmdArgs = args;
             } else {
+                subLabel = label + " " + args[0];
                 subCmdArgs = new String[args.length - 1];
                 System.arraycopy(args, 1, subCmdArgs, 0, args.length - 1);
             }
         }
 
-        subCmd.execute(sender, label + " " + args[0], subCmdArgs);
+        subCmd.execute(sender, subLabel, subCmdArgs);
         return true;
     }
 }
