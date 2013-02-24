@@ -140,4 +140,11 @@
 
 	</build>
 
+	<distributionManagement>
+		<repository>
+			<id>aumgn-repo</id>
+			<url>ftp://maven.aumgn.fr</url>
+		</repository>
+	</distributionManagement>
+
 </project>
