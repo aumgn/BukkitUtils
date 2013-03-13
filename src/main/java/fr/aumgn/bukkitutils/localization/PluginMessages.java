@@ -9,6 +9,8 @@ import java.util.Map.Entry;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
+import com.google.common.base.Preconditions;
+
 /**
  * A set of messages loaded with {@link Localization}
  */
@@ -31,9 +33,41 @@ public class PluginMessages {
     }
 
     public String get(String key, Object... arguments) {
+        String message = rawGet(key, arguments);
+        if (message == null) {
+            return keyNotFound(key);
+        }
+
+        return message;
+    }
+
+    public String get(String[] keys) {
+        return get(keys, new Object[0]);
+    }
+
+    public String get(String[] keys, Object... arguments) {
+        Preconditions.checkArgument(keys.length > 0, "Keys can't be empty");
+        for (String key : keys) {
+            String message = rawGet(key, arguments);
+            if (message != null) {
+                return message;
+            }
+        }
+
+        return keyNotFound(keys[keys.length - 1]);
+    }
+
+    private String keyNotFound(String key) {
+        return ChatColor.RED + "## Missing message for key \"" + key + "\" ##";
+    }
+
+    public String rawGet(String key) {
+        return rawGet(key, new Object[0]);
+    }
+
+    public String rawGet(String key, Object... arguments) {
         if (!map.containsKey(key)) {
-            return ChatColor.RED + "## Missing message for key \""
-                    + key + "\" ##";
+            return null;
         }
 
         MessageFormat message = map.get(key);
