@@ -1,5 +1,6 @@
 package fr.aumgn.bukkitutils.playerref;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -30,9 +31,11 @@ public final class PlayerRef {
     }
 
     private final String name;
+    private transient WeakReference<Player> ref;
 
     private PlayerRef(String name) {
         this.name = name;
+        this.ref = new WeakReference<Player>(null);
     }
 
     public String getName() {
@@ -57,7 +60,13 @@ public final class PlayerRef {
     }
 
     public Player getPlayer() {
-        return Bukkit.getPlayerExact(name);
+        Player player = ref.get();
+        if (player == null) {
+            player = Bukkit.getPlayerExact(name);
+            ref = new WeakReference<Player>(player);
+        }
+
+        return player;
     }
 
     public OfflinePlayer getOfflinePlayer() {
