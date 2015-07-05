@@ -1,6 +1,5 @@
 package fr.aumgn.bukkitutils.util;
 
-import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -81,27 +80,6 @@ public final class Util {
         }
 
         return Material.matchMaterial(pattern);
-    }
-
-    /**
-     * Parse the data for the given material
-     * and the given token.
-     * This supports things such as colors name
-     * for wools, etc..
-     */
-    public static Short parseDataFor(Material material, String token) {
-        try {
-            return Short.parseShort(token);
-        }
-        catch (NumberFormatException exc) {
-        }
-
-        ItemTypeDataParser parser = ItemTypeDataParser.getFor(material);
-        if (parser == null) {
-            return null;
-        }
-
-        return parser.parse(token);
     }
 
     /**

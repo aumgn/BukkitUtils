@@ -16,6 +16,9 @@ public class EntityTypeArg extends AbstractCommandArg<EntityType> {
 
     @Override
     public EntityType value() {
+        // Magic value, yeah maybe, but there do not seem
+        // to be better alternatives available right now
+        @SuppressWarnings("deprecation")
         EntityType entityType = EntityType.fromName(string);
         if (entityType == null) {
             throw new NoSuchEntityType(messages, string);

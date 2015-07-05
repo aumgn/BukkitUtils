@@ -59,7 +59,9 @@ public class PlayerArg extends AbstractSenderMatchingArg<Player> {
         }
 
         // Immutable, hence safe cast
-        return (List<Player>) players;
+        @SuppressWarnings("unchecked")
+        List<Player> safePlayers = (List<Player>) players;
+        return safePlayers;
     }
 
     public static class NoSuchPlayer extends CommandError {

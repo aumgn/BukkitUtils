@@ -4,7 +4,6 @@ import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
 import fr.aumgn.bukkitutils.command.arg.basic.*;
 import fr.aumgn.bukkitutils.command.arg.bukkit.*;
-import fr.aumgn.bukkitutils.itemtype.ItemType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -186,30 +185,6 @@ public class CommandArgs extends CommandArgsBase {
         return getList(flag, new CommandArgFactory<MaterialArg>() {
             public MaterialArg createCommandArg(String string) {
                 return new MaterialArg(messages, string);
-            }
-        });
-    }
-
-    public ItemTypeArg getItemType(int index) {
-        return new ItemTypeArg(messages, getOrNull(index));
-    }
-
-    public ItemTypeArg getItemType(char flag) {
-        return new ItemTypeArg(messages, getOrNull(flag));
-    }
-
-    public ListArg<ItemType, ItemTypeArg> getItemTypes(int index) {
-        return getList(index, new CommandArgFactory<ItemTypeArg>() {
-            public ItemTypeArg createCommandArg(String string) {
-                return new ItemTypeArg(messages, string);
-            }
-        });
-    }
-
-    public ListArg<ItemType, ItemTypeArg> getItemTypes(char flag) {
-        return getList(flag, new CommandArgFactory<ItemTypeArg>() {
-            public ItemTypeArg createCommandArg(String string) {
-                return new ItemTypeArg(messages, string);
             }
         });
     }
