@@ -1,29 +1,29 @@
 package fr.aumgn.bukkitutils.command.arg.basic;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.geom.Vector;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class VectorArg extends AsbtractSenderArg<Vector> {
-
-    static double parseVectorComponent(CommandsMessages messages, String component) {
-        try {
-            return Double.parseDouble(component);
-        } catch (NumberFormatException exc) {
-            throw new CommandUsageError(
-                    messages.notAValidVectorComponent(component));
-        }
-    }
 
     private final CommandsMessages messages;
 
     public VectorArg(CommandsMessages messages, String string) {
         super(string);
         this.messages = messages;
+    }
+
+    static double parseVectorComponent(CommandsMessages messages, String component) {
+        try {
+            return Double.parseDouble(component);
+        }
+        catch (NumberFormatException exc) {
+            throw new CommandUsageError(
+                    messages.notAValidVectorComponent(component));
+        }
     }
 
     @Override

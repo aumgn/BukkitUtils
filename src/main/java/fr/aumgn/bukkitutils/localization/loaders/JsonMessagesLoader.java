@@ -1,11 +1,11 @@
 package fr.aumgn.bukkitutils.localization.loaders;
 
-import java.io.Reader;
-import java.util.Map;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.Reader;
+import java.util.Map;
 
 public class JsonMessagesLoader extends MessagesLoader {
 
@@ -17,10 +17,11 @@ public class JsonMessagesLoader extends MessagesLoader {
     @Override
     public Map<?, ?> loadRaw(Reader reader) {
         Gson gson = new GsonBuilder()
-            .create();
+                .create();
 
         TypeToken<Map<String, Object>> typeToken =
-                new TypeToken<Map<String, Object>>() {};
+                new TypeToken<Map<String, Object>>() {
+                };
         Object obj = gson.fromJson(reader, typeToken.getRawType());
         return (Map<?, ?>) obj;
     }

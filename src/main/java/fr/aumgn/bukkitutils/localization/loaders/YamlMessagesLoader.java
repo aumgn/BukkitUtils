@@ -1,10 +1,10 @@
 package fr.aumgn.bukkitutils.localization.loaders;
 
+import org.yaml.snakeyaml.Yaml;
+
 import java.io.Reader;
 import java.util.Collections;
 import java.util.Map;
-
-import org.yaml.snakeyaml.Yaml;
 
 public class YamlMessagesLoader extends MessagesLoader {
 

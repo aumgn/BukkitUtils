@@ -1,16 +1,18 @@
 package fr.aumgn.bukkitutils.geom;
 
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-
 import fr.aumgn.bukkitutils.geom.direction.HorizontalDirection;
 import fr.aumgn.bukkitutils.geom.direction.LocationDirection;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
 
 /**
  * Set of convenient methods to construct Direction
  * from other direction representations.
  */
 public final class Directions {
+
+    private Directions() {
+    }
 
     public static Direction fromLocation(Location location) {
         return new LocationDirection(location);
@@ -34,8 +36,5 @@ public final class Directions {
 
     public static Direction fromYaw(float yaw) {
         return new HorizontalDirection(yaw);
-    }
-
-    private Directions() {
     }
 }

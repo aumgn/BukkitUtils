@@ -1,12 +1,11 @@
 package fr.aumgn.bukkitutils.timer;
 
-import java.util.concurrent.TimeUnit;
-
+import com.google.common.base.Stopwatch;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.Plugin;
 
-import com.google.common.base.Stopwatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A timer class which display time according
@@ -76,9 +75,11 @@ public abstract class Timer implements Runnable {
     private ChatColor getCurrentColor() {
         if (remainingTime >= majorDelay) {
             return ChatColor.YELLOW;
-        } else if (remainingTime >= minorDelay){
+        }
+        else if (remainingTime >= minorDelay) {
             return ChatColor.GOLD;
-        } else {
+        }
+        else {
             return ChatColor.RED;
         }
     }
@@ -91,11 +92,14 @@ public abstract class Timer implements Runnable {
         remainingTime -= currentDelay;
         if (remainingTime > majorDelay) {
             schedule(majorDelay);
-        } else if (remainingTime > minorDelay) {
+        }
+        else if (remainingTime > minorDelay) {
             schedule(minorDelay);
-        } else if (remainingTime > 0) {
+        }
+        else if (remainingTime > 0) {
             schedule(1);
-        } else {
+        }
+        else {
             runnable.run();
         }
     }
@@ -105,11 +109,14 @@ public abstract class Timer implements Runnable {
         remainingTime -= currentDelay;
         if (remainingTime > majorDelay) {
             scheduleAndPrintTime(majorDelay);
-        } else if (remainingTime > minorDelay) {
+        }
+        else if (remainingTime > minorDelay) {
             scheduleAndPrintTime(minorDelay);
-        } else if (remainingTime > 0) {
+        }
+        else if (remainingTime > 0) {
             scheduleAndPrintTime(1);
-        } else {
+        }
+        else {
             runnable.run();
         }
     }
@@ -132,7 +139,8 @@ public abstract class Timer implements Runnable {
         int delay = currentDelay - pauseDelay;
         if (delay > 0) {
             scheduleAndPrintTime(delay);
-        } else {
+        }
+        else {
             runnable.run();
         }
     }

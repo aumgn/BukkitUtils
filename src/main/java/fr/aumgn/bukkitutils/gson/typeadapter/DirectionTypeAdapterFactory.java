@@ -1,7 +1,5 @@
 package fr.aumgn.bukkitutils.gson.typeadapter;
 
-import java.io.IOException;
-
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
@@ -9,11 +7,21 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonToken;
 import com.google.gson.stream.JsonWriter;
-
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Directions;
 
+import java.io.IOException;
+
 public class DirectionTypeAdapterFactory implements TypeAdapterFactory {
+
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
+        if (!Direction.class.isAssignableFrom(type.getRawType())) {
+            return null;
+        }
+
+        return new DirectionTypeAdapter<T>();
+    }
 
     public static class DirectionTypeAdapter<T> extends TypeAdapter<T> {
 
@@ -49,14 +57,5 @@ public class DirectionTypeAdapterFactory implements TypeAdapterFactory {
             reader.endObject();
             return (T) Directions.fromYawAndPitch(yaw, pitch);
         }
-    }
-
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> type) {
-        if (!Direction.class.isAssignableFrom(type.getRawType())) {
-            return null;
-        }
-
-        return new DirectionTypeAdapter<T>();
     }
 }

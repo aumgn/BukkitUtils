@@ -1,28 +1,19 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-
+import fr.aumgn.bukkitutils.command.CommandsMessages;
+import fr.aumgn.bukkitutils.command.arg.impl.AbstractSenderMatchingArg;
+import fr.aumgn.bukkitutils.command.exception.CommandError;
+import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.impl.AbstractSenderMatchingArg;
-import fr.aumgn.bukkitutils.command.exception.CommandError;
-import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 public class WorldArg extends AbstractSenderMatchingArg<World> {
-
-    public static class NoSuchWorld extends CommandError {
-        private static final long serialVersionUID = -4832133406864970323L;
-
-        public NoSuchWorld(CommandsMessages messages, String name) {
-            super(messages.noSuchWorld(name));
-        }
-    }
 
     private final CommandsMessages messages;
 
@@ -75,5 +66,13 @@ public class WorldArg extends AbstractSenderMatchingArg<World> {
         }
 
         return worlds;
+    }
+
+    public static class NoSuchWorld extends CommandError {
+        private static final long serialVersionUID = -4832133406864970323L;
+
+        public NoSuchWorld(CommandsMessages messages, String name) {
+            super(messages.noSuchWorld(name));
+        }
     }
 }

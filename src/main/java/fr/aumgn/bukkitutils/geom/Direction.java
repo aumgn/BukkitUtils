@@ -5,17 +5,7 @@ package fr.aumgn.bukkitutils.geom;
  */
 public interface Direction {
 
-    float getYaw();
-
-    float getPitch();
-
-    Vector2D getVector2D();
-
-    Vector getVector();
-
-    Direction rotate(float angle);
-
-    public static final Direction NONE = new Direction() {
+    Direction NONE = new Direction() {
         @Override
         public Vector2D getVector2D() {
             return new Vector2D();
@@ -46,4 +36,14 @@ public interface Direction {
             return 41;
         }
     };
+
+    float getYaw();
+
+    float getPitch();
+
+    Vector2D getVector2D();
+
+    Vector getVector();
+
+    Direction rotate(float angle);
 }

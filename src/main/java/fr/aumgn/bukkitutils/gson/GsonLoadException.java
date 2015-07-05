@@ -3,7 +3,6 @@ package fr.aumgn.bukkitutils.gson;
 /**
  * Thrown when exception occurred when loading
  * or writing a resource.
- *
  */
 public class GsonLoadException extends Exception {
 

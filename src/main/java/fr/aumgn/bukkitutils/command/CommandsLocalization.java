@@ -1,5 +1,9 @@
 package fr.aumgn.bukkitutils.command;
 
+import fr.aumgn.bukkitutils.localization.Localization;
+import fr.aumgn.bukkitutils.localization.loaders.MessagesLoader;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -7,11 +11,6 @@ import java.net.URLConnection;
 import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.Map;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
-import fr.aumgn.bukkitutils.localization.Localization;
-import fr.aumgn.bukkitutils.localization.loaders.MessagesLoader;
 
 public class CommandsLocalization extends Localization {
 
@@ -33,13 +32,13 @@ public class CommandsLocalization extends Localization {
 
     @Override
     protected void load(Map<String, MessageFormat> map, Locale locale,
-            String name) {
+                        String name) {
         loadInJar(map, locale, name);
         super.load(map, locale, name);
     }
 
     private void loadInJar(Map<String, MessageFormat> map, Locale locale,
-            String baseName) {
+                           String baseName) {
         for (MessagesLoader loader : Localization.loaders()) {
             for (String extension : loader.getExtensions()) {
                 String name = baseName + "." + extension;
@@ -51,7 +50,8 @@ public class CommandsLocalization extends Localization {
                         URLConnection connection = res.openConnection();
                         connection.setUseCaches(false);
                         iStream = connection.getInputStream();
-                    } catch (IOException _) {
+                    }
+                    catch (IOException _) {
                     }
                 }
 

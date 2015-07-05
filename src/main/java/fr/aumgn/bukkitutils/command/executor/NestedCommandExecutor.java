@@ -1,14 +1,13 @@
 package fr.aumgn.bukkitutils.command.executor;
 
+import fr.aumgn.bukkitutils.command.CommandsMessages;
+import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 import org.apache.commons.lang.Validate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.args.CommandArgsParser;
 
 public class NestedCommandExecutor implements CommandExecutor {
 
@@ -17,7 +16,7 @@ public class NestedCommandExecutor implements CommandExecutor {
     private final String defaultTo;
 
     public NestedCommandExecutor(JavaPlugin plugin, CommandsMessages messages,
-            String defaultTo) {
+                                 String defaultTo) {
         this.plugin = plugin;
         this.messages = messages;
         this.defaultTo = defaultTo;
@@ -25,9 +24,9 @@ public class NestedCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender,
-            Command cmd, String label, String[] rawArgs) {
+                             Command cmd, String label, String[] rawArgs) {
 
-        CommandArgsParser parser =  new CommandArgsParser(messages, rawArgs);
+        CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
         String[] args = parser.linearize();
 
         PluginCommand subCmd;
@@ -42,7 +41,8 @@ public class NestedCommandExecutor implements CommandExecutor {
             Validate.notNull(subCmd);
             subLabel = label;
             subCmdArgs = args;
-        } else {
+        }
+        else {
             subCmd = plugin.getCommand(cmd.getName() + " " + args[0]);
             if (subCmd == null) {
                 if (defaultTo.isEmpty()) {
@@ -53,7 +53,8 @@ public class NestedCommandExecutor implements CommandExecutor {
                 subLabel = label;
                 Validate.notNull(subCmd);
                 subCmdArgs = args;
-            } else {
+            }
+            else {
                 subLabel = label + " " + args[0];
                 subCmdArgs = new String[args.length - 1];
                 System.arraycopy(args, 1, subCmdArgs, 0, args.length - 1);

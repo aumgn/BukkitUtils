@@ -77,9 +77,9 @@ public class ItemType {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(31, 13)
-            .append(data)
-            .append(material)
-            .toHashCode();
+                .append(data)
+                .append(material)
+                .toHashCode();
     }
 
     @Override
@@ -93,11 +93,8 @@ public class ItemType {
         }
 
         ItemType other = (ItemType) obj;
-        if (data != other.data || material != other.material) {
-            return false;
-        }
+        return data == other.data && material == other.material;
 
-        return true;
     }
 
     public String toString() {

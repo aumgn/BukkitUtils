@@ -1,20 +1,19 @@
 package fr.aumgn.bukkitutils.gson.typeadapter;
 
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.bukkit.configuration.serialization.ConfigurationSerializable;
-import org.bukkit.configuration.serialization.ConfigurationSerialization;
-
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
  * Serialize with gson classes which implements
@@ -23,11 +22,22 @@ import com.google.gson.stream.JsonWriter;
 @SuppressWarnings("unchecked")
 public class BukkitConfigTypeAdapterFactory implements TypeAdapterFactory {
 
+    @Override
+    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> token) {
+        if (!ConfigurationSerializable.class.isAssignableFrom(
+                token.getRawType())) {
+            return null;
+        }
+
+        return new BukkitConfigTypeAdapter<T>(gson);
+    }
+
     public static class BukkitConfigTypeAdapter<T> extends TypeAdapter<T> {
 
         private static final String SERIALIZED_TYPE_KEY = "$$";
         private static final Type BUKKIT_SERIAL_TYPE =
-                new TypeToken<HashMap<String, String>>() {}.getType();
+                new TypeToken<HashMap<String, String>>() {
+                }.getType();
 
         private final Gson gson;
 
@@ -57,15 +67,5 @@ public class BukkitConfigTypeAdapterFactory implements TypeAdapterFactory {
 
             gson.toJson(map, BUKKIT_SERIAL_TYPE, writer);
         }
-    }
-
-    @Override
-    public <T> TypeAdapter<T> create(Gson gson, TypeToken<T> token) {
-        if (!ConfigurationSerializable.class.isAssignableFrom(
-                token.getRawType())) {
-            return null;
-        }
-
-        return new BukkitConfigTypeAdapter<T>(gson);
     }
 }

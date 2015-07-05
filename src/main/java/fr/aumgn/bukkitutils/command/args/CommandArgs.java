@@ -1,5 +1,10 @@
 package fr.aumgn.bukkitutils.command.args;
 
+import fr.aumgn.bukkitutils.command.CommandsMessages;
+import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
+import fr.aumgn.bukkitutils.command.arg.basic.*;
+import fr.aumgn.bukkitutils.command.arg.bukkit.*;
+import fr.aumgn.bukkitutils.itemtype.ItemType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
@@ -8,26 +13,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
-
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
-import fr.aumgn.bukkitutils.command.arg.basic.ListArg;
-import fr.aumgn.bukkitutils.command.arg.basic.DoubleArg;
-import fr.aumgn.bukkitutils.command.arg.basic.IntegerArg;
-import fr.aumgn.bukkitutils.command.arg.basic.ShortArg;
-import fr.aumgn.bukkitutils.command.arg.basic.TimeArg;
-import fr.aumgn.bukkitutils.command.arg.basic.Vector2DArg;
-import fr.aumgn.bukkitutils.command.arg.basic.VectorArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.ChatColorArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.EnchantmentArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.EntityTypeArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.ItemTypeArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.MaterialArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.OfflinePlayerArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.PlayerArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.PotionEffectTypeArg;
-import fr.aumgn.bukkitutils.command.arg.bukkit.WorldArg;
-import fr.aumgn.bukkitutils.itemtype.ItemType;
 
 public class CommandArgs extends CommandArgsBase {
 

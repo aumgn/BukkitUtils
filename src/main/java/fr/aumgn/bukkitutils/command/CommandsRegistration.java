@@ -1,17 +1,16 @@
 package fr.aumgn.bukkitutils.command;
 
-import java.lang.reflect.Method;
-import java.util.Locale;
-
+import fr.aumgn.bukkitutils.command.args.CommandArgs;
+import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
+import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
 import org.apache.commons.lang.Validate;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import fr.aumgn.bukkitutils.command.args.CommandArgs;
-import fr.aumgn.bukkitutils.command.executor.MethodCommandExecutor;
-import fr.aumgn.bukkitutils.command.executor.NestedCommandExecutor;
+import java.lang.reflect.Method;
+import java.util.Locale;
 
 /**
  * Class which handles all the mess of registering commands and nested commands
@@ -54,14 +53,9 @@ public class CommandsRegistration {
 
             String cmdName = cmdPrefix + cmdAnnotation.name();
             PluginCommand command = plugin.getCommand(cmdName);
-            Validate.notNull(command,
-                    String.format("Command '%s' does not exist", cmdName));
-
-            if (command != null) {
-                CommandExecutor executor = new MethodCommandExecutor(
-                        messages, commands, preExecute, method, cmdAnnotation);
-                setCommand(command, executor);
-            }
+            Validate.notNull(command, String.format("Command '%s' does not exist", cmdName));
+            CommandExecutor executor = new MethodCommandExecutor(messages, commands, preExecute, method, cmdAnnotation);
+            setCommand(command, executor);
         }
     }
 
@@ -72,13 +66,13 @@ public class CommandsRegistration {
                     CommandArgs.class);
             validateCommand(preExecute, true);
             return preExecute;
-        } catch (NoSuchMethodException exc) {
+        }
+        catch (NoSuchMethodException exc) {
             return null;
         }
     }
 
-    private String registerNestedCommand(Commands commands,
-            Method preExecute) {
+    private String registerNestedCommand(Commands commands, Method preExecute) {
         NestedCommands annotation =
                 commands.getClass().getAnnotation(NestedCommands.class);
         String[] nestedCmds = annotation.value();
@@ -87,21 +81,15 @@ public class CommandsRegistration {
 
         StringBuilder fullName = new StringBuilder();
 
-        NestedCommandExecutor nestedExecutor = null;
         for (String name : nestedCmds) {
             Validate.notEmpty(name);
             fullName.append(name);
 
             PluginCommand command = plugin.getCommand(fullName.toString());
-            Validate.notNull(command, String.format(
-                    "Command '%s' does not exist", name));
+            Validate.notNull(command, String.format("Command '%s' does not exist", name));
             CommandExecutor executor = command.getExecutor();
-            if (executor instanceof NestedCommandExecutor) {
-                nestedExecutor = (NestedCommandExecutor) executor;
-            } else {
-                nestedExecutor = new NestedCommandExecutor(plugin, messages,
-                        annotation.defaultTo());
-                setCommand(command, nestedExecutor);
+            if (!(executor instanceof NestedCommandExecutor)) {
+                setCommand(command, new NestedCommandExecutor(plugin, messages, annotation.defaultTo()));
             }
             fullName.append(" ");
         }
@@ -112,8 +100,7 @@ public class CommandsRegistration {
     private void setCommand(PluginCommand command, CommandExecutor executor) {
         CommandExecutor oldExecutor = command.getExecutor();
         command.setExecutor(executor);
-        if (oldExecutor instanceof MethodCommandExecutor
-                || oldExecutor instanceof MethodCommandExecutor) {
+        if (oldExecutor instanceof MethodCommandExecutor) {
             return;
         }
 
@@ -126,16 +113,17 @@ public class CommandsRegistration {
         if (strictLength) {
             Validate.isTrue(params.length == 2,
                     "Command method must define two parameters.");
-        } else {
+        }
+        else {
             Validate.isTrue(params.length == 1 || params.length == 2,
                     "Command method must define one or two parameter(s).");
         }
         Validate.isTrue(CommandSender.class.isAssignableFrom(params[0]),
                 "First parameter of command method must "
-                + "be of type CommandSender");
+                        + "be of type CommandSender");
         Validate.isTrue(params.length == 1
-                    || CommandArgs.class.isAssignableFrom(params[1]),
-                    "Second parameter of command method must "
-                            + "be of type CommandArgs");
+                        || CommandArgs.class.isAssignableFrom(params[1]),
+                "Second parameter of command method must "
+                        + "be of type CommandArgs");
     }
 }

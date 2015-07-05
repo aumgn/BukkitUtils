@@ -1,20 +1,18 @@
 package fr.aumgn.bukkitutils.playerref.set;
 
-import java.util.HashSet;
-import java.util.List;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.PlayersIterable;
 import fr.aumgn.bukkitutils.playerref.ToOfflinePlayer;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
+import java.util.HashSet;
+import java.util.List;
 
 public class PlayersRefHashSet
-            extends HashSet<PlayerRef> implements PlayersRefSet {
+        extends HashSet<PlayerRef> implements PlayersRefSet {
 
     private static final long serialVersionUID = -2701720565674845979L;
 

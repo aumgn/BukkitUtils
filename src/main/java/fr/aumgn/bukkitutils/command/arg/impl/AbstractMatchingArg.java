@@ -1,15 +1,15 @@
 package fr.aumgn.bukkitutils.command.arg.impl;
 
+import fr.aumgn.bukkitutils.command.arg.MatchingArg;
+
 import java.util.Collections;
 import java.util.List;
-
-import fr.aumgn.bukkitutils.command.arg.MatchingArg;
 
 public abstract class AbstractMatchingArg<V> extends AbstractCommandArg<V>
         implements MatchingArg<V> {
 
     public AbstractMatchingArg(String string) {
-        super( string);
+        super(string);
     }
 
     @Override

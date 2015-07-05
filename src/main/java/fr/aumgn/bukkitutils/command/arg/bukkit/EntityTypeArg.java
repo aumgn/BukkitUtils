@@ -1,20 +1,11 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import org.bukkit.entity.EntityType;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
+import org.bukkit.entity.EntityType;
 
 public class EntityTypeArg extends AbstractCommandArg<EntityType> {
-
-    public static class NoSuchEntityType extends CommandError {
-        private static final long serialVersionUID = 6849291638184124428L;
-
-        public NoSuchEntityType(CommandsMessages messages, String name) {
-            super(messages.noSuchEntityType(name));
-        }
-    }
 
     private final CommandsMessages messages;
 
@@ -26,10 +17,18 @@ public class EntityTypeArg extends AbstractCommandArg<EntityType> {
     @Override
     public EntityType value() {
         EntityType entityType = EntityType.fromName(string);
-        if(entityType == null) {
+        if (entityType == null) {
             throw new NoSuchEntityType(messages, string);
         }
 
         return entityType;
+    }
+
+    public static class NoSuchEntityType extends CommandError {
+        private static final long serialVersionUID = 6849291638184124428L;
+
+        public NoSuchEntityType(CommandsMessages messages, String name) {
+            super(messages.noSuchEntityType(name));
+        }
     }
 }

@@ -16,7 +16,8 @@ public class TextMatcher implements GlobMatcher {
     public int match(String str, int from) {
         if (str.startsWith(text, from)) {
             return from + text.length();
-        } else {
+        }
+        else {
             return -1;
         }
     }

@@ -17,7 +17,8 @@ public class ShortArg extends AbstractCommandArg<Short> {
     public Short value() {
         try {
             return Short.parseShort(string);
-        } catch (NumberFormatException exc) {
+        }
+        catch (NumberFormatException exc) {
             throw new CommandUsageError(messages.notAValidNumber(string));
         }
     }

@@ -1,14 +1,10 @@
 package fr.aumgn.bukkitutils.command.args;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
+
+import java.util.*;
+import java.util.Map.Entry;
 
 public class CommandArgsParser {
 
@@ -38,11 +34,13 @@ public class CommandArgsParser {
                     current.append(token.substring(0, token.length() - 1));
                     argsList.add(current.toString());
                     quoted = false;
-                } else {
+                }
+                else {
                     current.append(" ");
                     current.append(token);
                 }
-            } else {
+            }
+            else {
                 if (token.isEmpty()) {
                     continue;
                 }
@@ -50,15 +48,18 @@ public class CommandArgsParser {
                 if (token.charAt(0) == '"') {
                     if (token.charAt(token.length() - 1) == '\"') {
                         argsList.add(token.substring(1, token.length() - 1));
-                    } else {
+                    }
+                    else {
                         quoted = true;
                         current = new StringBuilder();
                         current.append(token.substring(1));
                     }
-                } else if (token.charAt(0) == '-' && token.length() > 1
+                }
+                else if (token.charAt(0) == '-' && token.length() > 1
                         && Character.isLetter(token.charAt(1))) {
                     parseFlags(token.substring(1));
-                } else {
+                }
+                else {
                     argsList.add(token);
                 }
             }
@@ -80,7 +81,7 @@ public class CommandArgsParser {
         }
 
         if (equal > 1) {
-            parseRegularFlags(flagsString.substring(0, equal -1));
+            parseRegularFlags(flagsString.substring(0, equal - 1));
         }
 
         argsFlags.put(
@@ -95,7 +96,7 @@ public class CommandArgsParser {
     }
 
     public void validate(boolean strictFlags, Set<Character> allowedFlags,
-            Set<Character> allowedArgsFlags, int min, int max) {
+                         Set<Character> allowedArgsFlags, int min, int max) {
         if (strictFlags) {
             StringBuilder invalidFlags = new StringBuilder();
             for (char flag : flags) {

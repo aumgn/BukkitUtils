@@ -1,13 +1,12 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
+import fr.aumgn.bukkitutils.command.CommandsMessages;
+import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
+import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-
-import fr.aumgn.bukkitutils.command.CommandsMessages;
-import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
-import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 
 public class OfflinePlayerArg extends AsbtractSenderArg<OfflinePlayer> {
 

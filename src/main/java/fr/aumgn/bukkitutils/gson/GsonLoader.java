@@ -1,20 +1,13 @@
 package fr.aumgn.bukkitutils.gson;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.lang.reflect.Type;
-
-import org.bukkit.plugin.Plugin;
-
 import com.google.common.base.Charsets;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
+import org.bukkit.plugin.Plugin;
+
+import java.io.*;
+import java.lang.reflect.Type;
 
 /**
  * Class which handle loading of .json resources
@@ -67,7 +60,8 @@ public class GsonLoader {
             T instance;
             if (file.createNewFile()) {
                 instance = klass.newInstance();
-            } else {
+            }
+            else {
                 instance = unsafeLoad(file, type);
             }
 
@@ -75,11 +69,14 @@ public class GsonLoader {
             write(file, instance);
 
             return instance;
-        } catch (IOException exc) {
+        }
+        catch (IOException exc) {
             throw new GsonLoadException(exc);
-        } catch (InstantiationException exc) {
+        }
+        catch (InstantiationException exc) {
             throw new GsonLoadException(exc);
-        } catch (IllegalAccessException exc) {
+        }
+        catch (IllegalAccessException exc) {
             throw new GsonLoadException(exc);
         }
     }
@@ -90,7 +87,8 @@ public class GsonLoader {
     public <T> T load(File file, Type klass) throws GsonLoadException {
         try {
             return unsafeLoad(file, klass);
-        } catch (IOException exc) {
+        }
+        catch (IOException exc) {
             throw new GsonLoadException(exc);
         }
     }
@@ -102,7 +100,8 @@ public class GsonLoader {
             throws GsonLoadException {
         try {
             return unsafeLoad(file, typeToken.getRawType());
-        } catch (IOException exc) {
+        }
+        catch (IOException exc) {
             throw new GsonLoadException(exc);
         }
     }
@@ -114,7 +113,8 @@ public class GsonLoader {
 
         try {
             return gson.fromJson(reader, klass);
-        } finally {
+        }
+        finally {
             reader.close();
         }
     }
@@ -126,7 +126,8 @@ public class GsonLoader {
             throws GsonLoadException {
         try {
             write(getFile(filename), instance);
-        } catch (IOException exc) {
+        }
+        catch (IOException exc) {
             throw new GsonLoadException(exc);
         }
     }
@@ -138,7 +139,8 @@ public class GsonLoader {
 
         try {
             writer.write(gson.toJson(instance));
-        } finally {
+        }
+        finally {
             writer.close();
         }
     }

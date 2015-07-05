@@ -1,25 +1,15 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
 import fr.aumgn.bukkitutils.itemtype.ItemType;
-
 import fr.aumgn.bukkitutils.util.Util;
+import org.bukkit.Material;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class ItemTypeArg extends AsbtractSenderArg<ItemType> {
-
-    public static class InvalidItemTypeFormat extends CommandError {
-        private static final long serialVersionUID = 1L;
-
-        public InvalidItemTypeFormat(CommandsMessages messages, String given) {
-            super(messages.invalidMaterialAndDataFormat(given));
-        }
-    }
 
     private final CommandsMessages messages;
 
@@ -59,5 +49,13 @@ public class ItemTypeArg extends AsbtractSenderArg<ItemType> {
     @Override
     protected String missingPermOtherMessage(String permission) {
         return messages.missingPermissionForOther(permission);
+    }
+
+    public static class InvalidItemTypeFormat extends CommandError {
+        private static final long serialVersionUID = 1L;
+
+        public InvalidItemTypeFormat(CommandsMessages messages, String given) {
+            super(messages.invalidMaterialAndDataFormat(given));
+        }
     }
 }

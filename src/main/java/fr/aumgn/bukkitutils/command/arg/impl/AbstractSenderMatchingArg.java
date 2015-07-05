@@ -1,14 +1,13 @@
 package fr.aumgn.bukkitutils.command.arg.impl;
 
-import java.util.Collections;
-import java.util.List;
-
-import org.bukkit.command.CommandSender;
-
 import fr.aumgn.bukkitutils.command.arg.MatchingArg;
 import fr.aumgn.bukkitutils.command.arg.SenderArg;
 import fr.aumgn.bukkitutils.command.arg.SenderMatchingArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
+import org.bukkit.command.CommandSender;
+
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractSenderMatchingArg<V>
         extends AsbtractSenderArg<V>

@@ -1,15 +1,14 @@
 package fr.aumgn.bukkitutils.geom;
 
-import java.util.Iterator;
-
+import fr.aumgn.bukkitutils.geom.direction.Vector2DDirection;
+import fr.aumgn.bukkitutils.geom.vector.Vector2DIterator;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
-import fr.aumgn.bukkitutils.geom.direction.Vector2DDirection;
-import fr.aumgn.bukkitutils.geom.vector.Vector2DIterator;
+import java.util.Iterator;
 
 /**
  * Immutable Vector2D class.
@@ -50,6 +49,10 @@ public class Vector2D implements Iterable<Vector2D> {
         return x;
     }
 
+    public Vector2D setX(double x) {
+        return new Vector2D(x, z);
+    }
+
     public int getBlockX() {
         return (int) Math.round(x);
     }
@@ -58,16 +61,12 @@ public class Vector2D implements Iterable<Vector2D> {
         return z;
     }
 
-    public int getBlockZ() {
-        return (int) Math.round(z);
-    }
-
-    public Vector2D setX(double x) {
-        return new Vector2D(x, z);
-    }
-
     public Vector2D setZ(double z) {
         return new Vector2D(x, z);
+    }
+
+    public int getBlockZ() {
+        return (int) Math.round(z);
     }
 
     public Vector2D add(double i) {
@@ -219,7 +218,7 @@ public class Vector2D implements Iterable<Vector2D> {
 
     @Override
     public String toString() {
-        return "(" + x + ", " + + z + ")";
+        return "(" + x + ", " + +z + ")";
     }
 
     @Override
@@ -240,13 +239,9 @@ public class Vector2D implements Iterable<Vector2D> {
             return false;
         }
 
-        Vector2D o = (Vector2D) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(o.x)
-                || Double.doubleToLongBits(z) != Double.doubleToLongBits(o.z)) {
-            return false;
-        }
+        Vector2D other = (Vector2D) obj;
+        return x == other.x && z == other.z;
 
-        return true;
     }
 
     public boolean equalsBlock(Object obj) {
@@ -259,11 +254,7 @@ public class Vector2D implements Iterable<Vector2D> {
         }
 
         Vector2D other = (Vector2D) obj;
-        if (getBlockX() != other.getBlockX()
-                || getBlockZ() != other.getBlockZ()) {
-            return false;
-        }
+        return getBlockX() == other.getBlockX() && getBlockZ() == other.getBlockZ();
 
-        return true;
     }
 }

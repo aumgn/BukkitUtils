@@ -20,10 +20,12 @@ public class TimeArg extends AbstractCommandArg<Integer> {
     public Integer value() {
         try {
             return TimeUtil.parseTime(string);
-        } catch (UnknownTimeFormatException exc) {
+        }
+        catch (UnknownTimeFormatException exc) {
             throw new CommandError(
                     messages.unknownTimeFormat(exc.getTime()));
-        } catch (UnknownTimePeriodException exc) {
+        }
+        catch (UnknownTimePeriodException exc) {
             throw new CommandError(
                     messages.unknownTimePeriod(exc.getPeriod()));
         }

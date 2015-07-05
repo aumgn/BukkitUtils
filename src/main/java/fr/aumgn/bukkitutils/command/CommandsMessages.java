@@ -1,9 +1,9 @@
 package fr.aumgn.bukkitutils.command;
 
+import fr.aumgn.bukkitutils.localization.PluginMessages;
+
 import java.text.MessageFormat;
 import java.util.Map;
-
-import fr.aumgn.bukkitutils.localization.PluginMessages;
 
 public class CommandsMessages extends PluginMessages {
 

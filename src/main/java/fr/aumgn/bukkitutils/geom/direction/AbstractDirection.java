@@ -1,8 +1,8 @@
 package fr.aumgn.bukkitutils.geom.direction;
 
+import fr.aumgn.bukkitutils.geom.Direction;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-import fr.aumgn.bukkitutils.geom.Direction;
 import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateRotation;
 
 abstract class AbstractDirection implements Direction {
@@ -15,9 +15,9 @@ abstract class AbstractDirection implements Direction {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(41, 19)
-            .append(getYaw())
-            .append(getPitch())
-            .toHashCode();
+                .append(getYaw())
+                .append(getPitch())
+                .toHashCode();
     }
 
     @Override
@@ -31,14 +31,8 @@ abstract class AbstractDirection implements Direction {
         }
 
         Direction other = (Direction) obj;
-        if (getYaw() != other.getYaw()) {
-            return false;
-        }
-        if (getPitch() != other.getPitch()) {
-            return false;
-        }
+        return getYaw() == other.getYaw() && getPitch() == other.getPitch();
 
-        return true;
     }
 
     @Override

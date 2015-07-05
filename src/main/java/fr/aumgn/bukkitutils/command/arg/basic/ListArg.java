@@ -1,21 +1,15 @@
 package fr.aumgn.bukkitutils.command.arg.basic;
 
-import static java.util.Collections.singletonList;
+import com.google.common.collect.AbstractIterator;
+import com.google.common.collect.Iterators;
+import fr.aumgn.bukkitutils.command.arg.*;
+import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.bukkit.command.CommandSender;
-
-import com.google.common.collect.AbstractIterator;
-import com.google.common.collect.Iterators;
-
-import fr.aumgn.bukkitutils.command.arg.CommandArg;
-import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
-import fr.aumgn.bukkitutils.command.arg.MatchingArg;
-import fr.aumgn.bukkitutils.command.arg.SenderArg;
-import fr.aumgn.bukkitutils.command.arg.SenderMatchingArg;
+import static java.util.Collections.singletonList;
 
 public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
         MatchingArg<V>, SenderArg<List<V>>, SenderMatchingArg<V>, Iterable<T> {
@@ -25,7 +19,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
     private final CommandArgFactory<T> factory;
 
     public ListArg(String separator,
-            CommandArgFactory<T> factory, String string) {
+                   CommandArgFactory<T> factory, String string) {
         this.string = string;
         this.separator = separator;
         this.factory = factory;
@@ -63,7 +57,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link SenderArg} or
      * this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -87,7 +81,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link SenderArg} or
      * this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -112,7 +106,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link MatchingArg} or
      * this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @SuppressWarnings("unchecked")
@@ -138,7 +132,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link MatchingArg} or
      * this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -151,7 +145,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link MatchingArg} or
      * this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -168,7 +162,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link SenderMatchingArg}
      * or this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -192,7 +186,7 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
      * Note that the {@link CommandArg} type argument of
      * this ListArg must implement {@link SenderMatchingArg}
      * or this will throws an UnsupportedOperationException.
-     * 
+     *
      * @throws UnsupportedOperationException
      */
     @Override
@@ -216,10 +210,12 @@ public class ListArg<V, T extends CommandArg<V>> implements CommandArg<List<V>>,
     public Iterator<T> iterator() {
         if (string == null) {
             return Iterators.singletonIterator(factory.createCommandArg(null));
-        } else {
+        }
+        else {
             final String[] splitted = string.split(separator);
             return new AbstractIterator<T>() {
                 private int i = 0;
+
                 @Override
                 protected T computeNext() {
                     if (i == splitted.length) {

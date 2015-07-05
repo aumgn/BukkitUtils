@@ -1,15 +1,14 @@
 package fr.aumgn.bukkitutils.localization;
 
-import java.text.MessageFormat;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Set;
-import java.util.Map.Entry;
-
+import com.google.common.base.Preconditions;
 import org.apache.commons.lang.Validate;
 import org.bukkit.ChatColor;
 
-import com.google.common.base.Preconditions;
+import java.text.MessageFormat;
+import java.util.Collections;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 /**
  * A set of messages loaded with {@link Localization}

@@ -17,7 +17,8 @@ public class IntegerArg extends AbstractCommandArg<Integer> {
     public Integer value() {
         try {
             return Integer.parseInt(string);
-        } catch (NumberFormatException exc) {
+        }
+        catch (NumberFormatException exc) {
             throw new CommandUsageError(messages.notAValidNumber(string));
         }
     }

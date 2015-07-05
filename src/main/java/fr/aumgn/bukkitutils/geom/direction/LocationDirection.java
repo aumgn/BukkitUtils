@@ -1,10 +1,11 @@
 package fr.aumgn.bukkitutils.geom.direction;
 
-import org.bukkit.Location;
-
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
+import org.bukkit.Location;
+
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateVector;
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateVector2D;
 
 public final class LocationDirection extends AbstractDirection {
 

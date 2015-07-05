@@ -1,17 +1,5 @@
 package fr.aumgn.bukkitutils.command.executor;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.logging.Level;
-
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.Command;
 import fr.aumgn.bukkitutils.command.Commands;
 import fr.aumgn.bukkitutils.command.CommandsMessages;
@@ -21,6 +9,17 @@ import fr.aumgn.bukkitutils.command.exception.CommandException;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.glob.exceptions.GlobException;
 import fr.aumgn.bukkitutils.glob.exceptions.UnbalancedSquareBracketException;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.logging.Level;
 
 public class MethodCommandExecutor implements CommandExecutor {
 
@@ -36,8 +35,8 @@ public class MethodCommandExecutor implements CommandExecutor {
     private final boolean isPlayerCommand;
 
     public MethodCommandExecutor(CommandsMessages messages, Commands instance,
-            Method preExecute, Method method, int min, int max,
-            boolean strictFlags, String flags, String argsFlags) {
+                                 Method preExecute, Method method, int min, int max,
+                                 boolean strictFlags, String flags, String argsFlags) {
         this.messages = messages;
         this.instance = instance;
         this.preExecute = preExecute;
@@ -46,7 +45,8 @@ public class MethodCommandExecutor implements CommandExecutor {
         if (method.getParameterTypes().length > 1) {
             this.min = min;
             this.max = max;
-        } else {
+        }
+        else {
             this.min = -1;
             this.max = 0;
         }
@@ -64,7 +64,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     }
 
     public MethodCommandExecutor(CommandsMessages messages, Commands instance,
-            Method preExecute, Method method, Command command) {
+                                 Method preExecute, Method method, Command command) {
         this(messages, instance, preExecute, method, command.min(),
                 command.max(), command.strictFlags(), command.flags(),
                 command.argsFlags());
@@ -72,7 +72,7 @@ public class MethodCommandExecutor implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender,
-            org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
+                             org.bukkit.command.Command cmd, String lbl, String[] rawArgs) {
         if (isPlayerCommand && !(sender instanceof Player)) {
             sender.sendMessage(ChatColor.RED + messages.playerOnly());
             return true;
@@ -81,7 +81,8 @@ public class MethodCommandExecutor implements CommandExecutor {
             CommandArgs args;
             if (min >= 0) {
                 args = getArgs(rawArgs);
-            } else {
+            }
+            else {
                 if (rawArgs.length > 0) {
                     throw new CommandUsageError(
                             messages.tooManyArguments(rawArgs.length, 0));
@@ -89,43 +90,50 @@ public class MethodCommandExecutor implements CommandExecutor {
                 args = null;
             }
             callCommand(lbl, sender, args);
-        } catch (GlobException exc) {
+        }
+        catch (GlobException exc) {
             handleGlobException(exc);
-        } catch (CommandUsageError error) {
+        }
+        catch (CommandUsageError error) {
             sender.sendMessage(ChatColor.RED + error.getMessage());
             return false;
-        } catch (Throwable thr) {
+        }
+        catch (Throwable thr) {
             sender.sendMessage(ChatColor.RED + thr.getMessage());
         }
         return true;
     }
 
-    private CommandArgs getArgs(String[] rawArgs){
+    private CommandArgs getArgs(String[] rawArgs) {
         CommandArgsParser parser = new CommandArgsParser(messages, rawArgs);
         parser.validate(strictFlags, flags, argsFlags, min, max);
         return new CommandArgs(messages, parser);
     }
 
     private void callCommand(String name, CommandSender sender,
-            CommandArgs args) throws Throwable {
+                             CommandArgs args) throws Throwable {
         try {
             if (preExecute != null) {
                 preExecute.invoke(instance, sender, args);
             }
             if (args != null) {
                 method.invoke(instance, sender, args);
-            } else {
+            }
+            else {
                 method.invoke(instance, sender);
             }
-        } catch (InvocationTargetException exc) {
+        }
+        catch (InvocationTargetException exc) {
             Throwable cause = exc.getCause();
             if (cause instanceof CommandException) {
                 throw cause;
             }
             unhandledError(name, args, cause);
-        } catch (IllegalArgumentException exc) {
+        }
+        catch (IllegalArgumentException exc) {
             unhandledError(name, args, exc);
-        } catch (IllegalAccessException exc) {
+        }
+        catch (IllegalAccessException exc) {
             unhandledError(name, args, exc);
         }
     }
@@ -144,7 +152,7 @@ public class MethodCommandExecutor implements CommandExecutor {
     private void unhandledError(String name, CommandArgs args, Throwable exc) {
         if (!(exc instanceof org.bukkit.command.CommandException)) {
             Bukkit.getLogger().severe(
-                    "Exception occured while executing \""+ name + "\"");
+                    "Exception occured while executing \"" + name + "\"");
             if (args != null) {
                 if (args.hasFlags()) {
                     StringBuilder flagsString = new StringBuilder();

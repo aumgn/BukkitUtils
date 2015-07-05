@@ -71,7 +71,8 @@ public class ColorDataParser extends ItemTypeDataParser {
 
         if (data != null && dye) {
             return (short) (15 - data);
-        } else {
+        }
+        else {
             return data;
         }
     }

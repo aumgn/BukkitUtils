@@ -1,12 +1,11 @@
 package fr.aumgn.bukkitutils.playerref.map;
 
-import java.util.Map;
-import java.util.Set;
-
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import java.util.Map;
+import java.util.Set;
 
 public interface PlayersRefMap<T> extends Map<PlayerRef, T> {
 

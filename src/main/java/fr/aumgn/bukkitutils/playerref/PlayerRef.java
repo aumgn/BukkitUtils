@@ -1,13 +1,13 @@
 package fr.aumgn.bukkitutils.playerref;
 
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
-
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 /**
  * Hold a reference to a player.
@@ -15,7 +15,14 @@ import org.bukkit.entity.Player;
 public final class PlayerRef {
 
     private static final Map<String, PlayerRef> playersRef =
-                new HashMap<String, PlayerRef>();
+            new HashMap<String, PlayerRef>();
+    private final String name;
+    private transient WeakReference<Player> ref;
+
+    private PlayerRef(String name) {
+        this.name = name;
+        this.ref = new WeakReference<Player>(null);
+    }
 
     public static PlayerRef get(OfflinePlayer player) {
         return get(player.getName());
@@ -30,14 +37,6 @@ public final class PlayerRef {
         return playersRef.get(lname);
     }
 
-    private final String name;
-    private transient WeakReference<Player> ref;
-
-    private PlayerRef(String name) {
-        this.name = name;
-        this.ref = new WeakReference<Player>(null);
-    }
-
     public String getName() {
         return name;
     }
@@ -46,7 +45,8 @@ public final class PlayerRef {
         Player player = getPlayer();
         if (player != null) {
             return player.getDisplayName();
-        } else {
+        }
+        else {
             return getName();
         }
     }
@@ -75,11 +75,7 @@ public final class PlayerRef {
 
     @Override
     public boolean equals(Object other) {
-        if (!(other instanceof PlayerRef)) {
-            return false;
-        }
-
-        return name.equals(((PlayerRef) other).name);
+        return other instanceof PlayerRef && name.equals(((PlayerRef) other).name);
     }
 
     @Override

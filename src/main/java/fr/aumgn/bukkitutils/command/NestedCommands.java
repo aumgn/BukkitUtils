@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * Defines a set of nested commands.
- *
+ * <p/>
  * All {@link Commands} subclasses which has this
  * annotation will prepend the given prefix to
- * their commands when registered. 
+ * their commands when registered.
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

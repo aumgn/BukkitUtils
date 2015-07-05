@@ -1,17 +1,16 @@
 package fr.aumgn.bukkitutils.util;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 
-import fr.aumgn.bukkitutils.itemtype.ItemTypeDataParser;
+import java.util.List;
+import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public final class Util {
 
@@ -58,7 +57,7 @@ public final class Util {
     }
 
     /**
-     * Broadcast the message to all players 
+     * Broadcast the message to all players
      * who have the given permission.
      * Do not send it to Console contrary to
      * {@link Bukkit#broadcastMessage(String)}
@@ -72,7 +71,7 @@ public final class Util {
     }
 
     /**
-     * Match a material. Wraps 
+     * Match a material. Wraps
      * {@link Material#matchMaterial(String)}
      * and add an support for `dye`.
      */
@@ -93,7 +92,8 @@ public final class Util {
     public static Short parseDataFor(Material material, String token) {
         try {
             return Short.parseShort(token);
-        } catch (NumberFormatException exc) {
+        }
+        catch (NumberFormatException exc) {
         }
 
         ItemTypeDataParser parser = ItemTypeDataParser.getFor(material);
@@ -116,7 +116,8 @@ public final class Util {
                 ChatColor color = ChatColor.valueOf(matcher.group(1)
                         .toUpperCase());
                 matcher.appendReplacement(parsed, color.toString());
-            } catch (IllegalArgumentException exc) {
+            }
+            catch (IllegalArgumentException exc) {
             }
         }
         matcher.appendTail(parsed);
@@ -125,25 +126,27 @@ public final class Util {
 
     /**
      * Parse a locale identifier into a Locale.
-     * Returns the system default Locale if 
-     * the string is invalid. 
+     * Returns the system default Locale if
+     * the string is invalid.
      */
     public static Locale parseLocale(String localeStr) {
         return parseLocale(localeStr, "_");
     }
 
     /**
-     * Parse a locale identifier into a Locale using 
-     * the given delimiter. Returns the system 
-     * default Locale if the string is invalid. 
+     * Parse a locale identifier into a Locale using
+     * the given delimiter. Returns the system
+     * default Locale if the string is invalid.
      */
     public static Locale parseLocale(String localeStr, String delimiter) {
         String[] splitted = localeStr.split(delimiter);
         if (splitted.length == 0) {
             return Locale.getDefault();
-        } else if (splitted.length == 1) {
+        }
+        else if (splitted.length == 1) {
             return new Locale(splitted[0]);
-        } else {
+        }
+        else {
             return new Locale(splitted[0], splitted[1]);
         }
     }

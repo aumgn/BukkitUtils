@@ -1,9 +1,8 @@
 package fr.aumgn.bukkitutils.command.arg.impl;
 
-import org.bukkit.command.CommandSender;
-
 import fr.aumgn.bukkitutils.command.arg.SenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
+import org.bukkit.command.CommandSender;
 
 public abstract class AsbtractSenderArg<V>
         extends AbstractCommandArg<V> implements SenderArg<V> {

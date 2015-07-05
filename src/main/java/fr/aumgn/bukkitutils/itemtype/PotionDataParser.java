@@ -1,16 +1,16 @@
 package fr.aumgn.bukkitutils.itemtype;
 
-import java.util.Locale;
-
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
+
+import java.util.Locale;
 
 public class PotionDataParser extends ItemTypeDataParser {
 
     @Override
     public Short parse(String rawToken) {
         String token = rawToken;
-        PotionType type = null;
+        PotionType type;
         int level = 1;
         boolean splash = false;
         boolean extended = false;
@@ -29,20 +29,23 @@ public class PotionDataParser extends ItemTypeDataParser {
         if (Character.isDigit(lastChar)) {
             try {
                 level = Integer.parseInt(String.valueOf(lastChar));
-            } catch (NumberFormatException exc) {
+            }
+            catch (NumberFormatException exc) {
             }
             token = token.substring(0, token.length() - 1);
         }
 
         try {
             type = PotionType.valueOf(token.toUpperCase(Locale.ENGLISH));
-        } catch (IllegalArgumentException exc) {
+        }
+        catch (IllegalArgumentException exc) {
             return null;
         }
 
         if (level < 1) {
             level = 1;
-        } else if (level > type.getMaxLevel()) {
+        }
+        else if (level > type.getMaxLevel()) {
             level = type.getMaxLevel();
         }
 

@@ -1,20 +1,18 @@
 package fr.aumgn.bukkitutils.playerref.list;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
 import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import fr.aumgn.bukkitutils.playerref.PlayersIterable;
 import fr.aumgn.bukkitutils.playerref.ToOfflinePlayer;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayersRefArrayList
-            extends ArrayList<PlayerRef> implements PlayersRefList {
+        extends ArrayList<PlayerRef> implements PlayersRefList {
 
     private static final long serialVersionUID = -921106024183437981L;
 

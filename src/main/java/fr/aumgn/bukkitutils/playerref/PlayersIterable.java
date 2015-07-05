@@ -1,12 +1,22 @@
 package fr.aumgn.bukkitutils.playerref;
 
-import java.util.Iterator;
-
+import com.google.common.collect.AbstractIterator;
 import org.bukkit.entity.Player;
 
-import com.google.common.collect.AbstractIterator;
+import java.util.Iterator;
 
 public class PlayersIterable implements Iterable<Player> {
+
+    private final PlayersIterator iterator;
+
+    public PlayersIterable(Iterable<PlayerRef> iterable) {
+        this.iterator = new PlayersIterator(iterable.iterator());
+    }
+
+    @Override
+    public Iterator<Player> iterator() {
+        return iterator;
+    }
 
     private static class PlayersIterator extends AbstractIterator<Player> {
 
@@ -26,16 +36,5 @@ public class PlayersIterable implements Iterable<Player> {
 
             return endOfData();
         }
-    }
-
-    private final PlayersIterator iterator;
-
-    public PlayersIterable(Iterable<PlayerRef> iterable) {
-        this.iterator = new PlayersIterator(iterable.iterator());
-    }
-
-    @Override
-    public Iterator<Player> iterator() {
-        return iterator;
     }
 }

@@ -1,10 +1,9 @@
 package fr.aumgn.bukkitutils.playerref.map;
 
-import java.util.Map.Entry;
-
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import org.bukkit.OfflinePlayer;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import java.util.Map.Entry;
 
 public class OfflinePlayerMapEntry<T> implements Entry<OfflinePlayer, T> {
 

@@ -1,16 +1,12 @@
 package fr.aumgn.bukkitutils.command.args;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.CommandArg;
 import fr.aumgn.bukkitutils.command.arg.CommandArgFactory;
-import fr.aumgn.bukkitutils.command.arg.basic.ListArg;
 import fr.aumgn.bukkitutils.command.arg.basic.EnumArg;
+import fr.aumgn.bukkitutils.command.arg.basic.ListArg;
+
+import java.util.*;
 
 public class CommandArgsBase {
 
@@ -119,7 +115,7 @@ public class CommandArgsBase {
      * the given factory for the given index.
      */
     public <T extends CommandArg<?>> T get(int index,
-            CommandArgFactory<T> factory) {
+                                           CommandArgFactory<T> factory) {
         return factory.createCommandArg(getOrNull(index));
     }
 
@@ -128,7 +124,7 @@ public class CommandArgsBase {
      * the given factory for the given argument flag.
      */
     public <T extends CommandArg<?>> T get(char flag,
-            CommandArgFactory<T> factory) {
+                                           CommandArgFactory<T> factory) {
         return factory.createCommandArg(getOrNull(flag));
     }
 
@@ -153,7 +149,7 @@ public class CommandArgsBase {
      * corresponding to the given factory for the given index.
      */
     public <V, T extends CommandArg<V>> ListArg<V, T> getList(int index,
-            CommandArgFactory<T> factory) {
+                                                              CommandArgFactory<T> factory) {
         return new ListArg<V, T>(",", factory, getOrNull(index));
     }
 
@@ -163,7 +159,7 @@ public class CommandArgsBase {
      * using the given separator.
      */
     public <V, T extends CommandArg<V>> ListArg<V, T> getList(int index,
-            CommandArgFactory<T> factory, String separator) {
+                                                              CommandArgFactory<T> factory, String separator) {
         return new ListArg<V, T>(separator, factory, getOrNull(index));
     }
 
@@ -172,7 +168,7 @@ public class CommandArgsBase {
      * corresponding to the given factory for the given flag.
      */
     public <V, T extends CommandArg<V>> ListArg<V, T> getList(char flag,
-            CommandArgFactory<T> factory) {
+                                                              CommandArgFactory<T> factory) {
         return new ListArg<V, T>(",", factory, getOrNull(flag));
     }
 
@@ -182,12 +178,12 @@ public class CommandArgsBase {
      * using the given separator.
      */
     public <V, T extends CommandArg<V>> ListArg<V, T> getList(char flag,
-            CommandArgFactory<T> factory, String separator) {
+                                                              CommandArgFactory<T> factory, String separator) {
         return new ListArg<V, T>(separator, factory, getOrNull(flag));
     }
 
     private <T extends Enum<T>> CommandArgFactory<EnumArg<T>>
-            enumArgFactory(final Class<T> enumClass) {
+    enumArgFactory(final Class<T> enumClass) {
         return new CommandArgFactory<EnumArg<T>>() {
             @Override
             public EnumArg<T> createCommandArg(String string) {
@@ -201,7 +197,7 @@ public class CommandArgsBase {
      * corresponding to the given enum class for the given index.
      */
     public <T extends Enum<T>> ListArg<T, EnumArg<T>> getList(int index,
-            Class<T> klass) {
+                                                              Class<T> klass) {
         return new ListArg<T, EnumArg<T>>(",", enumArgFactory(klass),
                 getOrNull(index));
     }
@@ -212,7 +208,7 @@ public class CommandArgsBase {
      * using the given separator.
      */
     public <T extends Enum<T>> ListArg<T, EnumArg<T>> getList(int index,
-            final Class<T> klass, String separator) {
+                                                              final Class<T> klass, String separator) {
         return new ListArg<T, EnumArg<T>>(separator, enumArgFactory(klass),
                 getOrNull(index));
     }
@@ -222,7 +218,7 @@ public class CommandArgsBase {
      * corresponding to the given enum class for the given flag.
      */
     public <T extends Enum<T>> ListArg<T, EnumArg<T>> getList(char flag,
-            final Class<T> klass) {
+                                                              final Class<T> klass) {
         return new ListArg<T, EnumArg<T>>(",", enumArgFactory(klass),
                 getOrNull(flag));
     }
@@ -233,7 +229,7 @@ public class CommandArgsBase {
      * using the given separator.
      */
     public <T extends Enum<T>> ListArg<T, EnumArg<T>> getList(char flag,
-            final Class<T> klass, String separator) {
+                                                              final Class<T> klass, String separator) {
         return new ListArg<T, EnumArg<T>>(separator, enumArgFactory(klass),
                 getOrNull(flag));
     }
@@ -246,7 +242,8 @@ public class CommandArgsBase {
         int endIndex;
         if (rawEndIndex > -1) {
             endIndex = rawEndIndex;
-        } else {
+        }
+        else {
             endIndex = args.length - 1;
         }
         StringBuilder builder = new StringBuilder();

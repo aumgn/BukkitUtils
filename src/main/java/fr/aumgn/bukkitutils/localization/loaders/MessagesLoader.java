@@ -1,13 +1,13 @@
 package fr.aumgn.bukkitutils.localization.loaders;
 
+import fr.aumgn.bukkitutils.util.Util;
+
 import java.io.Reader;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
-
-import fr.aumgn.bukkitutils.util.Util;
 
 /**
  * Interfaces for classes which load messages

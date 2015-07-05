@@ -1,17 +1,16 @@
 package fr.aumgn.bukkitutils.playerref.map;
 
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
-
 public class PlayersRefHashMap<T>
-            extends HashMap<PlayerRef, T> implements PlayersRefMap<T> {
+        extends HashMap<PlayerRef, T> implements PlayersRefMap<T> {
 
     private static final long serialVersionUID = -2270069935511356836L;
 

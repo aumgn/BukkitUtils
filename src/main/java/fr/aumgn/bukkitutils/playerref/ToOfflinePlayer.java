@@ -1,8 +1,7 @@
 package fr.aumgn.bukkitutils.playerref;
 
-import org.bukkit.OfflinePlayer;
-
 import com.google.common.base.Function;
+import org.bukkit.OfflinePlayer;
 
 public class ToOfflinePlayer implements Function<PlayerRef, OfflinePlayer> {
     @Override

@@ -17,7 +17,8 @@ public class DoubleArg extends AbstractCommandArg<Double> {
     public Double value() {
         try {
             return Double.parseDouble(string);
-        } catch (NumberFormatException exc) {
+        }
+        catch (NumberFormatException exc) {
             throw new CommandUsageError(messages.notAValidNumber(string));
         }
     }

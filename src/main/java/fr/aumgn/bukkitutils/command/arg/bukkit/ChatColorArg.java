@@ -1,21 +1,11 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
-import org.bukkit.ChatColor;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.impl.AbstractCommandArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
+import org.bukkit.ChatColor;
 
 public class ChatColorArg extends AbstractCommandArg<ChatColor> {
-
-    public static class NoSuchColor extends CommandError {
-
-        private static final long serialVersionUID = 2534023126371443961L;
-
-        public NoSuchColor(CommandsMessages messages, String name) {
-            super(messages.noSuchColor(name));
-        }
-    }
 
     private final CommandsMessages messages;
 
@@ -28,8 +18,18 @@ public class ChatColorArg extends AbstractCommandArg<ChatColor> {
     public ChatColor value() {
         try {
             return ChatColor.valueOf(string.toUpperCase());
-        } catch (IllegalArgumentException exc) {
+        }
+        catch (IllegalArgumentException exc) {
             throw new NoSuchColor(messages, string);
+        }
+    }
+
+    public static class NoSuchColor extends CommandError {
+
+        private static final long serialVersionUID = 2534023126371443961L;
+
+        public NoSuchColor(CommandsMessages messages, String name) {
+            super(messages.noSuchColor(name));
         }
     }
 }

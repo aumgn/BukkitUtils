@@ -1,15 +1,14 @@
 package fr.aumgn.bukkitutils.geom;
 
-import java.util.Iterator;
-
+import fr.aumgn.bukkitutils.geom.direction.VectorDirection;
+import fr.aumgn.bukkitutils.geom.vector.VectorIterator;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 
-import fr.aumgn.bukkitutils.geom.direction.VectorDirection;
-import fr.aumgn.bukkitutils.geom.vector.VectorIterator;
+import java.util.Iterator;
 
 /**
  * Immutable Vector class.
@@ -53,12 +52,20 @@ public class Vector implements Iterable<Vector> {
         return x;
     }
 
+    public Vector setX(double x) {
+        return new Vector(x, y, z);
+    }
+
     public int getBlockX() {
         return (int) Math.round(x);
     }
 
     public double getY() {
         return y;
+    }
+
+    public Vector setY(double y) {
+        return new Vector(x, y, z);
     }
 
     public int getBlockY() {
@@ -69,20 +76,12 @@ public class Vector implements Iterable<Vector> {
         return z;
     }
 
-    public int getBlockZ() {
-        return (int) Math.round(z);
-    }
-
-    public Vector setX(double x) {
-        return new Vector(x, y, z);
-    }
-
-    public Vector setY(double y) {
-        return new Vector(x, y, z);
-    }
-
     public Vector setZ(double z) {
         return new Vector(x, y, z);
+    }
+
+    public int getBlockZ() {
+        return (int) Math.round(z);
     }
 
     public Vector add(double i) {
@@ -277,13 +276,7 @@ public class Vector implements Iterable<Vector> {
         }
 
         Vector o = (Vector) obj;
-        if (Double.doubleToLongBits(x) != Double.doubleToLongBits(o.x)
-                || Double.doubleToLongBits(y) != Double.doubleToLongBits(o.y)
-                || Double.doubleToLongBits(z) != Double.doubleToLongBits(o.z)) {
-            return false;
-        }
-
-        return true;
+        return x == o.x && y == o.y && z == o.z;
     }
 
     public boolean equalsBlock(Object obj) {
@@ -296,12 +289,8 @@ public class Vector implements Iterable<Vector> {
         }
 
         Vector other = (Vector) obj;
-        if (getBlockX() != other.getBlockX()
-                || getBlockY() != other.getBlockY()
-                || getBlockZ() != other.getBlockZ()) {
-            return false;
-        }
-
-        return true;
+        return getBlockX() == other.getBlockX()
+                && getBlockY() == other.getBlockY()
+                && getBlockZ() == other.getBlockZ();
     }
 }

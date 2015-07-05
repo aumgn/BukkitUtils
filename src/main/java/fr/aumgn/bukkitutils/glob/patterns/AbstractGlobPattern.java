@@ -1,12 +1,12 @@
 package fr.aumgn.bukkitutils.glob.patterns;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import fr.aumgn.bukkitutils.glob.GlobPattern;
 import fr.aumgn.bukkitutils.glob.matchers.GlobMatcher;
 import fr.aumgn.bukkitutils.glob.matchers.GlobParser;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class AbstractGlobPattern<T> implements GlobPattern<T> {
 

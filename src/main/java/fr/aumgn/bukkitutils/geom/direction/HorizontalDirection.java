@@ -3,7 +3,9 @@ package fr.aumgn.bukkitutils.geom.direction;
 import fr.aumgn.bukkitutils.geom.Direction;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
-import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.*;
+
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateHorizontalRotation;
+import static fr.aumgn.bukkitutils.geom.direction.DirectionUtil.calculateVector2D;
 
 public final class HorizontalDirection extends AbstractDirection {
 

@@ -1,9 +1,9 @@
 package fr.aumgn.bukkitutils.geom.vector;
 
+import fr.aumgn.bukkitutils.geom.Vector;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import fr.aumgn.bukkitutils.geom.Vector;
 
 public class VectorIterator implements Iterator<Vector> {
 

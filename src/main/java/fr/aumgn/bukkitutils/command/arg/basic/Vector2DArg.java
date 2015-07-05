@@ -1,13 +1,12 @@
 package fr.aumgn.bukkitutils.command.arg.basic;
 
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.impl.AsbtractSenderArg;
 import fr.aumgn.bukkitutils.command.exception.CommandUsageError;
 import fr.aumgn.bukkitutils.geom.Vector;
 import fr.aumgn.bukkitutils.geom.Vector2D;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class Vector2DArg extends AsbtractSenderArg<Vector2D> {
 

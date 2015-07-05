@@ -1,39 +1,22 @@
 package fr.aumgn.bukkitutils.glob;
 
-import java.util.Locale;
-
 import com.google.common.base.Function;
-
 import fr.aumgn.bukkitutils.glob.patterns.GenericGlobPattern;
 import fr.aumgn.bukkitutils.glob.patterns.StringCIGlobPattern;
 import fr.aumgn.bukkitutils.glob.patterns.StringGlobPattern;
 import fr.aumgn.bukkitutils.glob.patterns.WildcardGlobPattern;
+
+import java.util.Locale;
 
 /**
  * GlobPattern builder class.
  */
 public class Glob {
 
-    private static class CaseInsensitiveToString<T>
-            implements Function<T, String> {
-
-        private final Function<T, String> toString;
-
-        public CaseInsensitiveToString(Function<T, String> toString) {
-            this.toString = toString;
-        }
-
-        @Override
-        public String apply(T obj) {
-            return toString.apply(obj).toLowerCase(Locale.ENGLISH);
-        }
-    }
-
     private final String rawPattern;
     private boolean partialStart;
     private boolean partialEnd;
     private boolean caseInsensitive;
-
     public Glob(String pattern) {
         this.rawPattern = pattern;
         this.partialStart = false;
@@ -121,13 +104,14 @@ public class Glob {
      * Construct the {@link GlobPattern}.
      */
     public GlobPattern<String> build() {
-        if (rawPattern == "*") {
+        if (rawPattern.equals("*")) {
             return new WildcardGlobPattern<String>();
         }
 
         if (caseInsensitive) {
             return new StringCIGlobPattern(getPattern());
-        } else {
+        }
+        else {
             return new StringGlobPattern(getPattern());
         }
     }
@@ -140,11 +124,26 @@ public class Glob {
             return new WildcardGlobPattern<T>();
         }
 
-        Function<T, String> caseAwareToString = toString; 
+        Function<T, String> caseAwareToString = toString;
         if (caseInsensitive) {
             caseAwareToString = new CaseInsensitiveToString<T>(toString);
         }
 
         return new GenericGlobPattern<T>(getPattern(), caseAwareToString);
+    }
+
+    private static class CaseInsensitiveToString<T>
+            implements Function<T, String> {
+
+        private final Function<T, String> toString;
+
+        public CaseInsensitiveToString(Function<T, String> toString) {
+            this.toString = toString;
+        }
+
+        @Override
+        public String apply(T obj) {
+            return toString.apply(obj).toLowerCase(Locale.ENGLISH);
+        }
     }
 }

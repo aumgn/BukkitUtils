@@ -19,7 +19,8 @@ public class PropertiesMessagesLoader extends MessagesLoader {
         try {
             properties.load(reader);
             return properties;
-        } catch (IOException exc) {
+        }
+        catch (IOException exc) {
             return Collections.<String, String>emptyMap();
         }
     }

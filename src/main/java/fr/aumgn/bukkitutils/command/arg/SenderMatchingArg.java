@@ -1,8 +1,8 @@
 package fr.aumgn.bukkitutils.command.arg;
 
-import java.util.List;
-
 import org.bukkit.command.CommandSender;
+
+import java.util.List;
 
 public interface SenderMatchingArg<V> {
 

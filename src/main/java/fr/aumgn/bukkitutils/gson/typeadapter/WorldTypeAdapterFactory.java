@@ -1,19 +1,17 @@
 package fr.aumgn.bukkitutils.gson.typeadapter;
 
-import java.io.IOException;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-
 import com.google.gson.Gson;
 import com.google.gson.TypeAdapter;
 import com.google.gson.TypeAdapterFactory;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-
 import fr.aumgn.bukkitutils.gson.GsonLoadRuntimeException;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+
+import java.io.IOException;
+import java.util.UUID;
 
 @SuppressWarnings("unchecked")
 public class WorldTypeAdapterFactory implements TypeAdapterFactory {

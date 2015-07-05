@@ -1,10 +1,9 @@
 package fr.aumgn.bukkitutils.playerref.map;
 
-import java.util.Map.Entry;
-
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import java.util.Map.Entry;
 
 public class PlayerMapEntry<T> implements Entry<Player, T> {
 

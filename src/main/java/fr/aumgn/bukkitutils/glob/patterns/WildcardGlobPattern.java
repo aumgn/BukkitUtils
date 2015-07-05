@@ -1,10 +1,10 @@
 package fr.aumgn.bukkitutils.glob.patterns;
 
+import fr.aumgn.bukkitutils.glob.GlobPattern;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import fr.aumgn.bukkitutils.glob.GlobPattern;
 
 public class WildcardGlobPattern<T> implements GlobPattern<T> {
 
@@ -15,7 +15,7 @@ public class WildcardGlobPattern<T> implements GlobPattern<T> {
 
     @Override
     public List<T> filter(T... objects) {
-        return Arrays.<T>asList(objects);
+        return Arrays.asList(objects);
     }
 
     @Override

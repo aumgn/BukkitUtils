@@ -10,7 +10,7 @@ public class MonsterEggDataParser extends ItemTypeDataParser {
         if (entityType != null) {
             int id = entityType.getTypeId();
             if (validate(id)) {
-                return (short) id; 
+                return (short) id;
             }
         }
 
@@ -18,18 +18,9 @@ public class MonsterEggDataParser extends ItemTypeDataParser {
     }
 
     private boolean validate(int id) {
-        if (id >= 50 && id <= 52) {
-            return true;
-        }
-
-        if (id >= 54 && id <= 62) {
-            return true;
-        }
-
-        if (id >= 90 && id <= 98) {
-            return true;
-        }
-
-        return (id == 98 || id == 120);
+        return id >= 50 && id <= 52
+                || id >= 54 && id <= 62
+                || id >= 90 && id <= 98
+                || (id == 98 || id == 120);
     }
 }

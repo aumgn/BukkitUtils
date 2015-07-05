@@ -1,11 +1,10 @@
 package fr.aumgn.bukkitutils.playerref.list;
 
-import java.util.List;
-
+import fr.aumgn.bukkitutils.playerref.PlayerRef;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import fr.aumgn.bukkitutils.playerref.PlayerRef;
+import java.util.List;
 
 public interface PlayersRefList extends List<PlayerRef> {
 

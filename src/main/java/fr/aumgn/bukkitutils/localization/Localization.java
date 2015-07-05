@@ -1,85 +1,71 @@
 package fr.aumgn.bukkitutils.localization;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.MessageFormat;
-import java.util.ArrayDeque;
-import java.util.Deque;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.Set;
-
-import org.bukkit.plugin.java.JavaPlugin;
-
 import com.google.common.base.Charsets;
-
 import fr.aumgn.bukkitutils.localization.loaders.JsonMessagesLoader;
 import fr.aumgn.bukkitutils.localization.loaders.MessagesLoader;
 import fr.aumgn.bukkitutils.localization.loaders.PropertiesMessagesLoader;
 import fr.aumgn.bukkitutils.localization.loaders.YamlMessagesLoader;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.text.MessageFormat;
+import java.util.*;
 
 /**
  * Class which handles loading of localization
  * resources for the given plugin and locale.
- *
+ * <p/>
  * This class looks for resources in the plugin's jarfile
  * (in the plugin's package) and in the plugin's data folder.
- *
+ * <p/>
  * Resources are defined by a name to which is appended
  * a suffix corresponding to the locale.
- *
+ * <p/>
  * For example if you're looking for a resource with the
  * name "messages" for the plugin MyPlugin whose main class
  * is "fr.aumgn.myplugin.MyPlugin" and the locale "fr_FR",
  * the class will go through all this steps :
  * <ul>
- *   <li>
- *     Looks for the resource
- *     fr/aumgn/myplugin/messages_en.{json,yml,properties}
- *     in the jarfile
- *   </li>
- *   <li>
- *     Looks for the resource
- *     [server]/plugins/MyPlugin/messages_en.{json,yml,properties}
- *   </li>
- *   <li>
- *     Looks for the resource
- *     fr/aumgn/myplugin/messages_en_US.{json,yml,properties}
- *     in the jarfile
- *   </li>
- *   <li>
- *     Looks for the resource
- *     [server]/plugins/MyPlugin/messages_en_US.{json,yml,properties}
- *   </li>
- *   <li>
- *     Looks for the resource
- *     fr/aumgn/myplugin/messages_fr.{json,yml,properties}
- *     in the jarfile
- *   </li>
- *   <li>
- *     Looks for the resource
- *     [server]/plugins/MyPlugin/messages_fr.{json,yml,properties}
- *   </li>
- *   <li>
- *     Looks for the resource
- *     fr/aumgn/myplugin/messages_fr_FR.{json,yml,properties}
- *     in the jarfile
- *   </li>
- *   <li>
- *     Looks for the resource
- *     [server]/plugins/MyPlugin/messages_fr_FR.{json,yml,properties}
- *   </li>
+ * <li>
+ * Looks for the resource
+ * fr/aumgn/myplugin/messages_en.{json,yml,properties}
+ * in the jarfile
+ * </li>
+ * <li>
+ * Looks for the resource
+ * [server]/plugins/MyPlugin/messages_en.{json,yml,properties}
+ * </li>
+ * <li>
+ * Looks for the resource
+ * fr/aumgn/myplugin/messages_en_US.{json,yml,properties}
+ * in the jarfile
+ * </li>
+ * <li>
+ * Looks for the resource
+ * [server]/plugins/MyPlugin/messages_en_US.{json,yml,properties}
+ * </li>
+ * <li>
+ * Looks for the resource
+ * fr/aumgn/myplugin/messages_fr.{json,yml,properties}
+ * in the jarfile
+ * </li>
+ * <li>
+ * Looks for the resource
+ * [server]/plugins/MyPlugin/messages_fr.{json,yml,properties}
+ * </li>
+ * <li>
+ * Looks for the resource
+ * fr/aumgn/myplugin/messages_fr_FR.{json,yml,properties}
+ * in the jarfile
+ * </li>
+ * <li>
+ * Looks for the resource
+ * [server]/plugins/MyPlugin/messages_fr_FR.{json,yml,properties}
+ * </li>
  * </ul>
- *
+ * <p/>
  * Each values find in a loaded resources has priority
  * over values find in previous resources.
  */
@@ -89,6 +75,38 @@ public class Localization {
 
     private static final Deque<MessagesLoader> loaders =
             new ArrayDeque<MessagesLoader>();
+
+    static {
+        register(new PropertiesMessagesLoader());
+        register(new YamlMessagesLoader());
+        register(new JsonMessagesLoader());
+    }
+
+    protected final JavaPlugin plugin;
+    protected final Locale[] locales;
+    private final File dir;
+
+    public Localization(JavaPlugin plugin) {
+        this(plugin, DEFAULT_LOCALE);
+    }
+    public Localization(JavaPlugin plugin, Locale targetLocale) {
+        this(plugin, plugin.getDataFolder(), targetLocale);
+    }
+    public Localization(JavaPlugin plugin, Locale targetLocale,
+                        Locale fallbackLocale) {
+        this(plugin, plugin.getDataFolder(), targetLocale, fallbackLocale);
+    }
+
+    public Localization(JavaPlugin plugin, File dir, Locale targetLocale) {
+        this(plugin, dir, targetLocale, DEFAULT_LOCALE);
+    }
+
+    public Localization(JavaPlugin plugin, File dir, Locale targetLocale,
+                        Locale fallbackLocale) {
+        this.plugin = plugin;
+        this.dir = dir;
+        this.locales = localesLookupFor(targetLocale, fallbackLocale);
+    }
 
     /**
      * Registers a MessagesLoader.
@@ -106,14 +124,8 @@ public class Localization {
         };
     }
 
-    static {
-        register(new PropertiesMessagesLoader());
-        register(new YamlMessagesLoader());
-        register(new JsonMessagesLoader());
-    }
-
     public static Locale[] localesLookupFor(Locale targetLocale,
-            Locale fallbackLocale) {
+                                            Locale fallbackLocale) {
         Set<Locale> localesSet = new LinkedHashSet<Locale>(4);
         localesSet.add(targetLocale);
         localesSet.add(new Locale(targetLocale.getLanguage()));
@@ -126,34 +138,6 @@ public class Localization {
             i--;
         }
         return locales;
-    }
-
-    protected final JavaPlugin plugin;
-    private final File dir;
-    protected final Locale[] locales;
-
-    public Localization(JavaPlugin plugin) {
-        this(plugin, DEFAULT_LOCALE);
-    }
-
-    public Localization(JavaPlugin plugin, Locale targetLocale) {
-        this(plugin, plugin.getDataFolder(), targetLocale);
-    }
-
-    public Localization(JavaPlugin plugin, Locale targetLocale,
-            Locale fallbackLocale) {
-        this(plugin,  plugin.getDataFolder(), targetLocale, fallbackLocale);
-    }
-
-    public Localization(JavaPlugin plugin, File dir, Locale targetLocale) {
-        this(plugin, dir, targetLocale, DEFAULT_LOCALE);
-    }
-
-    public Localization(JavaPlugin plugin, File dir, Locale targetLocale,
-            Locale fallbackLocale) {
-        this.plugin = plugin;
-        this.dir = dir;
-        this.locales = localesLookupFor(targetLocale, fallbackLocale);
     }
 
     /**
@@ -172,24 +156,25 @@ public class Localization {
     }
 
     protected void load(Map<String, MessageFormat> map, Locale locale,
-            String name) {
+                        String name) {
         loadBundled(map, locale, name);
         loadUser(map, locale, name);
     }
 
     protected void loadStream(Map<String, MessageFormat> map, Locale locale,
-            MessagesLoader loader, InputStream iStream) {
+                              MessagesLoader loader, InputStream iStream) {
         Reader reader =
                 new InputStreamReader(iStream, Charsets.UTF_8);
         map.putAll(loader.load(locale, reader));
         try {
             reader.close();
-        } catch (IOException exc) {
+        }
+        catch (IOException exc) {
         }
     }
 
-    private void loadBundled(Map<String, MessageFormat> map,  Locale locale,
-            String baseName) {
+    private void loadBundled(Map<String, MessageFormat> map, Locale locale,
+                             String baseName) {
         if (plugin == null) {
             return;
         }
@@ -205,7 +190,8 @@ public class Localization {
                         URLConnection connection = res.openConnection();
                         connection.setUseCaches(false);
                         iStream = connection.getInputStream();
-                    } catch (IOException _) {
+                    }
+                    catch (IOException _) {
                     }
                 }
 
@@ -218,7 +204,7 @@ public class Localization {
     }
 
     private void loadUser(Map<String, MessageFormat> map, Locale locale,
-            String baseName) {
+                          String baseName) {
         if (dir == null) {
             return;
         }
@@ -232,7 +218,8 @@ public class Localization {
                     try {
                         InputStream iStream = new FileInputStream(file);
                         loadStream(map, locale, loader, iStream);
-                    } catch (IOException exc) {
+                    }
+                    catch (IOException exc) {
                     }
                 }
             }
