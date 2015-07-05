@@ -51,7 +51,7 @@ public class CommandsLocalization extends Localization {
                         connection.setUseCaches(false);
                         iStream = connection.getInputStream();
                     }
-                    catch (IOException _) {
+                    catch (IOException exc) {
                     }
                 }
 

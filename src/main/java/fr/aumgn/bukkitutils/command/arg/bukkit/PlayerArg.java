@@ -1,6 +1,7 @@
 package fr.aumgn.bukkitutils.command.arg.bukkit;
 
 import com.google.common.base.Function;
+import com.google.common.collect.ImmutableList;
 import fr.aumgn.bukkitutils.command.CommandsMessages;
 import fr.aumgn.bukkitutils.command.arg.impl.AbstractSenderMatchingArg;
 import fr.aumgn.bukkitutils.command.exception.CommandError;
@@ -48,7 +49,7 @@ public class PlayerArg extends AbstractSenderMatchingArg<Player> {
 
     @Override
     public List<Player> match() {
-        List<Player> players = new Glob(string)
+        ImmutableList<? extends Player> players = new Glob(string)
                 .fromStart().caseInsensitive()
                 .build(new PlayerToString())
                 .filter(Bukkit.getOnlinePlayers());
@@ -57,7 +58,8 @@ public class PlayerArg extends AbstractSenderMatchingArg<Player> {
             throw new NoSuchPlayer(messages, string);
         }
 
-        return players;
+        // Immutable, hence safe cast
+        return (List<Player>) players;
     }
 
     public static class NoSuchPlayer extends CommandError {

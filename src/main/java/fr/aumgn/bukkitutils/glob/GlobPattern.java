@@ -1,6 +1,6 @@
 package fr.aumgn.bukkitutils.glob;
 
-import java.util.List;
+import com.google.common.collect.ImmutableList;
 
 /**
  * GlobPattern interface.
@@ -40,11 +40,11 @@ public interface GlobPattern<T> {
      * Filters the given array of objects using this
      * pattern.
      */
-    List<T> filter(T... objects);
+    ImmutableList<T> filter(T... objects);
 
     /**
      * Filters the given list of objects using this
      * pattern.
      */
-    List<T> filter(List<T> objects);
+    <E extends T> ImmutableList<E> filter(Iterable<E> objects);
 }

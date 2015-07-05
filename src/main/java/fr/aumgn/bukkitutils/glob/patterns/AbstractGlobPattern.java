@@ -1,10 +1,10 @@
 package fr.aumgn.bukkitutils.glob.patterns;
 
+import com.google.common.collect.ImmutableList;
 import fr.aumgn.bukkitutils.glob.GlobPattern;
 import fr.aumgn.bukkitutils.glob.matchers.GlobMatcher;
 import fr.aumgn.bukkitutils.glob.matchers.GlobParser;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -38,28 +38,28 @@ public abstract class AbstractGlobPattern<T> implements GlobPattern<T> {
     }
 
     @Override
-    public List<T> filter(T... objects) {
-        List<T> result = new ArrayList<T>();
+    public ImmutableList<T> filter(T... objects) {
+        ImmutableList.Builder<T> builder = ImmutableList.builder();
 
         for (T obj : objects) {
             if (match(obj)) {
-                result.add(obj);
+                builder.add(obj);
             }
         }
 
-        return result;
+        return builder.build();
     }
 
     @Override
-    public List<T> filter(List<T> objects) {
-        List<T> result = new ArrayList<T>();
+    public <E extends T> ImmutableList<E> filter(Iterable<E> objects) {
+        ImmutableList.Builder<E> builder = ImmutableList.builder();
 
-        for (T obj : objects) {
+        for (E obj : objects) {
             if (match(obj)) {
-                result.add(obj);
+                builder.add(obj);
             }
         }
 
-        return result;
+        return builder.build();
     }
 }

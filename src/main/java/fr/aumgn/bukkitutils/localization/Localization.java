@@ -191,7 +191,7 @@ public class Localization {
                         connection.setUseCaches(false);
                         iStream = connection.getInputStream();
                     }
-                    catch (IOException _) {
+                    catch (IOException exc) {
                     }
                 }
 

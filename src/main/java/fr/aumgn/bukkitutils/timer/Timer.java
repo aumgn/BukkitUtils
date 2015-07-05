@@ -21,16 +21,16 @@ public abstract class Timer implements Runnable {
     private final int minorDelay;
     private final String format;
     private final String endMessage;
-    private Runnable runnable;
+    private final Runnable runnable;
 
     private int remainingTime;
 
     private int taskId;
     private Stopwatch watch;
     private int currentDelay;
-    private int pauseDelay;
+    private long pauseDelay;
 
-    private Timer(boolean dummy, Plugin plugin, TimerConfig config, int seconds) {
+    public Timer(Plugin plugin, TimerConfig config, int seconds, Runnable runnable) {
         this.plugin = plugin;
         this.majorDelay = config.getMajorDuration();
         this.minorDelay = config.getMinorDuration();
@@ -41,20 +41,17 @@ public abstract class Timer implements Runnable {
         this.remainingTime = seconds;
 
         this.currentDelay = 0;
-    }
-
-    public Timer(Plugin plugin, TimerConfig config, int seconds, Runnable runnable) {
-        this(true, plugin, config, seconds);
-        this.runnable = runnable;
-    }
-
-    public Timer(Plugin plugin, TimerConfig config, int seconds) {
-        this(false, plugin, config, seconds);
-        this.runnable = new Runnable() {
+        this.runnable = runnable == null
+                ? new Runnable() {
             public void run() {
                 onFinish();
             }
-        };
+        }
+                : runnable;
+    }
+
+    public Timer(Plugin plugin, TimerConfig config, int seconds) {
+        this(plugin, config, seconds, null);
     }
 
     private void scheduleAndPrintTime(int delay) {
@@ -66,8 +63,7 @@ public abstract class Timer implements Runnable {
 
     private void schedule(int delay) {
         currentDelay = delay;
-        watch = new Stopwatch();
-        watch.start();
+        watch = Stopwatch.createStarted();
         taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(
                 plugin, this, (long) delay * TICKS_PER_SECONDS);
     }
@@ -131,12 +127,12 @@ public abstract class Timer implements Runnable {
     public void pause() {
         cancel();
         watch.stop();
-        pauseDelay = (int) watch.elapsedTime(TimeUnit.SECONDS);
+        pauseDelay = (int) watch.elapsed(TimeUnit.SECONDS);
         remainingTime -= pauseDelay;
     }
 
     public void resume() {
-        int delay = currentDelay - pauseDelay;
+        int delay = (int) (currentDelay - pauseDelay);
         if (delay > 0) {
             scheduleAndPrintTime(delay);
         }

@@ -56,7 +56,7 @@ public final class TimeUtil {
 
             return time;
         }
-        catch (NumberFormatException _) {
+        catch (NumberFormatException exc) {
             // Not an integer!
         }
 
